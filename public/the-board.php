@@ -74,7 +74,7 @@ class The_Board {
 		/* Define custom functionality.
 		 * Refer To http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
 		 */
-		add_action( 'plugins_loaded', array( $this, 'get_member_init' ) );
+		add_action( 'init', array( $this, 'tb_get_member_shortcode' ) );
 		add_filter( '@theboard', array( $this, 'filter_method_name' ) );
 
 	}
@@ -283,12 +283,18 @@ class The_Board {
 	 *
 	 * @since    1.0.0
 	 */
-	public function get_member_init() {
+
+	public function tb_get_member_shortcode(){
+		add_shortcode( 'get-theboard', 'get_member' );
+	}
+
+	public function get_member() {
+		die('lol');
 		$args = array(
 			'post_type' => 'members',
 			'tax_query' => array(
 				array(
-				'taxonomy' => 'groups'
+					'taxonomy' => 'groups'
 				)
 			)
 		);
@@ -301,7 +307,6 @@ class The_Board {
 				// essayer de récupérer toutes les meta d'un coup avec extract()
 			}
 		}
-		do_action( 'theboard_get_member', $members );
 	}
 
 	/**

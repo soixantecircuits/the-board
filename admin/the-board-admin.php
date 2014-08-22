@@ -195,6 +195,7 @@ class The_Board_Admin {
 		add_action( 'plugins_loaded', array( $this, 'tb_language_call' ), 1);
 		add_action( 'add_meta_boxes', array( $this, 'tb_metaboxes_init') );
 		add_action( 'save_post', array( $this, 'tb_metaboxes_save_datas'), 0, 1 );
+		add_action( 'init', array( $this, 'tb_register_sizes'), 0, 1 );
 		// add_action( 'contextual_help', 'member_contextual_help', 10, 3 );
 		add_filter( '@theboard', array( $this, 'filter_method_name' ) );
 
@@ -373,6 +374,12 @@ class The_Board_Admin {
 			'menu_icon'		=> 'dashicons-groups'
 		);
 		register_post_type( 'member', $args );
+	}
+
+	public function tb_register_sizes() {
+		add_image_size( 'tb_crop-256', 256, 256, true );
+		add_image_size( 'tb_width-120', 120);
+		add_image_size( 'tb_width-640', 640 );
 	}
 
 	public function tb_metaboxes_init() {
