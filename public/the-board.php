@@ -74,7 +74,7 @@ class The_Board {
 		/* Define custom functionality.
 		 * Refer To http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
 		 */
-		add_action( 'init', array( $this, 'tb_get_member_shortcode' ) );
+		// add_action( 'init', array( $this, 'tb_get_member_shortcode' ) );
 		add_filter( '@theboard', array( $this, 'filter_method_name' ) );
 
 	}
@@ -284,30 +284,7 @@ class The_Board {
 	 * @since    1.0.0
 	 */
 
-	public function tb_get_member_shortcode(){
-		add_shortcode( 'get-theboard', 'get_member' );
-	}
 
-	public function get_member() {
-		die('lol');
-		$args = array(
-			'post_type' => 'members',
-			'tax_query' => array(
-				array(
-					'taxonomy' => 'groups'
-				)
-			)
-		);
-		$members = new WP_Query( $args );
-		if( $members->have_posts() ) {
-			while( $members->have_posts() ) {
-				$members->the_post();
-				$firstname = get_post_meta( get_post_ID(), 'firstname', true );
-				echo $firstname;
-				// essayer de récupérer toutes les meta d'un coup avec extract()
-			}
-		}
-	}
 
 	/**
 	 * NOTE:  Filters are points of execution in which WordPress modifies data

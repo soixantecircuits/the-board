@@ -443,11 +443,13 @@ class The_Board_Admin {
 				<?php
 				break;
 		}
-		?>
-			<p>
-				<label class="selectit"><input type="checkbox" name="<?php echo 'hideit_' . $field['id']; ?>" <?php if(!empty($meta_hide)) echo 'checked'; ?>>Hide this information</label>
-			</p>
-		<?php
+		if($field['type'] != 'checkbox') {
+			?>
+				<p>
+					<label class="selectit"><input type="checkbox" name="<?php echo 'hideit_' . $field['id']; ?>" <?php if(!empty($meta_hide)) echo 'checked'; ?>>Hide this information</label>
+				</p>
+			<?php
+		}
 	}
 
 	public function tb_metaboxes_save_datas(){
