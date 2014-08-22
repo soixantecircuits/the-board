@@ -68,104 +68,104 @@ class The_Board_Admin {
 		$prefix = 'tb_';
 		$this->tb_fields = array(
 			array(
-					'label'		=> __('Lastname'),
-					'desc'		=> __('Lastname of the member.'),
+					'label'		=> __('Lastname', 'the-board'),
+					'desc'		=> __('Lastname of the member.', 'the-board'),
 					'id'		=> $prefix . 'lastname',
 					'type'		=> 'text',
 					'context'	=> 'normal',
 					'priority'	=> 'default'
 				),
 			array(
-					'label'		=> __('Firstname'),
-					'desc'		=> __('Firstname of the member.'),
+					'label'		=> __('Firstname', 'the-board'),
+					'desc'		=> __('Firstname of the member.', 'the-board'),
 					'id'		=> $prefix . 'firstname',
 					'type'		=> 'text',
 					'context'	=> 'normal',
 					'priority'	=> 'default'
 				),
 			array(
-					'label'		=> __('Post'),
-					'desc'		=> __('Post occupied by the member.'),
-					'id'		=> $prefix . 'post',
+					'label'		=> __('Job', 'the-board'),
+					'desc'		=> __('Job occupied by the member.', 'the-board'),
+					'id'		=> $prefix . 'job',
 					'type'		=> 'text',
 					'context'	=> 'normal',
 					'priority'	=> 'default'
 				),
 			array(
-					'label'		=> __('Invert in glossary'),
-					'desc'		=> __('If this is checked, member will be sorted by its firstname. "John Smith" would be find at "John" (J) instead of "Smith" (S).'),
+					'label'		=> __('Invert in glossary', 'the-board'),
+					'desc'		=> __('If this is checked, member will be sorted by its firstname. "John Smith" would be find at "John" (J) instead of "Smith" (S).', 'the-board'),
 					'id'		=> $prefix . 'invert',
 					'type'		=> 'checkbox',
 					'context'	=> 'side',
 					'priority'	=> 'low'
 				),
 			array(
-					'label'		=> __('Email'),
-					'desc'		=> __('Email of the member.'),
+					'label'		=> __('Email', 'the-board'),
+					'desc'		=> __('Email of the member.', 'the-board'),
 					'id'		=> $prefix . 'email',
 					'type'		=> 'email',
 					'context'	=> 'normal',
 					'priority'	=> 'default'
 				),
 			array(
-					'label'		=> __('Facebook'),
-					'desc'		=> __('URL for the Facebook account of the member.'),
+					'label'		=> __('Facebook', 'the-board'),
+					'desc'		=> __('URL for the Facebook account of the member.', 'the-board'),
 					'id'		=> $prefix . 'facebook',
 					'type'		=> 'text',
 					'context'	=> 'normal',
 					'priority'	=> 'low'
 				),
 			array(
-					'label'		=> __('Twitter'),
-					'desc'		=> __('URL for the Twitter account of the member.'),
+					'label'		=> __('Twitter', 'the-board'),
+					'desc'		=> __('URL for the Twitter account of the member.', 'the-board'),
 					'id'		=> $prefix . 'twitter',
 					'type'		=> 'text',
 					'context'	=> 'normal',
 					'priority'	=> 'low'
 				),
 			array(
-					'label'		=> __('Google+'),
-					'desc'		=> __('URL for the Google+ account of the member.'),
+					'label'		=> __('Google+', 'the-board'),
+					'desc'		=> __('URL for the Google+ account of the member.', 'the-board'),
 					'id'		=> $prefix . 'googleplus',
 					'type'		=> 'text',
 					'context'	=> 'normal',
 					'priority'	=> 'low'
 				),
 			array(
-					'label'		=> __('LinkedIn'),
-					'desc'		=> __('URL for the LinkedIn account of the member.'),
+					'label'		=> __('LinkedIn', 'the-board'),
+					'desc'		=> __('URL for the LinkedIn account of the member.', 'the-board'),
 					'id'		=> $prefix . 'linkedIn',
 					'type'		=> 'text',
 					'context'	=> 'normal',
 					'priority'	=> 'low'
 				),
 			array(
-					'label'		=> __('Skype'),
-					'desc'		=> __('URL for the Skype account of the member.'),
+					'label'		=> __('Skype', 'the-board'),
+					'desc'		=> __('URL for the Skype account of the member.', 'the-board'),
 					'id'		=> $prefix . 'skype',
 					'type'		=> 'text',
 					'context'	=> 'normal',
 					'priority'	=> 'low'
 				),
 			array(
-					'label'		=> __('Phone'),
-					'desc'		=> __('Phone number of the member.'),
+					'label'		=> __('Phone', 'the-board'),
+					'desc'		=> __('Phone number of the member.', 'the-board'),
 					'id'		=> $prefix . 'phone',
 					'type'		=> 'tel',
 					'context'	=> 'normal',
 					'priority'	=> 'low'
 				),
 			array(
-					'label'		=> __('Photo'),
-					'desc'		=> __('A nice picture of the member.'),
+					'label'		=> __('Photo', 'the-board'),
+					'desc'		=> __('A nice picture of the member.', 'the-board'),
 					'id'		=> $prefix . 'photo',
 					'type'		=> 'image',
 					'context'	=> 'normal',
 					'priority'	=> 'default'
 				),
 			array(
-					'label'		=> __('Custom field'),
-					'desc'		=> __('Whatever you think will be useful to know about the member.'),
+					'label'		=> __('Custom field', 'the-board'),
+					'desc'		=> __('Whatever you think will be useful to know about the member.', 'the-board'),
 					'id'		=> $prefix . 'custom',
 					'type'		=> 'custom',
 					'context'	=> 'normal',
@@ -341,23 +341,23 @@ class The_Board_Admin {
 	public function tb_member_posttype_init() {
 		// @theboard: Create the member post type
 		$labels = array(
-			'name'               => __( 'Members' ),
-			'singular_name'      => __( 'Member' ),
-			'add_new'            => __( 'Add New' ),
-			'add_new_item'       => __( 'Add New Member' ),
-			'edit_item'          => __( 'Edit Member' ),
-			'new_item'           => __( 'New Member' ),
-			'all_items'          => __( 'All Members' ),
-			'view_item'          => __( 'View Member' ),
-			'search_items'       => __( 'Search Members' ),
-			'not_found'          => __( 'No members found' ),
-			'not_found_in_trash' => __( 'No members found in the Trash' ),
+			'name'               => __( 'Members', 'the-board'),
+			'singular_name'      => __( 'Member', 'the-board'),
+			'add_new'            => __( 'Add New', 'the-board'),
+			'add_new_item'       => __( 'Add New Member', 'the-board'),
+			'edit_item'          => __( 'Edit Member', 'the-board'),
+			'new_item'           => __( 'New Member', 'the-board'),
+			'all_items'          => __( 'All Members', 'the-board'),
+			'view_item'          => __( 'View Member', 'the-board'),
+			'search_items'       => __( 'Search Members', 'the-board'),
+			'not_found'          => __( 'No members found', 'the-board'),
+			'not_found_in_trash' => __( 'No members found in the Trash', 'the-board'),
 			'parent_item_colon'  => '',
 			'menu_name'          => 'Members'
 		);
 		$args = array(
 			'labels'        => $labels,
-			'description'   => __('Structure members'),
+			'description'   => __('Structure members', 'the-board'),
 			'public'        => true,
 			'supports'      => array( 'title' ),
 			'has_archive'   => true,
@@ -366,74 +366,6 @@ class The_Board_Admin {
 		);
 		register_post_type( 'member', $args );
 	}
-
-	public function tb_member_groups_taxonomies_init() {
-
-		$labels = array(
-			'name'					=> __( 'Groups', 'text-domain' ),
-			'singular_name'			=> __( 'Group', 'text-domain' ),
-			'search_items'			=> __( 'Search Groups', 'text-domain' ),
-			'popular_items'			=> __( 'Popular Groups', 'text-domain' ),
-			'all_items'				=> __( 'All Groups', 'text-domain' ),
-			'parent_item'			=> __( 'Parent Group', 'text-domain' ),
-			'parent_item_colon'		=> __( 'Parent Group', 'text-domain' ),
-			'edit_item'				=> __( 'Edit Group', 'text-domain' ),
-			'update_item'			=> __( 'Update Group', 'text-domain' ),
-			'add_new_item'			=> __( 'Add New Group', 'text-domain' ),
-			'new_item_name'			=> __( 'New Group Name', 'text-domain' ),
-			'add_or_remove_items'	=> __( 'Add or remove Groups', 'text-domain' ),
-			'choose_from_most_used'	=> __( 'Choose from most used text-domain', 'text-domain' ),
-			'menu_name'				=> __( 'Group', 'text-domain' )
-		);
-
-		$args = array(
-			'hierarchical'      => true,
-			'label' 			=> __( 'Groups','text-domain' ),
-			'labels'            => $labels,
-			'show_ui'           => true,
-			'capabilities'		=> array(
-					'manage_terms'	=> 'manage_categories',
-					'edit_terms'	=> 'manage_categories',
-					'delete_terms'	=> 'manage_categories',
-					'assign_terms'	=> 'manage_categories'
-				)
-		);
-
-		register_taxonomy( 'groups', 'member', $args );
-		register_taxonomy_for_object_type( 'groups', 'member' );
-	}
-
-	// DELETE FOLLOWING FUNCTION
-
-	// function add_members_caps_to_admin() {
-	// 	$caps = array(
-	// 		'read',
-	// 		'read_members',
-	// 		'read_private_members',
-	// 		'edit_members',
-	// 		'edit_private_members',
-	// 		'edit_published_members',
-	// 		'edit_others_members',
-	// 		'publish_members',
-	// 		'delete_members',
-	// 		'delete_private_members',
-	// 		'delete_published_members',
-	// 		'delete_others_members',
-	// 		'manage_categories'
-	// 	);
-	// 	$roles = array(
-	// 		get_role( 'administrator' ),
-	// 		get_role( 'editor' ),
-	// 		get_role( 'contributor' ),
-	// 		get_role( 'author' )
-	// 	);
-	// 	foreach ($roles as $role) {
-	// 		foreach ($caps as $cap) {
-	// 			$role->add_cap( $cap );
-	// 		}
-	// 	}
-	// }
-
 
 	public function tb_metaboxes_init() {
 		foreach ($this->tb_fields as $field) {
@@ -448,7 +380,6 @@ class The_Board_Admin {
 			);
 		}
 	}
-
 
 	public function tb_show_metabox($post,  $metabox ) {
 		$field = $metabox['args'];
@@ -538,6 +469,33 @@ class The_Board_Admin {
 			elseif($new_hidden == '' && $old_hidden)
 				delete_post_meta( $post->ID, 'hideit_' . $field['id'], $old_hidden );
 		}
+	}
+
+	public function tb_member_groups_taxonomies_init() {
+		$labels = array(
+			'name'              => _x( 'Groups', 'taxonomy general name', 'the-board'),
+			'singular_name'     => _x( 'Group', 'taxonomy singular name', 'the-board'),
+			'search_items'      => __( 'Search Groups', 'the-board'),
+			'all_items'         => __( 'All Groups', 'the-board'),
+			'parent_item'       => __( 'Parent Group', 'the-board'),
+			'parent_item_colon' => __( 'Parent Group:', 'the-board'),
+			'edit_item'         => __( 'Edit Group', 'the-board'),
+			'update_item'       => __( 'Update Group', 'the-board'),
+			'add_new_item'      => __( 'Add New Group', 'the-board'),
+			'new_item_name'     => __( 'New Group Name', 'the-board'),
+			'menu_name'         => __( 'Group', 'the-board')
+		);
+
+		$args = array(
+			'hierarchical'      => true,
+			'labels'            => $labels,
+			'show_ui'           => true,
+			'show_admin_column' => true,
+			'query_var'         => true,
+			'rewrite'           => array( 'slug' => 'group' )
+		);
+
+		register_taxonomy( 'groups', array( 'member' ), $args );
 	}
 
 	/**
