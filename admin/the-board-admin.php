@@ -103,7 +103,7 @@ class The_Board_Admin {
 					'label'		=> __('Email', 'the-board'),
 					'desc'		=> __('Email of the member.', 'the-board'),
 					'id'		=> $prefix . 'email',
-					'type'		=> 'email',
+					'type'		=> 'text', // this is for using contact form 7
 					'context'	=> 'normal',
 					'priority'	=> 'default'
 				),
