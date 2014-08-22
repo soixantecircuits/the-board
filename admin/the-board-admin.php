@@ -65,6 +65,114 @@ class The_Board_Admin {
 		$plugin = The_Board::get_instance();
 		$this->plugin_slug = $plugin->get_plugin_slug();
 
+		$prefix = 'tb_';
+		$this->tb_fields = array(
+			array(
+					'label'		=> __('Lastname'),
+					'desc'		=> __('Lastname of the member.'),
+					'id'		=> $prefix . 'lastname',
+					'type'		=> 'text',
+					'context'	=> 'normal',
+					'priority'	=> 'default'
+				),
+			array(
+					'label'		=> __('Firstname'),
+					'desc'		=> __('Firstname of the member.'),
+					'id'		=> $prefix . 'firstname',
+					'type'		=> 'text',
+					'context'	=> 'normal',
+					'priority'	=> 'default'
+				),
+			array(
+					'label'		=> __('Post'),
+					'desc'		=> __('Post occupied by the member.'),
+					'id'		=> $prefix . 'post',
+					'type'		=> 'text',
+					'context'	=> 'normal',
+					'priority'	=> 'default'
+				),
+			array(
+					'label'		=> __('Invert in glossary'),
+					'desc'		=> __('If this is checked, member will be sorted by its firstname. "John Smith" would be find at "John" (J) instead of "Smith" (S).'),
+					'id'		=> $prefix . 'invert',
+					'type'		=> 'checkbox',
+					'context'	=> 'side',
+					'priority'	=> 'low'
+				),
+			array(
+					'label'		=> __('Email'),
+					'desc'		=> __('Email of the member.'),
+					'id'		=> $prefix . 'email',
+					'type'		=> 'email',
+					'context'	=> 'normal',
+					'priority'	=> 'default'
+				),
+			array(
+					'label'		=> __('Facebook'),
+					'desc'		=> __('URL for the Facebook account of the member.'),
+					'id'		=> $prefix . 'facebook',
+					'type'		=> 'text',
+					'context'	=> 'normal',
+					'priority'	=> 'low'
+				),
+			array(
+					'label'		=> __('Twitter'),
+					'desc'		=> __('URL for the Twitter account of the member.'),
+					'id'		=> $prefix . 'twitter',
+					'type'		=> 'text',
+					'context'	=> 'normal',
+					'priority'	=> 'low'
+				),
+			array(
+					'label'		=> __('Google+'),
+					'desc'		=> __('URL for the Google+ account of the member.'),
+					'id'		=> $prefix . 'googleplus',
+					'type'		=> 'text',
+					'context'	=> 'normal',
+					'priority'	=> 'low'
+				),
+			array(
+					'label'		=> __('LinkedIn'),
+					'desc'		=> __('URL for the LinkedIn account of the member.'),
+					'id'		=> $prefix . 'linkedIn',
+					'type'		=> 'text',
+					'context'	=> 'normal',
+					'priority'	=> 'low'
+				),
+			array(
+					'label'		=> __('Skype'),
+					'desc'		=> __('URL for the Skype account of the member.'),
+					'id'		=> $prefix . 'skype',
+					'type'		=> 'text',
+					'context'	=> 'normal',
+					'priority'	=> 'low'
+				),
+			array(
+					'label'		=> __('Phone'),
+					'desc'		=> __('Phone number of the member.'),
+					'id'		=> $prefix . 'phone',
+					'type'		=> 'tel',
+					'context'	=> 'normal',
+					'priority'	=> 'low'
+				),
+			array(
+					'label'		=> __('Photo'),
+					'desc'		=> __('A nice picture of the member.'),
+					'id'		=> $prefix . 'photo',
+					'type'		=> 'image',
+					'context'	=> 'normal',
+					'priority'	=> 'default'
+				),
+			array(
+					'label'		=> __('Custom field'),
+					'desc'		=> __('Whatever you think will be useful to know about the member.'),
+					'id'		=> $prefix . 'custom',
+					'type'		=> 'custom',
+					'context'	=> 'normal',
+					'priority'	=> 'low'
+				)
+			);
+
 		// Load admin style sheet and JavaScript.
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
@@ -328,114 +436,7 @@ class The_Board_Admin {
 
 
 	public function tb_metaboxes_init() {
-		$prefix = 'board_';
-		$tb_fields = array(
-			array(
-					'label'		=> __('Lastname'),
-					'desc'		=> __('Lastname of the member.'),
-					'id'		=> $prefix . 'lastname',
-					'type'		=> 'text',
-					'context'	=> 'normal',
-					'priority'	=> 'default'
-				),
-			array(
-					'label'		=> __('Firstname'),
-					'desc'		=> __('Firstname of the member.'),
-					'id'		=> $prefix . 'firstname',
-					'type'		=> 'text',
-					'context'	=> 'normal',
-					'priority'	=> 'default'
-				),
-			array(
-					'label'		=> __('Post'),
-					'desc'		=> __('Post occupied by the member.'),
-					'id'		=> $prefix . 'post',
-					'type'		=> 'text',
-					'context'	=> 'normal',
-					'priority'	=> 'default'
-				),
-			array(
-					'label'		=> __('Invert in glossary'),
-					'desc'		=> __('If this is checked, member will be sorted by its firstname. "John Smith" would be find at "John" (J) instead of "Smith" (S).'),
-					'id'		=> $prefix . 'invert',
-					'type'		=> 'checkbox',
-					'context'	=> 'side',
-					'priority'	=> 'low'
-				),
-			array(
-					'label'		=> __('Email'),
-					'desc'		=> __('Email of the member.'),
-					'id'		=> $prefix . 'email',
-					'type'		=> 'email',
-					'context'	=> 'normal',
-					'priority'	=> 'default'
-				),
-			array(
-					'label'		=> __('Facebook'),
-					'desc'		=> __('URL for the Facebook account of the member.'),
-					'id'		=> $prefix . 'facebook',
-					'type'		=> 'text',
-					'context'	=> 'normal',
-					'priority'	=> 'low'
-				),
-			array(
-					'label'		=> __('Twitter'),
-					'desc'		=> __('URL for the Twitter account of the member.'),
-					'id'		=> $prefix . 'twitter',
-					'type'		=> 'text',
-					'context'	=> 'normal',
-					'priority'	=> 'low'
-				),
-			array(
-					'label'		=> __('Google+'),
-					'desc'		=> __('URL for the Google+ account of the member.'),
-					'id'		=> $prefix . 'googleplus',
-					'type'		=> 'text',
-					'context'	=> 'normal',
-					'priority'	=> 'low'
-				),
-			array(
-					'label'		=> __('LinkedIn'),
-					'desc'		=> __('URL for the LinkedIn account of the member.'),
-					'id'		=> $prefix . 'linkedIn',
-					'type'		=> 'text',
-					'context'	=> 'normal',
-					'priority'	=> 'low'
-				),
-			array(
-					'label'		=> __('Skype'),
-					'desc'		=> __('URL for the Skype account of the member.'),
-					'id'		=> $prefix . 'skype',
-					'type'		=> 'text',
-					'context'	=> 'normal',
-					'priority'	=> 'low'
-				),
-			array(
-					'label'		=> __('Phone'),
-					'desc'		=> __('Phone number of the member.'),
-					'id'		=> $prefix . 'phone',
-					'type'		=> 'tel',
-					'context'	=> 'normal',
-					'priority'	=> 'low'
-				),
-			array(
-					'label'		=> __('Photo'),
-					'desc'		=> __('A nice picture of the member.'),
-					'id'		=> $prefix . 'photo',
-					'type'		=> 'image',
-					'context'	=> 'normal',
-					'priority'	=> 'default'
-				),
-			array(
-					'label'		=> __('Custom field'),
-					'desc'		=> __('Whatever you think will be useful to know about the member.'),
-					'id'		=> $prefix . 'custom',
-					'type'		=> 'custom',
-					'context'	=> 'normal',
-					'priority'	=> 'low'
-				)
-			);
-		foreach ($tb_fields as $field) {
+		foreach ($this->tb_fields as $field) {
 			add_meta_box(
 				$field['id'],
 				$field['label'],
@@ -451,6 +452,8 @@ class The_Board_Admin {
 
 	public function tb_show_metabox($post,  $metabox ) {
 		$field = $metabox['args'];
+		$meta_value = get_post_meta( $post->ID, $field['id'], true );
+		$meta_hide = get_post_meta( $post->ID, 'hideit_' . $field['id'], true );
 		?>
 			<input type="hidden" name="<?php echo 'tb_mb_nonce_' . $field['id']; ?>" value="<?php echo wp_create_nonce( basename(__FILE__) ); ?>">
 			<p class="howto"><?php echo $field['desc']; ?></p>
@@ -458,44 +461,44 @@ class The_Board_Admin {
 		switch ( $field['type'] ) {
 			case 'text':
 				?>
-					<input type="text" name="<?php echo $field['id']; ?>" value="<?php // put stored value ?>">
+					<input type="text" name="<?php echo $field['id']; ?>" value="<?php echo $meta_value; ?>">
 				<?php
 				break;
 			case 'checkbox':
 				?>
-					<label><input type="checkbox" name="<?php echo $field['id']; ?>" value="<?php // put stored value ?>">Invert</label>
+					<label><input type="checkbox" name="<?php echo $field['id']; ?>" value="<?php echo $meta_value; ?>">Invert</label>
 				<?php
 				break;
 			case 'email':
 				?>
-					<input type="email" name="<?php echo $field['id']; ?>" value="<?php // put stored value ?>">
+					<input type="email" name="<?php echo $field['id']; ?>" value="<?php echo $meta_value; ?>">
 				<?php
 				break;
 			case 'tel':
 				?>
-					<input type="tel" name="<?php echo $field['id']; ?>" value="<?php // put stored value ?>">
+					<input type="tel" name="<?php echo $field['id']; ?>" value="<?php echo $meta_value; ?>">
 				<?php
 				break;
 			case 'image':
 				?>
-					<input type="file" name="<?php echo $field['id']; ?>" value="<?php // put stored value ?>" accept="image/*">
+					<input type="file" name="<?php echo $field['id']; ?>" value="<?php echo $meta_value; ?>" accept="image/*">
 					<p class="howto"><?php echo __('Extesions accepted are: .jpg, .jpeg, .png and .gif') ?></p>
 				<?php
 				break;
 			case 'custom':
 				?>
-					<input type="text" name="<?php echo $field['id']; ?>" value="<?php // put stored value ?>">
+					<input type="text" name="<?php echo $field['id']; ?>" value="<?php echo $meta_value; ?>">
 				<?php
 				break;
 			default:
 				?>
-					<input type="text" name="<?php echo $field['id']; ?>" value="<?php // put stored value ?>">
+					<input type="text" name="<?php echo $field['id']; ?>" value="<?php echo $meta_value; ?>">
 				<?php
 				break;
 		}
 		?>
 			<p>
-				<label class="selectit"><input type="checkbox" name="<?php echo 'hideit_' . $field['id']; ?>" <?php echo ''; // put stored value ?>>Hide this information</label>
+				<label class="selectit"><input type="checkbox" name="<?php echo 'hideit_' . $field['id']; ?>" <?php if(!empty($meta_hide)) echo 'checked'; ?>>Hide this information</label>
 			</p>
 		<?php
 	}
@@ -503,10 +506,7 @@ class The_Board_Admin {
 	public function tb_metaboxes_save_datas(){
 		global $post;
 
-		// die(print_r($_POST));
-		// die(print_r($tb_fields));
-
-		foreach ($tb_fields as $field) {
+		foreach ($this->tb_fields as $field) {
 			if(isset($_POST['tb_mb_nonce_' . $field['id']])){
 				if(!wp_verify_nonce( $_POST['tb_mb_nonce_' . $field['id']], basename(__FILE__)) )
 					return;
@@ -515,20 +515,28 @@ class The_Board_Admin {
 			}
 			if(defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
 				return;
-			if('page' !== $_POST['post_type'])
+			if('member' !== $_POST['post_type'])
 				return;
 			if(!current_user_can('edit_page', $post->ID))
 				return;
 			elseif(!current_user_can('edit_post', $post->ID))
 				return;
 
-			$old = get_post_meta( $post->ID, $field['id'], true );
-			$new = $_POST[$field['id']];
-			if($new && $new != $old)
-				update_post_meta( $post->ID, $field['id'], $new );
-			elseif('' == $new && $old) {
-				delete_post_meta( $post->ID, $field['id'], $old );
-			}
+			$old_content = get_post_meta( $post->ID, $field['id'], true );
+			$new_content = $_POST[$field['id']];
+
+			if($new_content && $new_content != $old_content)
+				update_post_meta( $post->ID, $field['id'], $new_content );
+			elseif('' == $new_content && $old_content)
+				delete_post_meta( $post->ID, $field['id'], $old_content );
+
+			$old_hidden = get_post_meta( $post->ID, 'hideit_' . $field['id'], true );
+			$new_hidden = $_POST['hideit_' . $field['id']];
+
+			if(isset($new_hidden) && $new_hidden != '')
+				update_post_meta( $post->ID, 'hideit_' . $field['id'], $new_hidden );
+			elseif($new_hidden == '' && $old_hidden)
+				delete_post_meta( $post->ID, 'hideit_' . $field['id'], $old_hidden );
 		}
 	}
 
@@ -538,11 +546,11 @@ class The_Board_Admin {
 	 *
 	 */
 	public function member_contextual_help( $contextual_help, $screen_id, $screen ) {
-	if ( 'member' == $screen->id ) {
-		$contextual_help = include plugin_dir_path( __FILE__ ) . 'views/contextual-help.php';
-	} elseif ( 'edit-member' == $screen->id ) {
-		$contextual_help = include plugin_dir_path( __FILE__ ) . 'views/contextual-help-edit.php';
-	}
+		if ( 'member' == $screen->id ) {
+			$contextual_help = include plugin_dir_path( __FILE__ ) . 'views/contextual-help.php';
+		} elseif ( 'edit-member' == $screen->id ) {
+			$contextual_help = include plugin_dir_path( __FILE__ ) . 'views/contextual-help-edit.php';
+		}
 		return $contextual_help;
 	}
 
