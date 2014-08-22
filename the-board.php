@@ -71,7 +71,6 @@ add_action( 'plugins_loaded', array( 'The_Board', 'get_instance' ) );
 if ( is_admin()  ) {
 
 	require_once( plugin_dir_path( __FILE__ ) . 'admin/the-board-admin.php' );
-  //add_action( 'init', array( 'The_Board_Admin', 'tb_member_groups_taxonomies_init' ) );
 	add_action( 'plugins_loaded', array( 'The_Board_Admin', 'get_instance' ) );
 
 }
