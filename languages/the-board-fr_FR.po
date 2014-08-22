@@ -1,0 +1,229 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: POEditor.com\n"
+"Project-Id-Version: The Board\n"
+"Language: fr\n"
+
+#: ../admin/the-board-admin.php:71
+msgid "Lastname"
+msgstr "Nom de famille\t"
+
+#: ../admin/the-board-admin.php:72
+msgid "Lastname of the member."
+msgstr "Nom de famille du membre."
+
+#: ../admin/the-board-admin.php:79
+msgid "Firstname"
+msgstr "Prénom"
+
+#: ../admin/the-board-admin.php:80
+msgid "Firstname of the member."
+msgstr "Prénom du membre"
+
+#: ../admin/the-board-admin.php:87
+msgid "Job"
+msgstr "Poste"
+
+#: ../admin/the-board-admin.php:88
+msgid "Job occupied by the member."
+msgstr "Poste occupé par le membre."
+
+#: ../admin/the-board-admin.php:95
+msgid "Invert in glossary"
+msgstr "Inverser l'ordre du nom et du prénom"
+
+#: ../admin/the-board-admin.php:96
+msgid "If this is checked, member will be sorted by its firstname. \"John Smith\" would be find at \"John\" (J) instead of \"Smith\" (S)."
+msgstr "Si cette case est coché, le prénom et le nom apparaitront inversé"
+
+#: ../admin/the-board-admin.php:103
+msgid "Email"
+msgstr "e-mail"
+
+#: ../admin/the-board-admin.php:104
+msgid "Email of the member."
+msgstr "e-mail de la personne."
+
+#: ../admin/the-board-admin.php:111
+msgid "Facebook"
+msgstr "Facebook"
+
+#: ../admin/the-board-admin.php:112
+msgid "URL for the Facebook account of the member."
+msgstr "L'url du compte Facebook de la personne."
+
+#: ../admin/the-board-admin.php:119
+msgid "Twitter"
+msgstr "Twitter"
+
+#: ../admin/the-board-admin.php:120
+msgid "URL for the Twitter account of the member."
+msgstr "L'url du compte Twitter de la personne."
+
+#: ../admin/the-board-admin.php:127
+msgid "Google+"
+msgstr "Google+"
+
+#: ../admin/the-board-admin.php:128
+msgid "URL for the Google+ account of the member."
+msgstr "L'url du compte Google+ de la personne."
+
+#: ../admin/the-board-admin.php:135
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+#: ../admin/the-board-admin.php:136
+msgid "URL for the LinkedIn account of the member."
+msgstr "L'url public du compte LinkedIn de la personne"
+
+#: ../admin/the-board-admin.php:143
+msgid "Skype"
+msgstr "Skype"
+
+#: ../admin/the-board-admin.php:144
+msgid "URL for the Skype account of the member."
+msgstr "Le nom d'utilisateur Skype de la personne"
+
+#: ../admin/the-board-admin.php:151
+msgid "Phone"
+msgstr "Numéro de téléphone"
+
+#: ../admin/the-board-admin.php:152
+msgid "Phone number of the member."
+msgstr "Le numéro de téléphone de la personne."
+
+#: ../admin/the-board-admin.php:159
+msgid "Photo"
+msgstr "Photo"
+
+#: ../admin/the-board-admin.php:160
+msgid "A nice picture of the member."
+msgstr "Une belle photo du membre"
+
+#: ../admin/the-board-admin.php:167
+msgid "Custom field"
+msgstr "Un champ au choix ?"
+
+#: ../admin/the-board-admin.php:168
+msgid "Whatever you think will be useful to know about the member."
+msgstr "Ce que vous pensez pertinent à ajouter au sujet de cette personne."
+
+#: ../admin/the-board-admin.php:298 ../admin/the-board-admin.php:299
+msgid "The Board"
+msgstr "The Board"
+
+#: ../admin/the-board-admin.php:325
+msgid "Settings"
+msgstr "Paramètres"
+
+#: ../admin/the-board-admin.php:344 ../admin/views/contextual-help.php:13
+msgid "Members"
+msgstr "Membres"
+
+#: ../admin/the-board-admin.php:345
+msgid "Member"
+msgstr "Membre"
+
+#: ../admin/the-board-admin.php:346
+msgid "Add New"
+msgstr "Ajouter un nouveau"
+
+#: ../admin/the-board-admin.php:347
+msgid "Add New Member"
+msgstr "Ajouter un nouveau membre"
+
+#: ../admin/the-board-admin.php:348
+msgid "Edit Member"
+msgstr "Editer un membre"
+
+#: ../admin/the-board-admin.php:349
+msgid "New Member"
+msgstr "Nouveau membre"
+
+#: ../admin/the-board-admin.php:350
+msgid "All Members"
+msgstr "Tous les membres"
+
+#: ../admin/the-board-admin.php:351
+msgid "View Member"
+msgstr "Voir un membre"
+
+#: ../admin/the-board-admin.php:352
+msgid "Search Members"
+msgstr "Rechercher parmi les membres"
+
+#: ../admin/the-board-admin.php:353
+msgid "No members found"
+msgstr "Aucun membre trouvé"
+
+#: ../admin/the-board-admin.php:354
+msgid "No members found in the Trash"
+msgstr "Aucun membre trouvé dans la poubelle"
+
+#: ../admin/the-board-admin.php:360
+msgid "Structure members"
+msgstr "Structure membre"
+
+#: ../admin/the-board-admin.php:416
+msgid "Extesions accepted are: .jpg, .jpeg, .png and .gif"
+msgstr "Les extensions acceptés sont : .jpg, .jpeg, .png et .gif"
+
+#: ../admin/the-board-admin.php:476
+msgid "Groups"
+msgstr "Groupes"
+
+#: ../admin/the-board-admin.php:477 ../admin/the-board-admin.php:486
+msgid "Group"
+msgstr "Groupe"
+
+#: ../admin/the-board-admin.php:478
+msgid "Search Groups"
+msgstr "Rechercher parmi les groupes"
+
+#: ../admin/the-board-admin.php:479
+msgid "All Groups"
+msgstr "Tous les groupes"
+
+#: ../admin/the-board-admin.php:480
+msgid "Parent Group"
+msgstr "Groupe parent"
+
+#: ../admin/the-board-admin.php:481
+msgid "Parent Group:"
+msgstr "Goupe parent : "
+
+#: ../admin/the-board-admin.php:482
+msgid "Edit Group"
+msgstr "Éditer un groupe"
+
+#: ../admin/the-board-admin.php:483
+msgid "Update Group"
+msgstr "Mettre à jour un groupe"
+
+#: ../admin/the-board-admin.php:484
+msgid "Add New Group"
+msgstr "Ajouter un nouveau groupe"
+
+#: ../admin/the-board-admin.php:485
+msgid "New Group Name"
+msgstr "Ajouter un nom de groupe"
+
+#: ../admin/views/contextual-help-edit.php:12
+msgid "Editing Members"
+msgstr "Éditez les membres"
+
+#: ../admin/views/contextual-help-edit.php:13
+msgid "This page allows you to view/modify member details."
+msgstr "Cette page vous permet de voir et de modifier les détails des membres."
+
+#: ../admin/views/contextual-help.php:14
+msgid "Members show the details of the people involved."
+msgstr "Les membres affichent le détail des personnes impliquées."
+
+#: ../admin/views/contextual-help.php:15
+msgid "You can view/edit the details of each member by clicking on its name, or you can perform bulk actions using the dropdown menu and selecting multiple items."
+msgstr "Vous pouvez voir et éditer le détails de chaque membre en cliquant sur son nom ou en utilisant une action groupé et en les sélectionnant."
+

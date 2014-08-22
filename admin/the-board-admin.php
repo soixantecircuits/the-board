@@ -192,11 +192,18 @@ class The_Board_Admin {
 		 */
 		add_action( 'init', array( $this, 'tb_member_posttype_init' ), 0);
 		add_action( 'init', array( $this, 'tb_member_groups_taxonomies_init' ), 1);
+		add_action( 'plugins_loaded', array( $this, 'tb_language_call' ), 1);
 		add_action( 'add_meta_boxes', array( $this, 'tb_metaboxes_init') );
 		add_action( 'save_post', array( $this, 'tb_metaboxes_save_datas'), 0, 1 );
 		// add_action( 'contextual_help', 'member_contextual_help', 10, 3 );
 		add_filter( '@theboard', array( $this, 'filter_method_name' ) );
 
+	}
+
+	public function tb_language_call()
+	{
+    load_plugin_textdomain('the-board', false, basename(plugin_dir_path( dirname( __FILE__ ) ) ) . '/languages/');
+		//error_log(basename( plugin_dir_path( dirname( __FILE__ ) ) ) . '/languages/');
 	}
 
 	/**
