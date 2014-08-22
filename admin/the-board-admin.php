@@ -238,12 +238,13 @@ class The_Board_Admin {
 	 */
 	public function enqueue_admin_styles() {
 
-		if ( ! isset( $this->plugin_screen_hook_suffix ) ) {
+		if ( ! isset( $this->plugin_slug ) ) {
 			return;
 		}
 
+
 		$screen = get_current_screen();
-		if ( $this->plugin_screen_hook_suffix == $screen->id ) {
+		if ( $screen->id == 'member' ) {
 			wp_enqueue_style( $this->plugin_slug .'-admin-styles', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), The_Board::VERSION );
 		}
 
@@ -262,12 +263,12 @@ class The_Board_Admin {
 	 */
 	public function enqueue_admin_scripts() {
 
-		if ( ! isset( $this->plugin_screen_hook_suffix ) ) {
+		if ( ! isset( $this->plugin_slug ) ) {
 			return;
 		}
 
 		$screen = get_current_screen();
-		if ( $this->plugin_screen_hook_suffix == $screen->id ) {
+		if ( $screen->id == 'member' ) {
 			wp_enqueue_script( $this->plugin_slug . '-admin-script', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), The_Board::VERSION );
 		}
 
@@ -411,9 +412,10 @@ class The_Board_Admin {
 				<?php
 				break;
 			case 'image':
+				wp_enqueue_media();
 				?>
-					<input type="file" name="<?php echo $field['id']; ?>" value="<?php echo $meta_value; ?>" accept="image/*">
-					<p class="howto"><?php echo __('Extesions accepted are: .jpg, .jpeg, .png and .gif') ?></p>
+					<input type="text" name="<?php echo $field['id']; ?>" value="<?php echo $meta_value; ?>" id="tb_image_uploader">
+					<input type="button" value="<?php echo __('Upload Image', 'the-board'); ?>" class="button" id="tb_image_uploader_button">
 				<?php
 				break;
 			case 'custom':
