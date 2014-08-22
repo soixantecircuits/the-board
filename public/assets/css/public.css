@@ -1,1 +1,5 @@
 /* This stylesheet is used to style the public-facing components of the plugin. */
+
+.member_block {
+    border: 1px solid #000;
+}

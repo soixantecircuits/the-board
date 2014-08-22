@@ -74,7 +74,7 @@ class The_Board {
 		/* Define custom functionality.
 		 * Refer To http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
 		 */
-		// add_action( 'init', array( $this, 'tb_get_member_shortcode' ) );
+		add_action( 'init', array( $this, 'tb_get_member_shortcode' ) );
 		add_filter( '@theboard', array( $this, 'filter_method_name' ) );
 
 	}
@@ -88,6 +88,116 @@ class The_Board {
 	 */
 	public function get_plugin_slug() {
 		return $this->plugin_slug;
+	}
+
+	public function get_fields() {
+		$prefix = 'tb_';
+		return array(
+			array(
+					'label'		=> __('Lastname', 'the-board'),
+					'desc'		=> __('Lastname of the member.', 'the-board'),
+					'id'		=> $prefix . 'lastname',
+					'type'		=> 'text',
+					'context'	=> 'normal',
+					'priority'	=> 'default'
+				),
+			array(
+					'label'		=> __('Firstname', 'the-board'),
+					'desc'		=> __('Firstname of the member.', 'the-board'),
+					'id'		=> $prefix . 'firstname',
+					'type'		=> 'text',
+					'context'	=> 'normal',
+					'priority'	=> 'default'
+				),
+			array(
+					'label'		=> __('Job', 'the-board'),
+					'desc'		=> __('Job occupied by the member.', 'the-board'),
+					'id'		=> $prefix . 'job',
+					'type'		=> 'text',
+					'context'	=> 'normal',
+					'priority'	=> 'default'
+				),
+			array(
+					'label'		=> __('Invert in glossary', 'the-board'),
+					'desc'		=> __('If this is checked, member will be sorted by its firstname. "John Smith" would be find at "John" (J) instead of "Smith" (S).', 'the-board'),
+					'id'		=> $prefix . 'invert',
+					'type'		=> 'checkbox',
+					'context'	=> 'side',
+					'priority'	=> 'low'
+				),
+			array(
+					'label'		=> __('Email', 'the-board'),
+					'desc'		=> __('Email of the member.', 'the-board'),
+					'id'		=> $prefix . 'email',
+					'type'		=> 'text', // this is for using contact form 7
+					'context'	=> 'normal',
+					'priority'	=> 'default'
+				),
+			array(
+					'label'		=> __('Facebook', 'the-board'),
+					'desc'		=> __('URL for the Facebook account of the member.', 'the-board'),
+					'id'		=> $prefix . 'facebook',
+					'type'		=> 'text',
+					'context'	=> 'normal',
+					'priority'	=> 'low'
+				),
+			array(
+					'label'		=> __('Twitter', 'the-board'),
+					'desc'		=> __('URL for the Twitter account of the member.', 'the-board'),
+					'id'		=> $prefix . 'twitter',
+					'type'		=> 'text',
+					'context'	=> 'normal',
+					'priority'	=> 'low'
+				),
+			array(
+					'label'		=> __('Google+', 'the-board'),
+					'desc'		=> __('URL for the Google+ account of the member.', 'the-board'),
+					'id'		=> $prefix . 'googleplus',
+					'type'		=> 'text',
+					'context'	=> 'normal',
+					'priority'	=> 'low'
+				),
+			array(
+					'label'		=> __('LinkedIn', 'the-board'),
+					'desc'		=> __('URL for the LinkedIn account of the member.', 'the-board'),
+					'id'		=> $prefix . 'linkedIn',
+					'type'		=> 'text',
+					'context'	=> 'normal',
+					'priority'	=> 'low'
+				),
+			array(
+					'label'		=> __('Skype', 'the-board'),
+					'desc'		=> __('URL for the Skype account of the member.', 'the-board'),
+					'id'		=> $prefix . 'skype',
+					'type'		=> 'text',
+					'context'	=> 'normal',
+					'priority'	=> 'low'
+				),
+			array(
+					'label'		=> __('Phone', 'the-board'),
+					'desc'		=> __('Phone number of the member.', 'the-board'),
+					'id'		=> $prefix . 'phone',
+					'type'		=> 'tel',
+					'context'	=> 'normal',
+					'priority'	=> 'low'
+				),
+			array(
+					'label'		=> __('Photo', 'the-board'),
+					'desc'		=> __('A nice picture of the member.', 'the-board'),
+					'id'		=> $prefix . 'photo',
+					'type'		=> 'image',
+					'context'	=> 'normal',
+					'priority'	=> 'default'
+				),
+			array(
+					'label'		=> __('Custom field', 'the-board'),
+					'desc'		=> __('Whatever you think will be useful to know about the member.', 'the-board'),
+					'id'		=> $prefix . 'custom',
+					'type'		=> 'custom',
+					'context'	=> 'normal',
+					'priority'	=> 'low'
+				)
+			);
 	}
 
 	/**
@@ -284,7 +394,75 @@ class The_Board {
 	 * @since    1.0.0
 	 */
 
+	public function tb_get_member_shortcode(){
+		add_shortcode( 'get-theboard', array($this, 'tb_get_members') );
+	}
 
+	public function tb_get_members() {
+
+		$args=array(
+			'post_type' => 'member',
+			'post_status' => 'publish',
+			'posts_per_page' => -1,
+		);
+		$my_query = null;
+		$my_query = new WP_Query($args);
+
+		if( $my_query->have_posts() ) {
+			while( $my_query->have_posts() ){
+				$my_query->the_post();
+
+				$postmeta = get_post_meta( get_the_ID() );
+				// print_r($postmeta);
+				ob_start();
+				?>
+					<div class="member_block">
+						<?php if(isset($postmeta['tb_photo'])) { ?>
+							<img src="<?php echo $postmeta['tb_photo'][0]; ?>" alt="Photo du contact">
+						<?php } ?>
+						<?php if( isset($postmeta['tb_lastname']) || isset($postmeta['tb_firstname']) ) { ?>
+							<h2><?php if(isset($postmeta['tb_lastname'])) echo $postmeta['tb_lastname'][0]; ?> <?php if(isset($postmeta['tb_firstname'])) echo $postmeta['tb_firstname'][0]; ?></h2>
+						<?php } ?>
+						<?php if( isset($postmeta['tb_job']) ) { ?>
+							<h4><?php echo $postmeta['tb_job'][0]; ?></h4>
+						<?php } ?>
+						<?php if( isset($postmeta['tb_email']) ) { ?>
+							<p><?php echo $postmeta['tb_email'][0]; ?></p>
+						<?php } ?>
+						<?php if( isset($postmeta['tb_facebook']) || isset($postmeta['tb_twitter']) || isset($postmeta['tb_googleplus']) || isset($postmeta['tb_linkedin']) || isset($postmeta['tb_skype']) ) { ?>
+							<?php if( isset($postmeta['tb_facebook']) ) { ?>
+									<p><?php echo $postmeta['tb_facebook'][0]; ?></p>
+							<?php } ?>
+							<?php if( isset($postmeta['tb_twitter']) ) { ?>
+									<p><?php echo $postmeta['tb_twitter'][0]; ?></p>
+							<?php } ?>
+							<?php if( isset($postmeta['tb_googleplus']) ) { ?>
+									<p><?php echo $postmeta['tb_googleplus'][0]; ?></p>
+							<?php } ?>
+							<?php if( isset($postmeta['tb_linkedin']) ) { ?>
+									<p><?php echo $postmeta['tb_linkedin'][0]; ?></p>
+							<?php } ?>
+							<?php if( isset($postmeta['tb_skype']) ) { ?>
+									<p><?php echo $postmeta['tb_skype'][0]; ?></p>
+							<?php } ?>
+						<?php } ?>
+						<?php if( isset($postmeta['tb_phone']) ) { ?>
+							<p><?php echo $postmeta['tb_phone'][0]; ?></p>
+						<?php } ?>
+						<?php if( isset($postmeta['tb_custom']) ) { ?>
+							<p><?php echo $postmeta['tb_custom'][0]; ?></p>
+						<?php } ?>
+					</div>
+				<?php
+				ob_end_flush();
+
+				echo '<br>';
+				echo '<br>';
+			}
+		}
+
+		wp_reset_query();
+	}
 
 	/**
 	 * NOTE:  Filters are points of execution in which WordPress modifies data

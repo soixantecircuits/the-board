@@ -65,113 +65,7 @@ class The_Board_Admin {
 		$plugin = The_Board::get_instance();
 		$this->plugin_slug = $plugin->get_plugin_slug();
 
-		$prefix = 'tb_';
-		$this->tb_fields = array(
-			array(
-					'label'		=> __('Lastname', 'the-board'),
-					'desc'		=> __('Lastname of the member.', 'the-board'),
-					'id'		=> $prefix . 'lastname',
-					'type'		=> 'text',
-					'context'	=> 'normal',
-					'priority'	=> 'default'
-				),
-			array(
-					'label'		=> __('Firstname', 'the-board'),
-					'desc'		=> __('Firstname of the member.', 'the-board'),
-					'id'		=> $prefix . 'firstname',
-					'type'		=> 'text',
-					'context'	=> 'normal',
-					'priority'	=> 'default'
-				),
-			array(
-					'label'		=> __('Job', 'the-board'),
-					'desc'		=> __('Job occupied by the member.', 'the-board'),
-					'id'		=> $prefix . 'job',
-					'type'		=> 'text',
-					'context'	=> 'normal',
-					'priority'	=> 'default'
-				),
-			array(
-					'label'		=> __('Invert in glossary', 'the-board'),
-					'desc'		=> __('If this is checked, member will be sorted by its firstname. "John Smith" would be find at "John" (J) instead of "Smith" (S).', 'the-board'),
-					'id'		=> $prefix . 'invert',
-					'type'		=> 'checkbox',
-					'context'	=> 'side',
-					'priority'	=> 'low'
-				),
-			array(
-					'label'		=> __('Email', 'the-board'),
-					'desc'		=> __('Email of the member.', 'the-board'),
-					'id'		=> $prefix . 'email',
-					'type'		=> 'text', // this is for using contact form 7
-					'context'	=> 'normal',
-					'priority'	=> 'default'
-				),
-			array(
-					'label'		=> __('Facebook', 'the-board'),
-					'desc'		=> __('URL for the Facebook account of the member.', 'the-board'),
-					'id'		=> $prefix . 'facebook',
-					'type'		=> 'text',
-					'context'	=> 'normal',
-					'priority'	=> 'low'
-				),
-			array(
-					'label'		=> __('Twitter', 'the-board'),
-					'desc'		=> __('URL for the Twitter account of the member.', 'the-board'),
-					'id'		=> $prefix . 'twitter',
-					'type'		=> 'text',
-					'context'	=> 'normal',
-					'priority'	=> 'low'
-				),
-			array(
-					'label'		=> __('Google+', 'the-board'),
-					'desc'		=> __('URL for the Google+ account of the member.', 'the-board'),
-					'id'		=> $prefix . 'googleplus',
-					'type'		=> 'text',
-					'context'	=> 'normal',
-					'priority'	=> 'low'
-				),
-			array(
-					'label'		=> __('LinkedIn', 'the-board'),
-					'desc'		=> __('URL for the LinkedIn account of the member.', 'the-board'),
-					'id'		=> $prefix . 'linkedIn',
-					'type'		=> 'text',
-					'context'	=> 'normal',
-					'priority'	=> 'low'
-				),
-			array(
-					'label'		=> __('Skype', 'the-board'),
-					'desc'		=> __('URL for the Skype account of the member.', 'the-board'),
-					'id'		=> $prefix . 'skype',
-					'type'		=> 'text',
-					'context'	=> 'normal',
-					'priority'	=> 'low'
-				),
-			array(
-					'label'		=> __('Phone', 'the-board'),
-					'desc'		=> __('Phone number of the member.', 'the-board'),
-					'id'		=> $prefix . 'phone',
-					'type'		=> 'tel',
-					'context'	=> 'normal',
-					'priority'	=> 'low'
-				),
-			array(
-					'label'		=> __('Photo', 'the-board'),
-					'desc'		=> __('A nice picture of the member.', 'the-board'),
-					'id'		=> $prefix . 'photo',
-					'type'		=> 'image',
-					'context'	=> 'normal',
-					'priority'	=> 'default'
-				),
-			array(
-					'label'		=> __('Custom field', 'the-board'),
-					'desc'		=> __('Whatever you think will be useful to know about the member.', 'the-board'),
-					'id'		=> $prefix . 'custom',
-					'type'		=> 'custom',
-					'context'	=> 'normal',
-					'priority'	=> 'low'
-				)
-			);
+		$this->tb_fields = $plugin->get_fields();
 
 		// Load admin style sheet and JavaScript.
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
@@ -192,18 +86,20 @@ class The_Board_Admin {
 		 */
 		add_action( 'init', array( $this, 'tb_member_posttype_init' ), 0);
 		add_action( 'init', array( $this, 'tb_member_groups_taxonomies_init' ), 1);
+
 		add_action( 'plugins_loaded', array( $this, 'tb_language_call' ), 1);
+
 		add_action( 'add_meta_boxes', array( $this, 'tb_metaboxes_init') );
 		add_action( 'save_post', array( $this, 'tb_metaboxes_save_datas'), 0, 1 );
+
 		add_action( 'init', array( $this, 'tb_register_sizes'), 0, 1 );
 		// add_action( 'contextual_help', 'member_contextual_help', 10, 3 );
 		add_filter( '@theboard', array( $this, 'filter_method_name' ) );
 
 	}
 
-	public function tb_language_call()
-	{
-    load_plugin_textdomain('the-board', false, basename(plugin_dir_path( dirname( __FILE__ ) ) ) . '/languages/');
+	public function tb_language_call() {
+	load_plugin_textdomain('the-board', false, basename(plugin_dir_path( dirname( __FILE__ ) ) ) . '/languages/');
 		//error_log(basename( plugin_dir_path( dirname( __FILE__ ) ) ) . '/languages/');
 	}
 
