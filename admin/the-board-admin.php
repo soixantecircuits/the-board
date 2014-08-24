@@ -94,7 +94,7 @@ class The_Board_Admin {
 
 		add_action( 'init', array( $this, 'tb_register_sizes'), 0, 1 );
 		// add_action( 'contextual_help', 'member_contextual_help', 10, 3 );
-		add_filter( '@theboard', array( $this, 'filter_method_name' ) );
+		add_filter( 'post_updated_messages', array( $this, 'tb_update_message' ) );
 
 	}
 
@@ -409,9 +409,6 @@ class The_Board_Admin {
 			'menu_name'         => __( 'Groups', $this->plugin_slug)
 		);
 
-		// Don't forget to look http://wp-bytes.com/function/2013/02/changing-post-updated-messages/
-		// for fixing issue #5
-
 		$args = array(
 			'hierarchical'      => true,
 			'labels'            => $labels,
@@ -422,6 +419,30 @@ class The_Board_Admin {
 		);
 
 		register_taxonomy( 'groups', array( 'member' ), $args );
+	}
+
+	public function tb_update_message(){
+		// See http://wp-bytes.com/function/2013/02/changing-post-updated-messages/
+		global $post, $post_ID;
+		$posttype = get_post_type( $post_ID );
+
+		$obj = get_post_type_object( $posttype );
+		$singular = $obj->labels->singular_name;
+
+		$messages[$posttype] = array(
+			0 => '', // Unused. Messages start at index 1.
+			1 => sprintf( __($singular.' updated. <a href="%s">View '.strtolower($singular).'</a>'), esc_url( get_permalink($post_ID) ) ),
+			2 => __('Custom field updated.'),
+			3 => __('Custom field deleted.'),
+			4 => __($singular.' updated.'),
+			5 => isset($_GET['revision']) ? sprintf( __($singular.' restored to revision from %s'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+			6 => sprintf( __($singular.' published. <a href="%s">View '.strtolower($singular).'</a>'), esc_url( get_permalink($post_ID) ) ),
+			7 => __('Page saved.'),
+			8 => sprintf( __($singular.' submitted. <a target="_blank" href="%s">Preview '.strtolower($singular).'</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+			9 => sprintf( __($singular.' scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview '.strtolower($singular).'</a>'), date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
+			10 => sprintf( __($singular.' draft updated. <a target="_blank" href="%s">Preview '.strtolower($singular).'</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+		);
+		return $messages;
 	}
 
 	/**
