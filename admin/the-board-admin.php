@@ -99,7 +99,7 @@ class The_Board_Admin {
 	}
 
 	public function tb_language_call() {
-	load_plugin_textdomain('the-board', false, basename(plugin_dir_path( dirname( __FILE__ ) ) ) . '/languages/');
+		load_plugin_textdomain($this->plugin_slug, false, basename(plugin_dir_path( dirname( __FILE__ ) ) ) . '/languages/');
 		//error_log(basename( plugin_dir_path( dirname( __FILE__ ) ) ) . '/languages/');
 	}
 
@@ -246,23 +246,23 @@ class The_Board_Admin {
 	public function tb_member_posttype_init() {
 		// @theboard: Create the member post type
 		$labels = array(
-			'name'               => __( 'Members', 'the-board'),
-			'singular_name'      => __( 'Member', 'the-board'),
-			'add_new'            => __( 'Add New', 'the-board'),
-			'add_new_item'       => __( 'Add New Member', 'the-board'),
-			'edit_item'          => __( 'Edit Member', 'the-board'),
-			'new_item'           => __( 'New Member', 'the-board'),
-			'all_items'          => __( 'All Members', 'the-board'),
-			'view_item'          => __( 'View Member', 'the-board'),
-			'search_items'       => __( 'Search Members', 'the-board'),
-			'not_found'          => __( 'No members found', 'the-board'),
-			'not_found_in_trash' => __( 'No members found in the Trash', 'the-board'),
+			'name'               => __( 'Members', $this->plugin_slug),
+			'singular_name'      => __( 'Member', $this->plugin_slug),
+			'add_new'            => __( 'Add New', $this->plugin_slug),
+			'add_new_item'       => __( 'Add New Member', $this->plugin_slug),
+			'edit_item'          => __( 'Edit Member', $this->plugin_slug),
+			'new_item'           => __( 'New Member', $this->plugin_slug),
+			'all_items'          => __( 'All Members', $this->plugin_slug),
+			'view_item'          => __( 'View Member', $this->plugin_slug),
+			'search_items'       => __( 'Search Members', $this->plugin_slug),
+			'not_found'          => __( 'No members found', $this->plugin_slug),
+			'not_found_in_trash' => __( 'No members found in the Trash', $this->plugin_slug),
 			'parent_item_colon'  => '',
 			'menu_name'          => 'Members'
 		);
 		$args = array(
 			'labels'        => $labels,
-			'description'   => __('Structure members', 'the-board'),
+			'description'   => __('Structure members', $this->plugin_slug),
 			'public'        => true,
 			'supports'      => array( 'title' ),
 			'has_archive'   => true,
@@ -303,39 +303,39 @@ class The_Board_Admin {
 		switch ( $field['type'] ) {
 			case 'text':
 				?>
-					<input type="text" name="<?php echo $field['id']; ?>" value="<?php echo $meta_value; ?>">
+					<input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>">
 				<?php
 				break;
 			case 'checkbox':
 				?>
-					<label><input type="checkbox" name="<?php echo $field['id']; ?>" value="<?php echo $meta_value; ?>">Invert</label>
+					<label><input type="checkbox" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>">Invert</label>
 				<?php
 				break;
 			case 'email':
 				?>
-					<input type="email" name="<?php echo $field['id']; ?>" value="<?php echo $meta_value; ?>">
+					<input type="email" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>">
 				<?php
 				break;
 			case 'tel':
 				?>
-					<input type="tel" name="<?php echo $field['id']; ?>" value="<?php echo $meta_value; ?>">
+					<input type="tel" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>">
 				<?php
 				break;
 			case 'image':
 				wp_enqueue_media();
 				?>
-					<input type="text" name="<?php echo $field['id']; ?>" value="<?php echo $meta_value; ?>" id="tb_image_uploader">
-					<input type="button" value="<?php echo __('Upload Image', 'the-board'); ?>" class="button" id="tb_image_uploader_button">
+					<input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>" id="tb_image_uploader">
+					<input type="button" value="<?php echo __('Upload Image', $this->plugin_slug); ?>" class="button" id="tb_image_uploader_button">
 				<?php
 				break;
 			case 'custom':
 				?>
-					<input type="text" name="<?php echo $field['id']; ?>" value="<?php echo $meta_value; ?>">
+					<input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>">
 				<?php
 				break;
 			default:
 				?>
-					<input type="text" name="<?php echo $field['id']; ?>" value="<?php echo $meta_value; ?>">
+					<input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>">
 				<?php
 				break;
 		}
@@ -378,6 +378,15 @@ class The_Board_Admin {
 			$old_hidden = get_post_meta( $post->ID, 'hideit_' . $field['id'], true );
 			$new_hidden = $_POST['hideit_' . $field['id']];
 
+			if($_POST['post_title'] == '' && !wp_is_post_revision( $post->ID )){
+				$_POST['post_title'] = __('John Doe (name not provided)', $this->plugin_slug);
+				// We need to remove and recall save_post action in order to avoid an infinite loop.
+				// See http://codex.wordpress.org/Function_Reference/wp_update_post for more details
+				remove_action( 'save_post', array($this, 'tb_metaboxes_save_datas') );
+				wp_update_post( $_POST );
+				add_action( 'save_post', array($this, 'tb_metaboxes_save_datas') );
+			}
+
 			if(isset($new_hidden) && $new_hidden != '')
 				update_post_meta( $post->ID, 'hideit_' . $field['id'], $new_hidden );
 			elseif($new_hidden == '' && $old_hidden)
@@ -387,18 +396,21 @@ class The_Board_Admin {
 
 	public function tb_member_groups_taxonomies_init() {
 		$labels = array(
-			'name'              => _x( 'Groups', 'taxonomy general name', 'the-board'),
-			'singular_name'     => _x( 'Group', 'taxonomy singular name', 'the-board'),
-			'search_items'      => __( 'Search Groups', 'the-board'),
-			'all_items'         => __( 'All Groups', 'the-board'),
-			'parent_item'       => __( 'Parent Group', 'the-board'),
-			'parent_item_colon' => __( 'Parent Group:', 'the-board'),
-			'edit_item'         => __( 'Edit Group', 'the-board'),
-			'update_item'       => __( 'Update Group', 'the-board'),
-			'add_new_item'      => __( 'Add New Group', 'the-board'),
-			'new_item_name'     => __( 'New Group Name', 'the-board'),
-			'menu_name'         => __( 'Group', 'the-board')
+			'name'              => _x( 'Groups', 'taxonomy general name', $this->plugin_slug),
+			'singular_name'     => _x( 'Group', 'taxonomy singular name', $this->plugin_slug),
+			'search_items'      => __( 'Search Groups', $this->plugin_slug),
+			'all_items'         => __( 'All Groups', $this->plugin_slug),
+			'parent_item'       => __( 'Parent Group', $this->plugin_slug),
+			'parent_item_colon' => __( 'Parent Group:', $this->plugin_slug),
+			'edit_item'         => __( 'Edit Group', $this->plugin_slug),
+			'update_item'       => __( 'Update Group', $this->plugin_slug),
+			'add_new_item'      => __( 'Add New Group', $this->plugin_slug),
+			'new_item_name'     => __( 'New Group Name', $this->plugin_slug),
+			'menu_name'         => __( 'Groups', $this->plugin_slug)
 		);
+
+		// Don't forget to look http://wp-bytes.com/function/2013/02/changing-post-updated-messages/
+		// for fixing issue #5
 
 		$args = array(
 			'hierarchical'      => true,

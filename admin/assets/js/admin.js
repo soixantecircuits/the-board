@@ -31,6 +31,11 @@
             image_uploader.open();
         });
 
+        $('#tb_lastname_input, #tb_firstname_input').keyup(function(){
+            var title = $('#tb_lastname_input').val() + ' ' + $('#tb_firstname_input').val()
+            $('#title').val(title);
+        });
+
 	});
 
 }(jQuery));
