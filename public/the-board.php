@@ -413,43 +413,48 @@ class The_Board {
 				$my_query->the_post();
 
 				$postmeta = get_post_meta( get_the_ID() );
-				// print_r($postmeta);
+				// print_r($postmeta);	
 				ob_start();
 				?>
 					<div class="member_block">
-						<?php if(isset($postmeta['tb_photo'])) { ?>
+						<?php if( isset($postmeta['tb_photo']) && !isset($postmeta['hideit_tb_photo']) ) { ?>
 							<img src="<?php echo $postmeta['tb_photo'][0]; ?>" alt="Photo du contact">
 						<?php } ?>
 						<?php if( isset($postmeta['tb_lastname']) || isset($postmeta['tb_firstname']) ) { ?>
-							<h2><?php if(isset($postmeta['tb_lastname'])) echo $postmeta['tb_lastname'][0]; ?> <?php if(isset($postmeta['tb_firstname'])) echo $postmeta['tb_firstname'][0]; ?></h2>
+							<h2><?php if(isset($postmeta['tb_lastname']) && !isset($postmeta['hideit_tb_lastname'])){
+								echo $postmeta['tb_lastname'][0];
+							}?>
+							<?php if(isset($postmeta['tb_firstname']) && !isset($postmeta['hideit_tb_firstname'])){
+								echo $postmeta['tb_firstname'][0];
+							} ?></h2>
 						<?php } ?>
-						<?php if( isset($postmeta['tb_job']) ) { ?>
+						<?php if( isset($postmeta['tb_job']) && !isset($postmeta['hideit_tb_job']) ) { ?>
 							<h4><?php echo $postmeta['tb_job'][0]; ?></h4>
 						<?php } ?>
-						<?php if( isset($postmeta['tb_email']) ) { ?>
+						<?php if( isset($postmeta['tb_email']) && !isset($postmeta['hideit_tb_email'])) { ?>
 							<p><?php echo $postmeta['tb_email'][0]; ?></p>
 						<?php } ?>
 						<?php if( isset($postmeta['tb_facebook']) || isset($postmeta['tb_twitter']) || isset($postmeta['tb_googleplus']) || isset($postmeta['tb_linkedin']) || isset($postmeta['tb_skype']) ) { ?>
-							<?php if( isset($postmeta['tb_facebook']) ) { ?>
+							<?php if( isset($postmeta['tb_facebook']) && !isset($postmeta['hideit_tb_facebook'])) { ?>
 									<p><?php echo $postmeta['tb_facebook'][0]; ?></p>
 							<?php } ?>
-							<?php if( isset($postmeta['tb_twitter']) ) { ?>
+							<?php if( isset($postmeta['tb_twitter']) && !isset($postmeta['hideit_tb_twitter']) ) { ?>
 									<p><?php echo $postmeta['tb_twitter'][0]; ?></p>
 							<?php } ?>
-							<?php if( isset($postmeta['tb_googleplus']) ) { ?>
+							<?php if( isset($postmeta['tb_googleplus']) && !isset($postmeta['hideit_tb_googleplus'])) { ?>
 									<p><?php echo $postmeta['tb_googleplus'][0]; ?></p>
 							<?php } ?>
-							<?php if( isset($postmeta['tb_linkedin']) ) { ?>
+							<?php if( isset($postmeta['tb_linkedin']) && !isset($postmeta['hideit_tb_linkedin'])) { ?>
 									<p><?php echo $postmeta['tb_linkedin'][0]; ?></p>
 							<?php } ?>
-							<?php if( isset($postmeta['tb_skype']) ) { ?>
+							<?php if( isset($postmeta['tb_skype']) && !isset($postmeta['hideit_tb_skype'])) { ?>
 									<p><?php echo $postmeta['tb_skype'][0]; ?></p>
 							<?php } ?>
 						<?php } ?>
-						<?php if( isset($postmeta['tb_phone']) ) { ?>
+						<?php if( isset($postmeta['tb_phone']) && !isset($postmeta['hideit_tb_phone'])) { ?>
 							<p><?php echo $postmeta['tb_phone'][0]; ?></p>
 						<?php } ?>
-						<?php if( isset($postmeta['tb_custom']) ) { ?>
+						<?php if( isset($postmeta['tb_custom']) && !isset($postmeta['hideit_tb_custom'])) { ?>
 							<p><?php echo $postmeta['tb_custom'][0]; ?></p>
 						<?php } ?>
 					</div>
