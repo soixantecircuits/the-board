@@ -25,15 +25,10 @@
             image_uploader.on('select', function(){
                 var attachment = image_uploader.state().get('selection').first().toJSON();
                 var url = attachment.url;
-                $('#tb_image_uploader').val(url);
+                $('#tb_photo_input').val(url);
             })
 
             image_uploader.open();
-        });
-
-        $('#tb_lastname_input, #tb_firstname_input').keyup(function(){
-            var title = $('#tb_lastname_input').val() + ' ' + $('#tb_firstname_input').val()
-            $('#title').val(title);
         });
 
 	});

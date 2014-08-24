@@ -264,7 +264,7 @@ class The_Board_Admin {
 			'labels'        => $labels,
 			'description'   => __('Structure members', $this->plugin_slug),
 			'public'        => true,
-			'supports'      => array( 'title' ),
+			'supports'      => false,
 			'has_archive'   => true,
 			'taxonomy'		=> 'groups',
 			'menu_icon'		=> 'dashicons-groups'
@@ -324,7 +324,7 @@ class The_Board_Admin {
 			case 'image':
 				wp_enqueue_media();
 				?>
-					<input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>" id="tb_image_uploader">
+					<input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>">
 					<input type="button" value="<?php echo __('Upload Image', $this->plugin_slug); ?>" class="button" id="tb_image_uploader_button">
 				<?php
 				break;
@@ -350,6 +350,38 @@ class The_Board_Admin {
 
 	public function tb_metaboxes_save_datas(){
 		global $post;
+
+		if( !wp_is_post_revision( $post->ID ) ){
+			$old_title = $_POST['post_title'];
+
+			$new_ln = $_POST['tb_lastname'];
+			$new_fn = $_POST['tb_firstname'];
+
+			$old_ln = get_post_meta( $post->ID, 'tb_lastname', true );
+			$old_fn = get_post_meta( $post->ID, 'tb_firstname', true );
+
+			if( $new_ln != $old_ln || $new_fn != $old_fn ){
+				if( !empty($new_ln) && !empty($new_fn) ) {
+					$_POST['post_title'] = $new_ln . ' ' . $new_fn;
+				} elseif ( !empty($new_fn) ) {
+					$_POST['post_title'] = $new_fn;
+				} elseif ( !empty($new_ln) ) {
+					$_POST['post_title'] = $new_ln;
+				} else {
+					$_POST['post_title'] = __('John Doe (name not provided)', $this->plugin_slug);
+				}
+			} elseif ( empty($_POST['post_title']) ) {
+				$_POST['post_title'] = __('John Doe (name not provided)', $this->plugin_slug);
+				// wp_die($new_fn.' vs. '.$old_fn.'<br>'.$new_ln.' vs. '.$old_ln.'<br>'.$_POST['post_title']);
+			}
+			// We need to remove and recall save_post action in order to avoid an infinite loop.
+			// See http://codex.wordpress.org/Function_Reference/wp_update_post for more details
+			if( $_POST['post_title'] !== $old_title ){
+				remove_action( 'save_post', array($this, 'tb_metaboxes_save_datas') );
+				wp_update_post( $_POST );
+				add_action( 'save_post', array($this, 'tb_metaboxes_save_datas') );
+			}
+		}
 
 		foreach ($this->tb_fields as $field) {
 			if(isset($_POST['tb_mb_nonce_' . $field['id']])){
@@ -378,14 +410,6 @@ class The_Board_Admin {
 			$old_hidden = get_post_meta( $post->ID, 'hideit_' . $field['id'], true );
 			$new_hidden = $_POST['hideit_' . $field['id']];
 
-			if($_POST['post_title'] == '' && !wp_is_post_revision( $post->ID )){
-				$_POST['post_title'] = __('John Doe (name not provided)', $this->plugin_slug);
-				// We need to remove and recall save_post action in order to avoid an infinite loop.
-				// See http://codex.wordpress.org/Function_Reference/wp_update_post for more details
-				remove_action( 'save_post', array($this, 'tb_metaboxes_save_datas') );
-				wp_update_post( $_POST );
-				add_action( 'save_post', array($this, 'tb_metaboxes_save_datas') );
-			}
 
 			if(isset($new_hidden) && $new_hidden != '')
 				update_post_meta( $post->ID, 'hideit_' . $field['id'], $new_hidden );
@@ -430,17 +454,17 @@ class The_Board_Admin {
 		$singular = $obj->labels->singular_name;
 
 		$messages[$posttype] = array(
-			0 => '', // Unused. Messages start at index 1.
-			1 => sprintf( __($singular.' updated. <a href="%s">View '.strtolower($singular).'</a>'), esc_url( get_permalink($post_ID) ) ),
-			2 => __('Custom field updated.'),
-			3 => __('Custom field deleted.'),
-			4 => __($singular.' updated.'),
-			5 => isset($_GET['revision']) ? sprintf( __($singular.' restored to revision from %s'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-			6 => sprintf( __($singular.' published. <a href="%s">View '.strtolower($singular).'</a>'), esc_url( get_permalink($post_ID) ) ),
-			7 => __('Page saved.'),
-			8 => sprintf( __($singular.' submitted. <a target="_blank" href="%s">Preview '.strtolower($singular).'</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
-			9 => sprintf( __($singular.' scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview '.strtolower($singular).'</a>'), date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
-			10 => sprintf( __($singular.' draft updated. <a target="_blank" href="%s">Preview '.strtolower($singular).'</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+			0 	=> '', // Unused. Messages start at index 1.
+			1 	=> sprintf( __($singular.' updated. <a href="%s">View '.strtolower($singular).'</a>'), esc_url( get_permalink($post_ID) ) ),
+			2 	=> __('Custom field updated.'),
+			3 	=> __('Custom field deleted.'),
+			4 	=> __($singular.' updated.'),
+			5 	=> isset($_GET['revision']) ? sprintf( __($singular.' restored to revision from %s'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+			6 	=> sprintf( __($singular.' published. <a href="%s">View '.strtolower($singular).'</a>'), esc_url( get_permalink($post_ID) ) ),
+			7 	=> __('Page saved.'),
+			8 	=> sprintf( __($singular.' submitted. <a target="_blank" href="%s">Preview '.strtolower($singular).'</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+			9 	=> sprintf( __($singular.' scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview '.strtolower($singular).'</a>'), date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
+			10 	=> sprintf( __($singular.' draft updated. <a target="_blank" href="%s">Preview '.strtolower($singular).'</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
 		);
 		return $messages;
 	}
