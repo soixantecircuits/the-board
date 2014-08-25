@@ -13,8 +13,17 @@
                 <td colspan="5" rowspan="" headers="">
                     <?php $attachments = get_children( 'post_type=attachment&post_mime_type=image' );
                     $attachment_array = array_values($attachments);
-                    $image_id = $attachment_array[0]->ID;
-                    echo wp_get_attachment_image( $image_id, 'tb_crop-120' ); ?>
+                    foreach ($attachment_array as $attachment) {
+                        if( $postmeta['tb_photo'][0] == $attachment->guid ){
+                            $image_id = $attachment->ID;
+                            break;
+                        }
+                    }
+                    // echo '<pre>';
+                    // print_r($attachments);
+                    // echo '</pre>';
+                    if( $image_id )
+                        echo wp_get_attachment_image( $image_id, 'tb_crop-120' ); ?>
                 </td>
             </tr>
         <?php } ?>
@@ -44,7 +53,7 @@
                 </td>
             </tr>
         <?php } ?>
-        <?php if( isset($postmeta['tb_contact']) && !isset($postmeta['hideit_tb_contact']) && isset($postmeta['tb_email']) && !isset($postmeta['hideit_tb_email']) && isset($postmeta['tb_phone']) && !isset($postmeta['hideit_tb_phone']) ) { ?>
+        <?php if( isset($postmeta['tb_contact']) || isset($postmeta['tb_email']) || isset($postmeta['tb_phone']) ) { ?>
             <tr class="contact_row">
                 <?php if( isset($postmeta['tb_contact']) && !isset($postmeta['hideit_tb_contact'])) { ?>
                     <tr>
