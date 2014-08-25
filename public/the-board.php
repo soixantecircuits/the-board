@@ -129,7 +129,15 @@ class The_Board {
 					'label'		=> __('Email', 'the-board'),
 					'desc'		=> __('Email of the member.', 'the-board'),
 					'id'		=> $prefix . 'email',
-					'type'		=> 'text', // this is for using contact form 7
+					'type'		=> 'email',
+					'context'	=> 'normal',
+					'priority'	=> 'default'
+				),
+			array(
+					'label'		=> __('Contact form', 'the-board'),
+					'desc'		=> __('Contact form of the member. Put the ID provided by Contact Form 7.', 'the-board'),
+					'id'		=> $prefix . 'contact',
+					'type'		=> 'contact',
 					'context'	=> 'normal',
 					'priority'	=> 'default'
 				),
@@ -381,7 +389,7 @@ class The_Board {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_script( $this->plugin_slug . '-plugin-script', plugins_url( 'assets/js/public.js', __FILE__ ), array( 'jquery' ), self::VERSION );
+		wp_enqueue_script( $this->plugin_slug . '-plugin-script', plugins_url( 'assets/js/public.js', __FILE__ ), array(  ), self::VERSION );
 	}
 
 	/**
@@ -394,79 +402,111 @@ class The_Board {
 	 * @since    1.0.0
 	 */
 
-	public function tb_get_member_shortcode(){
-		add_shortcode( 'get-theboard', array($this, 'tb_get_members') );
+	public function tb_get_terms(){
+		return $terms = array(
+			'Direction' => array(),
+			'Pôle levée de fonds et communication' => array(
+				'Mécénat / Partenariat / Personnalités',
+				'Legs, donations et assurances-vies',
+				'Communication',
+				'événements'
+			),
+			'Pôle Administratif et financier / Accompagnement des familles / recherche' => array(
+				'Administratif et financier',
+				'Accompagnement des familles',
+				'Recherche'
+			)
+		);
+
+		// Need to take a serious look at this. Probably a hook problem
+		// $terms = get_terms("groups", array( 'hide_empty' => 0 ));
+		// if ( !empty( $terms ) && !is_wp_error( $terms ) ){
+		// 	foreach ( $terms as $term ) {
+		// 		$return .= $term->name;
+		// 	}
+		// }
 	}
 
-	public function tb_get_members() {
+	public function tb_get_member_shortcode(){
+		add_shortcode( 'theboard-show-member', array($this, 'tb_get_one_member') );
+		add_shortcode( 'theboard-show-group', array($this, 'tb_get_members_by_group') );
+		// add_shortcode( 'theboard-show-all-members', array($this, 'tb_get_all_members') );
+	}
 
-		$args=array(
-			'post_type' => 'member',
-			'post_status' => 'publish',
-			'posts_per_page' => -1,
-		);
-		$my_query = null;
-		$my_query = new WP_Query($args);
+	public function tb_get_members_by_group($atts) {
+		$return = null;
 
-		if( $my_query->have_posts() ) {
-			while( $my_query->have_posts() ){
-				$my_query->the_post();
+		extract(shortcode_atts( array(
+			'group'	=> ''
+		), $atts, 'theboard-show-group' ) );
+
+		$path = $this->tb_check_path('group');
+
+		$terms = $this->tb_get_terms();
+		$group_match = $terms[$group];
+
+		if( $group_match )
+			return;
+
+		// foreach ($group_match as $subgroup => $sub) {
+			ob_start();
+			include( $path );
+			$return .= ob_get_contents();
+			ob_end_clean();
+		// }
+
+		return $return;
+	}
+
+	public function tb_get_one_member($atts) {
+		$return = null;
+
+		extract(shortcode_atts( array(
+			'id'	=> 0
+		), $atts, 'theboard-show-member' ) );
+
+		$path = $this->tb_check_path('member');
+
+		$tb_member_query = null;
+		$tb_member_query = new WP_Query( 'post_type=member&p='.$id );
+
+		if( $tb_member_query->have_posts() ) {
+			while( $tb_member_query->have_posts() ){
+				$tb_member_query->the_post();
 
 				$postmeta = get_post_meta( get_the_ID() );
-				// print_r($postmeta);	
 				ob_start();
-				?>
-					<div class="member_block">
-						<?php if( isset($postmeta['tb_photo']) && !isset($postmeta['hideit_tb_photo']) ) { ?>
-							<img src="<?php echo $postmeta['tb_photo'][0]; ?>" alt="Photo du contact">
-						<?php } ?>
-						<?php if( isset($postmeta['tb_lastname']) || isset($postmeta['tb_firstname']) ) { ?>
-							<h2><?php if(isset($postmeta['tb_lastname']) && !isset($postmeta['hideit_tb_lastname'])){
-								echo $postmeta['tb_lastname'][0];
-							}?>
-							<?php if(isset($postmeta['tb_firstname']) && !isset($postmeta['hideit_tb_firstname'])){
-								echo $postmeta['tb_firstname'][0];
-							} ?></h2>
-						<?php } ?>
-						<?php if( isset($postmeta['tb_job']) && !isset($postmeta['hideit_tb_job']) ) { ?>
-							<h4><?php echo $postmeta['tb_job'][0]; ?></h4>
-						<?php } ?>
-						<?php if( isset($postmeta['tb_email']) && !isset($postmeta['hideit_tb_email'])) { ?>
-							<p><?php echo $postmeta['tb_email'][0]; ?></p>
-						<?php } ?>
-						<?php if( isset($postmeta['tb_facebook']) || isset($postmeta['tb_twitter']) || isset($postmeta['tb_googleplus']) || isset($postmeta['tb_linkedin']) || isset($postmeta['tb_skype']) ) { ?>
-							<?php if( isset($postmeta['tb_facebook']) && !isset($postmeta['hideit_tb_facebook'])) { ?>
-									<p><?php echo $postmeta['tb_facebook'][0]; ?></p>
-							<?php } ?>
-							<?php if( isset($postmeta['tb_twitter']) && !isset($postmeta['hideit_tb_twitter']) ) { ?>
-									<p><?php echo $postmeta['tb_twitter'][0]; ?></p>
-							<?php } ?>
-							<?php if( isset($postmeta['tb_googleplus']) && !isset($postmeta['hideit_tb_googleplus'])) { ?>
-									<p><?php echo $postmeta['tb_googleplus'][0]; ?></p>
-							<?php } ?>
-							<?php if( isset($postmeta['tb_linkedin']) && !isset($postmeta['hideit_tb_linkedin'])) { ?>
-									<p><?php echo $postmeta['tb_linkedin'][0]; ?></p>
-							<?php } ?>
-							<?php if( isset($postmeta['tb_skype']) && !isset($postmeta['hideit_tb_skype'])) { ?>
-									<p><?php echo $postmeta['tb_skype'][0]; ?></p>
-							<?php } ?>
-						<?php } ?>
-						<?php if( isset($postmeta['tb_phone']) && !isset($postmeta['hideit_tb_phone'])) { ?>
-							<p><?php echo $postmeta['tb_phone'][0]; ?></p>
-						<?php } ?>
-						<?php if( isset($postmeta['tb_custom']) && !isset($postmeta['hideit_tb_custom'])) { ?>
-							<p><?php echo $postmeta['tb_custom'][0]; ?></p>
-						<?php } ?>
-					</div>
-				<?php
-				ob_end_flush();
-
-				echo '<br>';
-				echo '<br>';
+				include( $path );
+				$return .= ob_get_contents();
+				ob_end_clean();
 			}
 		}
 
-		wp_reset_query();
+		wp_reset_postdata();
+
+		return $return;
+	}
+
+	public function tb_check_path($tb_shortcode_slug){
+		$user_theme_template = get_bloginfo("stylesheet_directory") . "/plugins/the-board/templates/".$tb_shortcode_slug;
+
+		if( file_exists($user_theme_template."/styles.css") ){
+			// wp_enqueue_style('user-css', $user_theme_template."/styles.css");
+			// wp_deregister_style( $this->plugin_slug . '-plugin-style' );
+		}
+
+		if( file_exists($user_theme_template."/scripts.js") ){
+			// wp_enqueue_script('user-js', $user_theme_template."/scripts.js");
+			// wp_deregister_script( $this->plugin_slug . '-plugin-script' );
+		}
+
+		if( file_exists($user_theme_template."/".$tb_shortcode_slug.".php") )
+			return $path = $user_theme_template."/".$tb_shortcode_slug.".php";
+		else
+			return $path = plugin_dir_path( __FILE__ ) . 'views/'.$tb_shortcode_slug.'.php';
+
+		if( !isset($path) || !file_exists($path))
+			return __('No template found. Sorry.', $this->plugin_slug);
 	}
 
 	/**

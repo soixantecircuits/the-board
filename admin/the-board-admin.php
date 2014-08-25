@@ -85,7 +85,7 @@ class The_Board_Admin {
 		 * http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
 		 */
 		add_action( 'init', array( $this, 'tb_member_posttype_init' ), 0);
-		add_action( 'init', array( $this, 'tb_member_groups_taxonomies_init' ), 1);
+		add_action( 'after_setup_theme', array( $this, 'tb_member_groups_taxonomies_init' ), 1);
 
 		add_action( 'plugins_loaded', array( $this, 'tb_language_call' ), 1);
 
@@ -96,6 +96,10 @@ class The_Board_Admin {
 		// add_action( 'contextual_help', 'member_contextual_help', 10, 3 );
 		add_filter( 'post_updated_messages', array( $this, 'tb_update_message' ) );
 
+		// if( ! class_exists( 'TB_Contact_Form_List_Table' ) )
+			// include_once('tb_list_table.php');
+
+		add_filter( 'manage_member_columns', array( 'TB_Contact_Form_List_Table', 'define_columns' ) );
 	}
 
 	public function tb_language_call() {
@@ -273,23 +277,33 @@ class The_Board_Admin {
 	}
 
 	public function tb_register_sizes() {
+		add_image_size( 'tb_crop-120', 120, 120, true );
 		add_image_size( 'tb_crop-256', 256, 256, true );
 		add_image_size( 'tb_width-120', 120);
 		add_image_size( 'tb_width-640', 640 );
 	}
 
 	public function tb_metaboxes_init() {
+		$query = new WP_Query( 'post_type=wpcf7_contact_form' );
+
 		foreach ($this->tb_fields as $field) {
-			add_meta_box(
-				$field['id'],
-				$field['label'],
-				array( $this, 'tb_show_metabox' ),
-				'member',
-				$field['context'],
-				$field['priority'],
-				$field
-			);
+			if( 'contact' == $field['type'] && !$query->have_posts() ) {
+				wp_reset_query();
+			} else {
+				add_meta_box(
+					$field['id'],
+					$field['label'],
+					array( $this, 'tb_show_metabox' ),
+					'member',
+					$field['context'],
+					$field['priority'],
+					$field
+				);
+
+			}
 		}
+
+		wp_reset_query();
 	}
 
 	public function tb_show_metabox($post,  $metabox ) {
@@ -298,7 +312,6 @@ class The_Board_Admin {
 		$meta_hide = get_post_meta( $post->ID, 'hideit_' . $field['id'], true );
 		?>
 			<input type="hidden" name="<?php echo 'tb_mb_nonce_' . $field['id']; ?>" value="<?php echo wp_create_nonce( basename(__FILE__) ); ?>">
-			<p class="howto"><?php echo $field['desc']; ?></p>
 		<?php
 		switch ( $field['type'] ) {
 			case 'text':
@@ -314,6 +327,11 @@ class The_Board_Admin {
 			case 'email':
 				?>
 					<input type="email" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>">
+				<?php
+				break;
+			case 'contact':
+				?>
+					<input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>">
 				<?php
 				break;
 			case 'tel':
@@ -338,8 +356,9 @@ class The_Board_Admin {
 					<input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>">
 				<?php
 				break;
-		}
-		if($field['type'] != 'checkbox') {
+		} ?>
+		<p class="howto"><?php echo $field['desc']; ?></p>
+		<?php if($field['type'] != 'checkbox') {
 			?>
 				<p>
 					<label class="selectit"><input type="checkbox" name="<?php echo 'hideit_' . $field['id']; ?>" <?php if(!empty($meta_hide)) echo 'checked'; ?>>Hide this information</label>
@@ -355,6 +374,13 @@ class The_Board_Admin {
 			return;
 
 		if( !wp_is_post_revision( $post->ID ) ){
+			if('member' !== $_POST['post_type'])
+				return;
+			if(!current_user_can('edit_page', $post->ID))
+				return;
+			elseif(!current_user_can('edit_post', $post->ID))
+				return;
+
 			$old_title = $_POST['post_title'];
 
 			$new_ln = $_POST['tb_lastname'];
@@ -373,8 +399,6 @@ class The_Board_Admin {
 				} else {
 					$_POST['post_title'] = __('John Doe (name not provided)', $this->plugin_slug);
 				}
-			} elseif ( empty($_POST['post_title']) ) {
-				$_POST['post_title'] = __('John Doe', $this->plugin_slug);
 			}
 			// We need to remove and recall save_post action in order to avoid an infinite loop.
 			// See http://codex.wordpress.org/Function_Reference/wp_update_post for more details
