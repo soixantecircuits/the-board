@@ -351,6 +351,9 @@ class The_Board_Admin {
 	public function tb_metaboxes_save_datas(){
 		global $post;
 
+		if(!isset($post))
+			return;
+
 		if( !wp_is_post_revision( $post->ID ) ){
 			$old_title = $_POST['post_title'];
 
@@ -360,7 +363,7 @@ class The_Board_Admin {
 			$old_ln = get_post_meta( $post->ID, 'tb_lastname', true );
 			$old_fn = get_post_meta( $post->ID, 'tb_firstname', true );
 
-			if( $new_ln != $old_ln || $new_fn != $old_fn ){
+			if( $new_ln != $old_ln || $new_fn != $old_fn || empty($_POST['post_title']) ){
 				if( !empty($new_ln) && !empty($new_fn) ) {
 					$_POST['post_title'] = $new_ln . ' ' . $new_fn;
 				} elseif ( !empty($new_fn) ) {
@@ -371,8 +374,7 @@ class The_Board_Admin {
 					$_POST['post_title'] = __('John Doe (name not provided)', $this->plugin_slug);
 				}
 			} elseif ( empty($_POST['post_title']) ) {
-				$_POST['post_title'] = __('John Doe (name not provided)', $this->plugin_slug);
-				// wp_die($new_fn.' vs. '.$old_fn.'<br>'.$new_ln.' vs. '.$old_ln.'<br>'.$_POST['post_title']);
+				$_POST['post_title'] = __('John Doe', $this->plugin_slug);
 			}
 			// We need to remove and recall save_post action in order to avoid an infinite loop.
 			// See http://codex.wordpress.org/Function_Reference/wp_update_post for more details
@@ -407,14 +409,15 @@ class The_Board_Admin {
 			elseif('' == $new_content && $old_content)
 				delete_post_meta( $post->ID, $field['id'], $old_content );
 
-			$old_hidden = get_post_meta( $post->ID, 'hideit_' . $field['id'], true );
-			$new_hidden = $_POST['hideit_' . $field['id']];
+			if(isset($_POST['hideit_' . $field['id']])){
+				$old_hidden = get_post_meta( $post->ID, 'hideit_' . $field['id'], true );
+				$new_hidden = $_POST['hideit_' . $field['id']];
 
-
-			if(isset($new_hidden) && $new_hidden != '')
-				update_post_meta( $post->ID, 'hideit_' . $field['id'], $new_hidden );
-			elseif($new_hidden == '' && $old_hidden)
-				delete_post_meta( $post->ID, 'hideit_' . $field['id'], $old_hidden );
+				if(isset($new_hidden) && $new_hidden != '')
+					update_post_meta( $post->ID, 'hideit_' . $field['id'], $new_hidden );
+				elseif($new_hidden == '' && $old_hidden)
+					delete_post_meta( $post->ID, 'hideit_' . $field['id'], $old_hidden );
+			}
 		}
 	}
 
