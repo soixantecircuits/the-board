@@ -19,9 +19,6 @@
                             break;
                         }
                     }
-                    // echo '<pre>';
-                    // print_r($attachments);
-                    // echo '</pre>';
                     if( $image_id )
                         echo wp_get_attachment_image( $image_id, 'tb_crop-120' ); ?>
                 </td>

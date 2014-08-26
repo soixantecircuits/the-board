@@ -204,6 +204,14 @@ class The_Board {
 					'type'		=> 'custom',
 					'context'	=> 'normal',
 					'priority'	=> 'low'
+				),
+			array(
+					'label'		=> __('Hierarchy', 'the-board'),
+					'desc'		=> __('0 being top level, how high is the member in his group ?', 'the-board'),
+					'id'		=> $prefix . 'hierarchy',
+					'type'		=> 'text',
+					'context'	=> 'side',
+					'priority'	=> 'default'
 				)
 			);
 	}
@@ -430,7 +438,15 @@ class The_Board {
 	public function tb_get_member_shortcode(){
 		add_shortcode( 'theboard-show-member', array($this, 'tb_get_one_member') );
 		add_shortcode( 'theboard-show-group', array($this, 'tb_get_members_by_group') );
-		// add_shortcode( 'theboard-show-all-members', array($this, 'tb_get_all_members') );
+		add_shortcode( 'theboard-static-page', array($this, 'tb_get_all_members') );
+	}
+
+	public function tb_get_all_members(){
+		ob_start();
+		include('views/static-fond.php');
+		$return .= ob_get_contents();
+		ob_end_clean();
+		return $return;
 	}
 
 	public function tb_get_members_by_group($atts) {
@@ -440,20 +456,16 @@ class The_Board {
 			'group'	=> ''
 		), $atts, 'theboard-show-group' ) );
 
+
 		$path = $this->tb_check_path('group');
 
 		$terms = $this->tb_get_terms();
 		$group_match = $terms[$group];
 
-		if( $group_match )
-			return;
-
-		// foreach ($group_match as $subgroup => $sub) {
-			ob_start();
-			include( $path );
-			$return .= ob_get_contents();
-			ob_end_clean();
-		// }
+		ob_start();
+		include( $path );
+		$return .= ob_get_contents();
+		ob_end_clean();
 
 		return $return;
 	}
