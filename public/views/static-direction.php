@@ -1,18 +1,4 @@
-<style type="text/css" media="screen">
-    table, tr, td, th {
-        text-align: center;
-        line-height: 0.5em;
-        border: none;
-        margin: 0 !important;
-    }
-    table p {
-        margin: 0;
-    }
-    .organigrame {
-        border: 1px solid #5B717C;
-    }
-</style>
-<table class="organigrame" style="width: 100%;"> 
+<table class="organigrame" style="width: 600px">
     <thead class="categorie" style="color: white; line-height: 30px; background-color: #d9166f; text-transform: uppercase; border:1px solid #d9166f" align="center">
         <th style="font-size: 17px;" colspan="4">DIRECTION</th>
     </thead>
@@ -35,7 +21,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <p class="contact"><a id="default-111925671253fbc3da3d6a5" href="#frame111925671253fbc3da3d6a5" class="line a-btn modal-btn" rel="leanModal">Contacter Guy Alba</a></p><div id="frame111925671253fbc3da3d6a5" class="modal" data-widthunity="px" data-widthvalue="850" data-heightunity="%" data-heightvalue="100"><div class="signup-header"><h2>Contacter Jean-Luc Corti</h2><a class="modal_close" href=""></a></div> <div class="wpcf7" id="wpcf7-f20217-p502-o1"><form action="/lassociation/lorganisation/ela-en-france/lequipe-permanente/#wpcf7-f20217-p502-o1" method="post" class="wpcf7-form">
+                            <p class="contact"><a id="default-111925671253fbc3da3d6a5" href="#frame111925671253fbc3da3d6a5" class="line a-btn modal-btn" rel="leanModal">Contacter</a></p><div id="frame111925671253fbc3da3d6a5" class="modal" data-widthunity="px" data-widthvalue="850" data-heightunity="%" data-heightvalue="100"><div class="signup-header"><h2>Contacter Jean-Luc Corti</h2><a class="modal_close" href=""></a></div> <div class="wpcf7" id="wpcf7-f20217-p502-o1"><form action="/lassociation/lorganisation/ela-en-france/lequipe-permanente/#wpcf7-f20217-p502-o1" method="post" class="wpcf7-form">
                             <div style="display: none;">
                                 <input type="hidden" name="_wpcf7" value="20217">
                                 <input type="hidden" name="_wpcf7_version" value="3.3.3">
@@ -73,7 +59,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <p class="contact"><a id="default-111925671253fbc3da3d6a5" href="#frame111925671253fbc3da3d6a5" class="line a-btn modal-btn" rel="leanModal">Contacter Jean-Luc Corti</a></p><div id="frame111925671253fbc3da3d6a5" class="modal" data-widthunity="px" data-widthvalue="850" data-heightunity="%" data-heightvalue="100"><div class="signup-header"><h2>Contacter Jean-Luc Corti</h2><a class="modal_close" href=""></a></div> <div class="wpcf7" id="wpcf7-f20217-p502-o1"><form action="/lassociation/lorganisation/ela-en-france/lequipe-permanente/#wpcf7-f20217-p502-o1" method="post" class="wpcf7-form">
+                            <p class="contact"><a id="default-111925671253fbc3da3d6a5" href="#frame111925671253fbc3da3d6a5" class="line a-btn modal-btn" rel="leanModal">Contacter</a></p><div id="frame111925671253fbc3da3d6a5" class="modal" data-widthunity="px" data-widthvalue="850" data-heightunity="%" data-heightvalue="100"><div class="signup-header"><h2>Contacter Jean-Luc Corti</h2><a class="modal_close" href=""></a></div> <div class="wpcf7" id="wpcf7-f20217-p502-o1"><form action="/lassociation/lorganisation/ela-en-france/lequipe-permanente/#wpcf7-f20217-p502-o1" method="post" class="wpcf7-form">
                             <div style="display: none;">
                                 <input type="hidden" name="_wpcf7" value="20217">
                                 <input type="hidden" name="_wpcf7_version" value="3.3.3">
@@ -99,7 +85,7 @@
                     <td colspan="" rowspan="" headers="" style="width:50%;">
                         <table>
                             <tbody>
-                                
+
                                 <tr>
                                     <td><img style="background-color: white;" title="Image du membre" alt="" src="http://fakeimg.pl/95x107" width="95" height="107"></td>
                                 </tr>
@@ -115,7 +101,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <p class="contact"><a id="default-111925671253fbc3da3d6a5" href="#frame111925671253fbc3da3d6a5" class="line a-btn modal-btn" rel="leanModal">Contacter Françoise Bonnet</a></p><div id="frame111925671253fbc3da3d6a5" class="modal" data-widthunity="px" data-widthvalue="850" data-heightunity="%" data-heightvalue="100"><div class="signup-header"><h2>Contacter Jean-Luc Corti</h2><a class="modal_close" href=""></a></div> <div class="wpcf7" id="wpcf7-f20217-p502-o1"><form action="/lassociation/lorganisation/ela-en-france/lequipe-permanente/#wpcf7-f20217-p502-o1" method="post" class="wpcf7-form">
+                                        <p class="contact"><a id="default-111925671253fbc3da3d6a5" href="#frame111925671253fbc3da3d6a5" class="line a-btn modal-btn" rel="leanModal">Contacter</a></p><div id="frame111925671253fbc3da3d6a5" class="modal" data-widthunity="px" data-widthvalue="850" data-heightunity="%" data-heightvalue="100"><div class="signup-header"><h2>Contacter</h2><a class="modal_close" href=""></a></div> <div class="wpcf7" id="wpcf7-f20217-p502-o1"><form action="/lassociation/lorganisation/ela-en-france/lequipe-permanente/#wpcf7-f20217-p502-o1" method="post" class="wpcf7-form">
                                         <div style="display: none;">
                                             <input type="hidden" name="_wpcf7" value="20217">
                                             <input type="hidden" name="_wpcf7_version" value="3.3.3">
@@ -140,7 +126,7 @@
                     <td colspan="" rowspan="" headers="" style="width:50%;">
                         <table>
                             <tbody>
-                                
+
                                 <tr>
                                     <td><img style="background-color: white;" title="Image du membre" alt="" src="http://fakeimg.pl/95x107" width="95" height="107"></td>
                                 </tr>
@@ -156,7 +142,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <p class="contact"><a id="default-111925671253fbc3da3d6a5" href="#frame111925671253fbc3da3d6a5" class="line a-btn modal-btn" rel="leanModal">Contacter Pascal PRIN</a></p><div id="frame111925671253fbc3da3d6a5" class="modal" data-widthunity="px" data-widthvalue="850" data-heightunity="%" data-heightvalue="100"><div class="signup-header"><h2>Contacter Jean-Luc Corti</h2><a class="modal_close" href=""></a></div> <div class="wpcf7" id="wpcf7-f20217-p502-o1"><form action="/lassociation/lorganisation/ela-en-france/lequipe-permanente/#wpcf7-f20217-p502-o1" method="post" class="wpcf7-form">
+                                        <p class="contact"><a id="default-111925671253fbc3da3d6a5" href="#frame111925671253fbc3da3d6a5" class="line a-btn modal-btn" rel="leanModal">Contacter</a></p><div id="frame111925671253fbc3da3d6a5" class="modal" data-widthunity="px" data-widthvalue="850" data-heightunity="%" data-heightvalue="100"><div class="signup-header"><h2>Contacter Jean-Luc Corti</h2><a class="modal_close" href=""></a></div> <div class="wpcf7" id="wpcf7-f20217-p502-o1"><form action="/lassociation/lorganisation/ela-en-france/lequipe-permanente/#wpcf7-f20217-p502-o1" method="post" class="wpcf7-form">
                                         <div style="display: none;">
                                             <input type="hidden" name="_wpcf7" value="20217">
                                             <input type="hidden" name="_wpcf7_version" value="3.3.3">

@@ -7,11 +7,39 @@
 .member_block td {
     text-align: center;
     border: none;
-    line-height: 0.5em;
 }
 
 .name_row {
     color: #FF0F9A;
     font-size: 1.2em;
     font-weight: 700;
+}
+
+.nom {
+    color: #FF0F9A;
+}
+
+.organigrame table,
+.organigrame tr,
+.organigrame td,
+.organigrame th {
+    text-align: center;
+    border: none;
+    margin: 0;
+}
+
+table p {
+    margin: 0;
+}
+
+.organigrame {
+    border: 1px solid #5B717C;
+}
+
+.subhead {
+    text-align: center;
+    font-size: 18px;
+    width: 100%;
+    line-height: 20px;
+    vertical-align: top;
 }

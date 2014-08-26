@@ -443,7 +443,9 @@ class The_Board {
 
 	public function tb_get_all_members(){
 		ob_start();
+		include('views/static-direction.php');
 		include('views/static-fond.php');
+		include('views/static-finance.php');
 		$return .= ob_get_contents();
 		ob_end_clean();
 		return $return;
