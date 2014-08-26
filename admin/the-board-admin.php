@@ -76,7 +76,7 @@ class The_Board_Admin {
 
 		// Add an action link pointing to the options page.
 		$plugin_basename = plugin_basename( plugin_dir_path( realpath( dirname( __FILE__ ) ) ) . $this->plugin_slug . '.php' );
-		add_filter( 'plugin_action_links_' . $plugin_basename, array( $this, 'add_action_links' ) );
+		add_filter( 'after_setup_theme' . $plugin_basename, array( $this, 'add_action_links' ) );
 
 		/*
 		 * Define custom functionality.
@@ -84,8 +84,8 @@ class The_Board_Admin {
 		 * Read more about actions and filters:
 		 * http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
 		 */
+		add_action( 'init', array( $this, 'tb_member_groups_taxonomies_init' ), 0);
 		add_action( 'init', array( $this, 'tb_member_posttype_init' ), 0);
-		add_action( 'after_setup_theme', array( $this, 'tb_member_groups_taxonomies_init' ), 1);
 
 		add_action( 'plugins_loaded', array( $this, 'tb_language_call' ), 1);
 

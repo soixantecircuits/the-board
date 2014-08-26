@@ -74,7 +74,7 @@ class The_Board {
 		/* Define custom functionality.
 		 * Refer To http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
 		 */
-		add_action( 'init', array( $this, 'tb_get_member_shortcode' ) );
+		// add_action( 'wp', array( $this, 'tb_get_member_shortcode' ), 1 );
 		add_filter( '@theboard', array( $this, 'filter_method_name' ) );
 
 	}
@@ -410,98 +410,13 @@ class The_Board {
 	 * @since    1.0.0
 	 */
 
-	public function tb_get_terms(){
-		return $terms = array(
-			'Direction' => array(),
-			'Pôle levée de fonds et communication' => array(
-				'Mécénat / Partenariat / Personnalités',
-				'Legs, donations et assurances-vies',
-				'Communication',
-				'événements'
-			),
-			'Pôle Administratif et financier / Accompagnement des familles / recherche' => array(
-				'Administratif et financier',
-				'Accompagnement des familles',
-				'Recherche'
-			)
-		);
+	// public function tb_get_member_shortcode(){
+	// 	add_shortcode( 'theboard-show-member', array($this, 'tb_get_one_member') );
+	// 	add_shortcode( 'theboard-show-group', array($this, 'tb_get_members_by_group') );
+	// 	add_shortcode( 'theboard-static-page', array($this, 'tb_get_all_members') );
+	// }
 
-		// Need to take a serious look at this. Probably a hook problem
-		// $terms = get_terms("groups", array( 'hide_empty' => 0 ));
-		// if ( !empty( $terms ) && !is_wp_error( $terms ) ){
-		// 	foreach ( $terms as $term ) {
-		// 		$return .= $term->name;
-		// 	}
-		// }
-	}
-
-	public function tb_get_member_shortcode(){
-		add_shortcode( 'theboard-show-member', array($this, 'tb_get_one_member') );
-		add_shortcode( 'theboard-show-group', array($this, 'tb_get_members_by_group') );
-		add_shortcode( 'theboard-static-page', array($this, 'tb_get_all_members') );
-	}
-
-	public function tb_get_all_members(){
-		ob_start();
-		include('views/static-direction.php');
-		include('views/static-fond.php');
-		include('views/static-finance.php');
-		$return .= ob_get_contents();
-		ob_end_clean();
-		return $return;
-	}
-
-	public function tb_get_members_by_group($atts) {
-		$return = null;
-
-		extract(shortcode_atts( array(
-			'group'	=> ''
-		), $atts, 'theboard-show-group' ) );
-
-
-		$path = $this->tb_check_path('group');
-
-		$terms = $this->tb_get_terms();
-		$group_match = $terms[$group];
-
-		ob_start();
-		include( $path );
-		$return .= ob_get_contents();
-		ob_end_clean();
-
-		return $return;
-	}
-
-	public function tb_get_one_member($atts) {
-		$return = null;
-
-		extract(shortcode_atts( array(
-			'id'	=> 0
-		), $atts, 'theboard-show-member' ) );
-
-		$path = $this->tb_check_path('member');
-
-		$tb_member_query = null;
-		$tb_member_query = new WP_Query( 'post_type=member&p='.$id );
-
-		if( $tb_member_query->have_posts() ) {
-			while( $tb_member_query->have_posts() ){
-				$tb_member_query->the_post();
-
-				$postmeta = get_post_meta( get_the_ID() );
-				ob_start();
-				include( $path );
-				$return .= ob_get_contents();
-				ob_end_clean();
-			}
-		}
-
-		wp_reset_postdata();
-
-		return $return;
-	}
-
-	public function tb_check_path($tb_shortcode_slug){
+	static function tb_check_path($tb_shortcode_slug){
 		$user_theme_template = get_bloginfo("stylesheet_directory") . "/plugins/the-board/templates/".$tb_shortcode_slug;
 
 		if( file_exists($user_theme_template."/styles.css") ){

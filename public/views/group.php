@@ -15,7 +15,6 @@
     </thead>
     <tbody>
         <?php
-            // print_r($group_match);
             if( sizeof($group_match) > 1 ){
                 foreach ($group as $subgroup) {
                     ?>
@@ -31,17 +30,17 @@
     </tbody>
 </table>
 
-<?php 
+<?php
     function display_members_hierarchically($group){
         $members = array();
         $member_query = new WP_Query( array(
             'post_type' => 'member',
-            // 'tax_query' => array(
-                // array(
-                    // 'taxonomy' => 'groups',
-                    // 'terms'    => $group
-            //     )
-            // )
+            'tax_query' => array(
+                array(
+                    'taxonomy' => 'groups',
+                    'terms'    => $group
+                )
+            )
         ) );
         // print_r($member_query);
         if( $member_query->have_posts() ){
