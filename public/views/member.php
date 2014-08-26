@@ -38,6 +38,9 @@
                             if(isset($postmeta['tb_firstname']) && !isset($postmeta['hideit_tb_firstname'])){
                                 $fullname .= $postmeta['tb_firstname'][0];
                             }
+                            if( isset($postmeta['tb_invert']) && isset($postmeta['tb_lastname']) && isset($postmeta['tb_firstname']) ){
+                                $fullname = $postmeta['tb_firstname'][0] . ' ' . $postmeta['tb_lastname'][0];
+                            }
                         } ?>
                         <?php echo $fullname; ?>
                 </td>
@@ -55,7 +58,7 @@
                 <?php if( isset($postmeta['tb_contact']) && !isset($postmeta['hideit_tb_contact'])) { ?>
                     <tr>
                         <td colspan="5" rowspan="" headers="">
-                            <?php echo do_shortcode('[modal name="'.__('Contacter', $this->plugin_slug).' '.$fullname.'" class="line" title="'.__('Contacter', $this->plugin_slug).' '.$fullname.'" width="320px"][contact-form-7 id="'.$postmeta['tb_contact'][0].'"][/modal]'); ?>
+                            <?php echo do_shortcode('[modal name="'.__('Contacter', 'the-board').' '.$fullname.'" class="line" title="'.__('Contacter', 'the-board').' '.$fullname.'" width="320px"][contact-form-7 id="'.$postmeta['tb_contact'][0].'"][/modal]'); ?>
                         </td>
                     </tr>
                 <?php } ?>

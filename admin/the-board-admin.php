@@ -321,7 +321,7 @@ class The_Board_Admin {
 				break;
 			case 'checkbox':
 				?>
-					<label><input type="checkbox" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>">Invert</label>
+					<label><input type="checkbox" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" <?php if(!empty($meta_value)) echo 'checked'; ?> >Invert</label>
 				<?php
 				break;
 			case 'email':
