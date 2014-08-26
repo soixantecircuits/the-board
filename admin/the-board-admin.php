@@ -84,8 +84,7 @@ class The_Board_Admin {
 		 * Read more about actions and filters:
 		 * http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
 		 */
-		add_action( 'init', array( $this, 'tb_member_groups_taxonomies_init' ), 0);
-		add_action( 'init', array( $this, 'tb_member_posttype_init' ), 0);
+
 
 		add_action( 'plugins_loaded', array( $this, 'tb_language_call' ), 1);
 
@@ -247,34 +246,7 @@ class The_Board_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function tb_member_posttype_init() {
-		// @theboard: Create the member post type
-		$labels = array(
-			'name'               => __( 'Members', $this->plugin_slug),
-			'singular_name'      => __( 'Member', $this->plugin_slug),
-			'add_new'            => __( 'Add New', $this->plugin_slug),
-			'add_new_item'       => __( 'Add New Member', $this->plugin_slug),
-			'edit_item'          => __( 'Edit Member', $this->plugin_slug),
-			'new_item'           => __( 'New Member', $this->plugin_slug),
-			'all_items'          => __( 'All Members', $this->plugin_slug),
-			'view_item'          => __( 'View Member', $this->plugin_slug),
-			'search_items'       => __( 'Search Members', $this->plugin_slug),
-			'not_found'          => __( 'No members found', $this->plugin_slug),
-			'not_found_in_trash' => __( 'No members found in the Trash', $this->plugin_slug),
-			'parent_item_colon'  => '',
-			'menu_name'          => 'Members'
-		);
-		$args = array(
-			'labels'        => $labels,
-			'description'   => __('Structure members', $this->plugin_slug),
-			'public'        => true,
-			'supports'      => false,
-			'has_archive'   => true,
-			'taxonomy'		=> 'groups',
-			'menu_icon'		=> 'dashicons-groups'
-		);
-		register_post_type( 'member', $args );
-	}
+
 
 	public function tb_register_sizes() {
 		add_image_size( 'tb_crop-120', 120, 120, true );
@@ -445,32 +417,7 @@ class The_Board_Admin {
 		}
 	}
 
-	public function tb_member_groups_taxonomies_init() {
-		$labels = array(
-			'name'              => _x( 'Groups', 'taxonomy general name', $this->plugin_slug),
-			'singular_name'     => _x( 'Group', 'taxonomy singular name', $this->plugin_slug),
-			'search_items'      => __( 'Search Groups', $this->plugin_slug),
-			'all_items'         => __( 'All Groups', $this->plugin_slug),
-			'parent_item'       => __( 'Parent Group', $this->plugin_slug),
-			'parent_item_colon' => __( 'Parent Group:', $this->plugin_slug),
-			'edit_item'         => __( 'Edit Group', $this->plugin_slug),
-			'update_item'       => __( 'Update Group', $this->plugin_slug),
-			'add_new_item'      => __( 'Add New Group', $this->plugin_slug),
-			'new_item_name'     => __( 'New Group Name', $this->plugin_slug),
-			'menu_name'         => __( 'Groups', $this->plugin_slug)
-		);
 
-		$args = array(
-			'hierarchical'      => true,
-			'labels'            => $labels,
-			'show_ui'           => true,
-			'show_admin_column' => true,
-			'query_var'         => true,
-			'rewrite'           => array( 'slug' => 'group' )
-		);
-
-		register_taxonomy( 'groups', array( 'member' ), $args );
-	}
 
 	public function tb_update_message(){
 		// See http://wp-bytes.com/function/2013/02/changing-post-updated-messages/

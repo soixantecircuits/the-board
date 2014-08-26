@@ -14,7 +14,7 @@ function tb_get_members_by_group($atts) {
     $path = The_Board::tb_check_path('group');
 
     // $terms = The_Board::tb_get_terms('groups');
-    $terms = get_terms( 'groups' );
+    $terms = get_terms( 'groups', array('hide_empty'    => false ));
     print_r($terms);
     // $group_match = $terms[$group];
     // gérer si le group match pas
