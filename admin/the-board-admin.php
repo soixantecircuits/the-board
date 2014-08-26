@@ -153,6 +153,7 @@ class The_Board_Admin {
 		$screen = get_current_screen();
 		if ( $screen->id == 'member' ) {
 			wp_enqueue_style( $this->plugin_slug .'-admin-styles', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), The_Board::VERSION );
+			wp_enqueue_style( $this->plugin_slug .'-chosen-styles', plugins_url( 'assets/css/chosen.min.css', __FILE__ ), array(), The_Board::VERSION );
 		}
 
 	}
@@ -176,7 +177,8 @@ class The_Board_Admin {
 
 		$screen = get_current_screen();
 		if ( $screen->id == 'member' ) {
-			wp_enqueue_script( $this->plugin_slug . '-admin-script', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), The_Board::VERSION );
+			wp_enqueue_script( $this->plugin_slug . '-chosen', plugins_url( 'assets/js/chosen.jquery.min.js', __FILE__ ), array( 'jquery' ), The_Board::VERSION );
+			wp_enqueue_script( $this->plugin_slug . '-admin-script', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery',$this->plugin_slug . '-chosen' ), The_Board::VERSION );
 		}
 
 	}
@@ -299,7 +301,31 @@ class The_Board_Admin {
 			case 'email':
 				?>
 					<input type="email" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>">
-				<?php
+					<?php
+					// WP_Query arguments
+					$args = array (
+					    'post_type'              => 'wpcf7_contact_form',
+					    'post_status'            => 'publish',
+					);
+					// The Query
+					$query = new WP_Query( $args );
+					?>
+						<?php 
+						if ( $query->have_posts() ) {?>
+							<select name="<?php echo $field['id']; ?>-wp-contact-form" id="<?php echo $field['id'] . '_input_list'; ?>" class="chosen-select">
+							<?php
+							while ( $query->have_posts() ) {
+								$query->the_post();
+								echo '<option value="'.get_the_ID().'">' . get_the_title() . '</option>';
+							}
+							wp_reset_postdata();
+							?>
+						Contact Form
+					</select>
+					<?php
+						} else {
+							_e('You should use Contact form 7', 'the-board');
+						}
 				break;
 			case 'contact':
 				?>

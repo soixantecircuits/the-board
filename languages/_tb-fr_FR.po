@@ -1,0 +1,242 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: The Board\n"
+"POT-Creation-Date: 2014-08-22 11:32+0100\n"
+"PO-Revision-Date: 2014-08-22 11:32+0100\n"
+"Last-Translator: \n"
+"Language-Team: Soixante circuits <contact@soixantecircuits.fr>\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.8\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_x\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../admin/the-board-admin.php:71
+msgid "Lastname"
+msgstr "Nom de famille\t"
+
+#: ../admin/the-board-admin.php:72
+msgid "Lastname of the member."
+msgstr "Nom de famille du membre."
+
+#: ../admin/the-board-admin.php:79
+msgid "Firstname"
+msgstr "Prénom"
+
+#: ../admin/the-board-admin.php:80
+msgid "Firstname of the member."
+msgstr "Prénom du membre"
+
+#: ../admin/the-board-admin.php:87
+msgid "Job"
+msgstr ""
+
+#: ../admin/the-board-admin.php:88
+msgid "Job occupied by the member."
+msgstr ""
+
+#: ../admin/the-board-admin.php:95
+msgid "Invert in glossary"
+msgstr ""
+
+#: ../admin/the-board-admin.php:96
+msgid ""
+"If this is checked, member will be sorted by its firstname. \"John Smith\" "
+"would be find at \"John\" (J) instead of \"Smith\" (S)."
+msgstr ""
+
+#: ../admin/the-board-admin.php:103
+msgid "Email"
+msgstr ""
+
+#: ../admin/the-board-admin.php:104
+msgid "Email of the member."
+msgstr ""
+
+#: ../admin/the-board-admin.php:111
+msgid "Facebook"
+msgstr ""
+
+#: ../admin/the-board-admin.php:112
+msgid "URL for the Facebook account of the member."
+msgstr ""
+
+#: ../admin/the-board-admin.php:119
+msgid "Twitter"
+msgstr ""
+
+#: ../admin/the-board-admin.php:120
+msgid "URL for the Twitter account of the member."
+msgstr ""
+
+#: ../admin/the-board-admin.php:127
+msgid "Google+"
+msgstr ""
+
+#: ../admin/the-board-admin.php:128
+msgid "URL for the Google+ account of the member."
+msgstr ""
+
+#: ../admin/the-board-admin.php:135
+msgid "LinkedIn"
+msgstr ""
+
+#: ../admin/the-board-admin.php:136
+msgid "URL for the LinkedIn account of the member."
+msgstr ""
+
+#: ../admin/the-board-admin.php:143
+msgid "Skype"
+msgstr ""
+
+#: ../admin/the-board-admin.php:144
+msgid "URL for the Skype account of the member."
+msgstr ""
+
+#: ../admin/the-board-admin.php:151
+msgid "Phone"
+msgstr ""
+
+#: ../admin/the-board-admin.php:152
+msgid "Phone number of the member."
+msgstr ""
+
+#: ../admin/the-board-admin.php:159
+msgid "Photo"
+msgstr ""
+
+#: ../admin/the-board-admin.php:160
+msgid "A nice picture of the member."
+msgstr ""
+
+#: ../admin/the-board-admin.php:167
+msgid "Custom field"
+msgstr ""
+
+#: ../admin/the-board-admin.php:168
+msgid "Whatever you think will be useful to know about the member."
+msgstr ""
+
+#: ../admin/the-board-admin.php:298 ../admin/the-board-admin.php:299
+msgid "The Board"
+msgstr ""
+
+#: ../admin/the-board-admin.php:325
+msgid "Settings"
+msgstr ""
+
+#: ../admin/the-board-admin.php:344 ../admin/views/contextual-help.php:13
+msgid "Members"
+msgstr ""
+
+#: ../admin/the-board-admin.php:345
+msgid "Member"
+msgstr ""
+
+#: ../admin/the-board-admin.php:346
+msgid "Add New"
+msgstr ""
+
+#: ../admin/the-board-admin.php:347
+msgid "Add New Member"
+msgstr ""
+
+#: ../admin/the-board-admin.php:348
+msgid "Edit Member"
+msgstr ""
+
+#: ../admin/the-board-admin.php:349
+msgid "New Member"
+msgstr ""
+
+#: ../admin/the-board-admin.php:350
+msgid "All Members"
+msgstr ""
+
+#: ../admin/the-board-admin.php:351
+msgid "View Member"
+msgstr ""
+
+#: ../admin/the-board-admin.php:352
+msgid "Search Members"
+msgstr ""
+
+#: ../admin/the-board-admin.php:353
+msgid "No members found"
+msgstr ""
+
+#: ../admin/the-board-admin.php:354
+msgid "No members found in the Trash"
+msgstr ""
+
+#: ../admin/the-board-admin.php:360
+msgid "Structure members"
+msgstr ""
+
+#: ../admin/the-board-admin.php:416
+msgid "Extesions accepted are: .jpg, .jpeg, .png and .gif"
+msgstr ""
+
+#: ../admin/the-board-admin.php:476
+msgid "Groups"
+msgstr ""
+
+#: ../admin/the-board-admin.php:477 ../admin/the-board-admin.php:486
+msgid "Group"
+msgstr ""
+
+#: ../admin/the-board-admin.php:478
+msgid "Search Groups"
+msgstr ""
+
+#: ../admin/the-board-admin.php:479
+msgid "All Groups"
+msgstr ""
+
+#: ../admin/the-board-admin.php:480
+msgid "Parent Group"
+msgstr ""
+
+#: ../admin/the-board-admin.php:481
+msgid "Parent Group:"
+msgstr ""
+
+#: ../admin/the-board-admin.php:482
+msgid "Edit Group"
+msgstr ""
+
+#: ../admin/the-board-admin.php:483
+msgid "Update Group"
+msgstr ""
+
+#: ../admin/the-board-admin.php:484
+msgid "Add New Group"
+msgstr ""
+
+#: ../admin/the-board-admin.php:485
+msgid "New Group Name"
+msgstr ""
+
+#: ../admin/views/contextual-help-edit.php:12
+msgid "Editing Members"
+msgstr ""
+
+#: ../admin/views/contextual-help-edit.php:13
+msgid "This page allows you to view/modify member details."
+msgstr ""
+
+#: ../admin/views/contextual-help.php:14
+msgid "Members show the details of the people involved."
+msgstr ""
+
+#: ../admin/views/contextual-help.php:15
+msgid ""
+"You can view/edit the details of each member by clicking on its name, or you "
+"can perform bulk actions using the dropdown menu and selecting multiple "
+"items."
+msgstr ""

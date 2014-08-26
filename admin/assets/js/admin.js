@@ -2,7 +2,7 @@
 	"use strict";
 
 	$(function () {
-
+        $(".chosen-select").chosen();
 		// Wordpress native image uploader call
         var image_uploader;
         $('#tb_image_uploader_button').click(function (e){
