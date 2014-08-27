@@ -28,8 +28,11 @@ function member_columns( $column, $post_id ) {
     case 'first_name' :
       echo get_post_meta( $post_id , 'tb_firstname' , true );
       break;
+    case 'shortcode' :
+      echo "[theboard-show-member id=".$post_id."]";
+      break;
     case 'group' :
-      echo get_post_meta( $post_id , 'tb_group' , true );
+      echo get_groups( $post_id);
       break;;
   }
 }
@@ -42,6 +45,18 @@ function save_title($title_to_ignore) {
     $my_post_title = $_POST['tb_lastname'];
   }
   return $my_post_title;
+}
+
+function get_groups($id){
+  $groups = wp_get_post_terms( $id, 'groups' );
+  $groups_string = '';
+  foreach ($groups as $group){
+    if ($groups_string!='')
+      $groups_string.=', '.$group->name;
+    else
+      $groups_string.=$group->name;
+  }
+  return $groups_string;
 }
 
 
