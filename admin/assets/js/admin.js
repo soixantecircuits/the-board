@@ -1,42 +1,59 @@
 (function ( $ ) {
-	"use strict";
+  "use strict";
 
-	$(function () {
-        $('.profile-photo-holder').hover(function(){
-          $('.upload-profile-photo').fadeIn();
-        }, function(){
-          $('.upload-profile-photo').fadeOut().css('display', 'none');
+  $(function () {
+    $('.profile-photo-holder').hover(function(){
+      $('.upload-profile-photo').fadeIn();
+    }, function(){
+      $('.upload-profile-photo').fadeOut().css('display', 'none');
+    });
+    $(".chosen-select").chosen();
+    // Wordpress native image uploader call
+    var image_uploader;
+    $('.tb_image_uploader_button').click(function (e){
+      e.preventDefault();
+
+      // Is it already instantiated ?
+      if(image_uploader){
+        image_uploader.open();
+        return;
+      }
+
+      image_uploader = wp.media.frames.file_frame = wp.media({
+        title: 'Choose Image',
+        button: {
+          text: 'Choose Image'
+        },
+        multiple: false
+      });
+      image_uploader.on('select', function(){
+        $('.profile-photo-holder').css('display', 'block');
+        $('.button.tb_image_uploader_button.to-hide').hide();
+        var attachment = image_uploader.state().get('selection').first().toJSON();
+        var defaultWidth = 150;
+        var url ='',
+          buttonWidth = 0;
+
+        if (attachment.sizes.thumbnail == undefined){
+          url = attachment.sizes.full.url;
+        }
+        else{
+          buttonWidth = defaultWidth;
+          url = attachment.sizes.thumbnail.url;
+        }
+        $('#tb_photo_input').attr('value',url);
+        $('#profile_photo').attr('src', url);
+        if (buttonWidth == 0)
+          buttonWidth = $('#profile_photo').width();
+
+        $('.upload-profile-photo').css({
+          'width':buttonWidth,
+          'margin-left': (defaultWidth -  $('#profile_photo').width()) / 2
         });
-        $(".chosen-select").chosen();
-		// Wordpress native image uploader call
-        var image_uploader;
-        $('.tb_image_uploader_button').click(function (e){
-            e.preventDefault();
+      });
+      image_uploader.open();
+    });
 
-            // Is it already instantiated ?
-            if(image_uploader){
-                image_uploader.open();
-                return;
-            }
-
-            image_uploader = wp.media.frames.file_frame = wp.media({
-                title: 'Choose Image',
-                button: {
-                    text: 'Choose Image'
-                },
-                multiple: false
-            });
-            image_uploader.on('select', function(){
-                $('.profile-photo-holder').css('display', 'block');
-                $('.button.tb_image_uploader_button.to-hide').hide();
-                var attachment = image_uploader.state().get('selection').first().toJSON();
-                var url = attachment.sizes.thumbnail.url;
-                $('#tb_photo_input').attr('value',url);
-                $('#profile_photo').attr('src', url);
-            });
-            image_uploader.open();
-        });
-
-	});
+  });
 
 }(jQuery));
