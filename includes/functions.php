@@ -55,6 +55,6 @@ function tb_member_groups_taxonomies_init() {
       'query_var'         => true,
       'rewrite'           => array( 'slug' => 'group' )
   );
-
   register_taxonomy( 'groups', array( 'member' ), $args );
 }
+

@@ -35,7 +35,7 @@ function member_columns( $column, $post_id ) {
       break;
     case 'group' :
       echo get_groups( $post_id);
-      break;;
+      break;
   }
 }
 add_action( 'manage_posts_custom_column' , 'member_columns', 10, 2 );
@@ -45,6 +45,9 @@ add_filter('title_save_pre', 'save_title');
 function save_title($title_to_ignore) {
   if ($_POST['post_type']=='member'){
     $my_post_title = $_POST['tb_lastname'];
+  }
+  else{
+    $my_post_title = $_POST['post_title'];
   }
   return $my_post_title;
 }

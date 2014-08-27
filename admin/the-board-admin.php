@@ -46,7 +46,9 @@ class The_Board_Admin {
 	 * @since     1.0.0
 	 */
 	private function __construct() {
-
+    global $wpdb;
+    $init_query = $wpdb->query("SHOW COLUMNS FROM $wpdb->terms LIKE 'term_order'");
+    if ($init_query == 0) {	$wpdb->query("ALTER TABLE $wpdb->terms ADD `term_order` INT( 4 ) NULL DEFAULT '0'"); }
 		/*
 		 * @theboard :
 		 *
@@ -92,7 +94,18 @@ class The_Board_Admin {
 		add_action( 'init', array( $this, 'tb_register_sizes'), 0, 1 );
 		// add_action( 'contextual_help', 'member_contextual_help', 10, 3 );
 		add_filter( 'post_updated_messages', array( $this, 'tb_update_message' ) );
+
+    add_action('edit_form_top', array( $this, 'shortcode_on_the_top'));
 	}
+
+
+  public function shortcode_on_the_top( $post )
+  {
+    echo '<div id="member-shortcode-holder">';
+    echo '<h3 id="member-shortcode-title"><span>'. __('Use this shortcode to display this member', $this->plugin_slug).'</span></h3>';
+    echo "<input type='text' id='member-shortcode'"." value='[theboard-show-member id=".$post->ID."]' readonly>";
+    echo '</div>';
+  }
 
 	public function tb_language_call() {
 		load_plugin_textdomain($this->plugin_slug, false, basename(plugin_dir_path( dirname( __FILE__ ) ) ) . '/languages/');
@@ -268,13 +281,21 @@ class The_Board_Admin {
 		$field = $metabox['args'];
 		$meta_value = get_post_meta( $post->ID, $field['id'], true );
 		$meta_hide = get_post_meta( $post->ID, 'hideit_' . $field['id'], true );
+
+		if('tb_hierarchy' == $field['id'] && !is_numeric($meta_value) )
+			$meta_value = 0;
 		?>
 			<input type="hidden" name="<?php echo 'tb_mb_nonce_' . $field['id']; ?>" value="<?php echo wp_create_nonce( basename(__FILE__) ); ?>">
 		<?php
 		switch ( $field['type'] ) {
 			case 'text':
 				?>
-					<input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>">
+					<input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>" >
+				<?php
+				break;
+			case 'number':
+				?>
+					<input type="number" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>" <?php if('tb_hierarchy' == $field['id']) echo 'required'; ?> min="0" >
 				<?php
 				break;
 			case 'checkbox':
@@ -428,7 +449,7 @@ class The_Board_Admin {
 			$old_content = get_post_meta( $post->ID, $field['id'], true );
 			$new_content = $_POST[$field['id']];
 
-			if($new_content && $new_content != $old_content)
+			if( isset($new_content) && $new_content != $old_content)
 				update_post_meta( $post->ID, $field['id'], $new_content );
 			elseif('' == $new_content && $old_content)
 				delete_post_meta( $post->ID, $field['id'], $old_content );

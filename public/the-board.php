@@ -207,7 +207,7 @@ class The_Board {
 					'label'		=> __('Hierarchy', 'the-board'),
 					'desc'		=> __('0 being top level, how high is the member in his group ?', 'the-board'),
 					'id'		=> $prefix . 'hierarchy',
-					'type'		=> 'text',
+					'type'		=> 'number',
 					'context'	=> 'side',
 					'priority'	=> 'default'
 				)
