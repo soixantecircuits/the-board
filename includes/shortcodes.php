@@ -39,7 +39,6 @@ function tb_get_one_member($atts) {
     if( $tb_member_query->have_posts() ) {
         while( $tb_member_query->have_posts() ){
             $tb_member_query->the_post();
-
             $postmeta = get_post_meta( get_the_ID() );
             ob_start();
             include( $path );
@@ -47,9 +46,7 @@ function tb_get_one_member($atts) {
             ob_end_clean();
         }
     }
-
     wp_reset_postdata();
-
     return $return;
 }
 
