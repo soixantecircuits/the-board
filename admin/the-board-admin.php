@@ -268,13 +268,16 @@ class The_Board_Admin {
 		$field = $metabox['args'];
 		$meta_value = get_post_meta( $post->ID, $field['id'], true );
 		$meta_hide = get_post_meta( $post->ID, 'hideit_' . $field['id'], true );
+
+		if('tb_hierarchy' == $field['id'] && !is_numeric($meta_value) )
+			$meta_value = 0;
 		?>
 			<input type="hidden" name="<?php echo 'tb_mb_nonce_' . $field['id']; ?>" value="<?php echo wp_create_nonce( basename(__FILE__) ); ?>">
 		<?php
 		switch ( $field['type'] ) {
 			case 'text':
 				?>
-					<input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>">
+					<input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>" <?php if('tb_hierarchy' == $field['id']) echo 'required'; ?> >
 				<?php
 				break;
 			case 'checkbox':

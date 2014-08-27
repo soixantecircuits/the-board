@@ -73,6 +73,7 @@ require_once plugin_dir_path( __FILE__ ) . '/includes/groups_order.php';
  */
 if ( is_admin()  ) {
   require_once plugin_dir_path( __FILE__ ) . 'admin/tb_list.php';
+  require_once plugin_dir_path( __FILE__ ) . 'admin/tb_list_groups.php';
   require_once( plugin_dir_path( __FILE__ ) . 'admin/the-board-admin.php' );
 	add_action( 'plugins_loaded', array( 'The_Board_Admin', 'get_instance' ) );
 
