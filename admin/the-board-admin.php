@@ -331,7 +331,7 @@ class The_Board_Admin {
           <input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>" hidden>
           <div class="profile-photo-holder">
             <img id="profile_photo" src="<?php echo $meta_value; ?>" alt="Profile photo"/>
-            <input type="button" value="<?php echo __('Upload Image', $this->plugin_slug); ?>" class="button upload-profile-photo" id="tb_image_uploader_button">
+            <input type="button" value="<?php echo __('Upload Image', $this->plugin_slug); ?>" class="button upload-profile-photo tb_image_uploader_button">
           </div>
         <?php
         }
