@@ -84,8 +84,6 @@ class The_Board_Admin {
 		 * Read more about actions and filters:
 		 * http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
 		 */
-
-
 		add_action( 'plugins_loaded', array( $this, 'tb_language_call' ), 1);
 
 		add_action( 'add_meta_boxes', array( $this, 'tb_metaboxes_init') );
@@ -94,11 +92,6 @@ class The_Board_Admin {
 		add_action( 'init', array( $this, 'tb_register_sizes'), 0, 1 );
 		// add_action( 'contextual_help', 'member_contextual_help', 10, 3 );
 		add_filter( 'post_updated_messages', array( $this, 'tb_update_message' ) );
-
-		// if( ! class_exists( 'TB_Contact_Form_List_Table' ) )
-			// include_once('tb_list_table.php');
-
-		add_filter( 'manage_member_columns', array( 'TB_Contact_Form_List_Table', 'define_columns' ) );
 	}
 
 	public function tb_language_call() {
@@ -258,26 +251,17 @@ class The_Board_Admin {
 	}
 
 	public function tb_metaboxes_init() {
-		$query = new WP_Query( 'post_type=wpcf7_contact_form' );
-
 		foreach ($this->tb_fields as $field) {
-			if( 'contact' == $field['type'] && !$query->have_posts() ) {
-				wp_reset_query();
-			} else {
-				add_meta_box(
-					$field['id'],
-					$field['label'],
-					array( $this, 'tb_show_metabox' ),
-					'member',
-					$field['context'],
-					$field['priority'],
-					$field
-				);
-
-			}
+			add_meta_box(
+				$field['id'],
+				$field['label'],
+				array( $this, 'tb_show_metabox' ),
+				'member',
+				$field['context'],
+				$field['priority'],
+				$field
+			);
 		}
-
-		wp_reset_query();
 	}
 
 	public function tb_show_metabox($post,  $metabox ) {
@@ -301,22 +285,26 @@ class The_Board_Admin {
 			case 'email':
 				?>
 					<input type="email" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>">
-					<?php
-					// WP_Query arguments
+				<?php
+				break;
+			case 'contact':
 					$args = array (
 					    'post_type'              => 'wpcf7_contact_form',
 					    'post_status'            => 'publish',
 					);
-					// The Query
 					$query = new WP_Query( $args );
+					$isempty = empty($meta_value) ? 'selected' : null;
 					?>
-						<?php 
+						<?php
 						if ( $query->have_posts() ) {?>
-							<select name="<?php echo $field['id']; ?>-wp-contact-form" id="<?php echo $field['id'] . '_input_list'; ?>" class="chosen-select">
+							<select name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input_list'; ?>" class="chosen-select">
+								<option disabled <?php echo $isempty; ?> ><?php _e('Chose a contact in the list below', 'the-board'); ?></option>
+								<option value=""><?php _e('None', 'the-board'); ?></option>
 							<?php
 							while ( $query->have_posts() ) {
 								$query->the_post();
-								echo '<option value="'.get_the_ID().'">' . get_the_title() . '</option>';
+								$selected = get_the_ID() == $meta_value ? 'selected' : null;
+								echo '<option value="'.get_the_ID().'" '.$selected.' >' . get_the_title() . '</option>';
 							}
 							wp_reset_postdata();
 							?>
@@ -324,12 +312,11 @@ class The_Board_Admin {
 					</select>
 					<?php
 						} else {
-							_e('You should use Contact form 7', 'the-board');
+							$url = 'http://wordpress.org/plugins/contact-form-7/';?>
+							<p class="howto"><?php printf(__('We recommend you use Contact form 7. Never heard of it ? Check it out <a href="%s" target="%s">here</a>', $this->plugin_slug), esc_url( $url ), '_blank'); ?></p>
+							<?php return;
 						}
-				break;
-			case 'contact':
 				?>
-					<input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>">
 				<?php
 				break;
 			case 'tel':
