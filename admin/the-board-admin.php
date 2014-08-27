@@ -290,23 +290,23 @@ class The_Board_Admin {
 			case 'contact':
 					$args = array (
 					    'post_type'              => 'wpcf7_contact_form',
-					    'post_status'            => 'publish',
+							'posts_per_page'         => '-1',
+							'order'									 => 'desc'
 					);
-					$query = new WP_Query( $args );
+					$contactForms = get_posts( $args );
 					$isempty = empty($meta_value) ? 'selected' : null;
 					?>
 						<?php
-						if ( $query->have_posts() ) {?>
+						if ( count($contactForms) > 0 ) {?>
 							<select name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input_list'; ?>" class="chosen-select">
 								<option disabled <?php echo $isempty; ?> ><?php _e('Chose a contact in the list below', 'the-board'); ?></option>
 								<option value=""><?php _e('None', 'the-board'); ?></option>
 							<?php
-							while ( $query->have_posts() ) {
-								$query->the_post();
-								$selected = get_the_ID() == $meta_value ? 'selected' : null;
-								echo '<option value="'.get_the_ID().'" '.$selected.' >' . get_the_title() . '</option>';
-							}
-							wp_reset_postdata();
+								foreach ( $contactForms as $contactForm ) : setup_postdata( $contactForm ); 
+									$selected = $contactForm->ID == $meta_value ? 'selected' : null;
+									echo '<option value="'.$contactForm->ID.'" '.$selected.' >' . $contactForm->post_title . '</option>';
+								endforeach; 
+								wp_reset_postdata();
 							?>
 						Contact Form
 					</select>

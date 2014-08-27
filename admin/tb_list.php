@@ -1,6 +1,4 @@
 <?php
-
-
 function set_member_columns($columns) {
 
   return array(
@@ -20,7 +18,11 @@ add_filter('manage_member_posts_columns' , 'set_member_columns');
 function member_columns( $column, $post_id ) {
   switch ( $column ) {
     case 'photo' :
-      echo '<img width="100" height="100" src="'. get_post_meta( $post_id , 'tb_photo' , true ) . '">';
+      $image = get_post_meta( $post_id , 'tb_photo' , true );
+      if( empty( $image ) ) {
+        $image = plugins_url( '../assets/replace.jpg' , __FILE__ );
+      } 
+      echo '<img width="72" height="72" src="'. $image . '">';
       break;
     case 'title' :
       echo get_post_meta( $post_id , 'tb_lastname' , true );
@@ -58,5 +60,3 @@ function get_groups($id){
   }
   return $groups_string;
 }
-
-
