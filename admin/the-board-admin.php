@@ -290,7 +290,12 @@ class The_Board_Admin {
 		switch ( $field['type'] ) {
 			case 'text':
 				?>
-					<input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>" <?php if('tb_hierarchy' == $field['id']) echo 'required'; ?> >
+					<input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>" >
+				<?php
+				break;
+			case 'number':
+				?>
+					<input type="number" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>" <?php if('tb_hierarchy' == $field['id']) echo 'required'; ?> min="0" >
 				<?php
 				break;
 			case 'checkbox':
