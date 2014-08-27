@@ -53,6 +53,7 @@ register_deactivation_hook( __FILE__, array( 'The_Board', 'deactivate' ) );
 add_action( 'plugins_loaded', array( 'The_Board', 'get_instance' ) );
 require_once plugin_dir_path( __FILE__ ) . '/includes/functions.php';
 require_once plugin_dir_path( __FILE__ ) . '/includes/shortcodes.php';
+require_once plugin_dir_path( __FILE__ ) . '/includes/groups_order.php';
 
 /*----------------------------------------------------------------------------*
  * Dashboard and Administrative Functionality
