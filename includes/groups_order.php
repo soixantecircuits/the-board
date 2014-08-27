@@ -5,21 +5,25 @@ function group_order_page() {
 }
 
 function group_order_css() {
-  $pos_page = $_GET['page'];
-  $pos_args = 'order-groups';
-  $pos = strpos($pos_page,$pos_args);
-  if ( $pos === false ) {} else {
-    wp_enqueue_style('order-page', plugins_url('css/order-page.css', __FILE__), 'screen');
+  if(isset($_GET['page'])){
+    $pos_page = $_GET['page'];
+    $pos_args = 'order-groups';
+    $pos = strpos($pos_page, $pos_args);
+    if ( $pos === false ) {} else {
+      wp_enqueue_style('order-page', plugins_url('css/order-page.css', __FILE__), 'screen');
+    }
   }
 }
 function group_order_js_libs() {
-  $pos_page = $_GET['page'];
-  $pos_args = 'order-groups';
-  $pos = strpos($pos_page,$pos_args);
-  if ( $pos === false ) {} else {
-    wp_enqueue_script('jquery');
-    wp_enqueue_script('jquery-ui-core');
-    wp_enqueue_script('jquery-ui-sortable');
+  if(isset($_GET['page'])){
+    $pos_page = $_GET['page'];
+    $pos_args = 'order-groups';
+    $pos = strpos($pos_page,$pos_args);
+    if ( $pos === false ) {} else {
+      wp_enqueue_script('jquery');
+      wp_enqueue_script('jquery-ui-core');
+      wp_enqueue_script('jquery-ui-sortable');
+    }
   }
 }
 
@@ -175,4 +179,3 @@ function group_order_apply_order_filter($orderby, $args) {
   }
 }
 add_filter('get_terms_orderby', 'group_order_apply_order_filter', 10, 2);
-

@@ -20,7 +20,7 @@ function member_columns( $column, $post_id ) {
     case 'photo' :
       $image = get_post_meta( $post_id , 'tb_photo' , true );
       if( empty( $image ) ) {
-        $image = plugins_url( '../assets/replace.jpg' , __FILE__ );
+        $image = plugins_url( '/assets/replace.jpg' , dirname(__FILE__) );
       } 
       echo '<img width="72" height="72" src="'. $image . '">';
       break;

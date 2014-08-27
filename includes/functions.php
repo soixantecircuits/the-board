@@ -27,7 +27,7 @@ function tb_member_posttype_init() {
       'supports'      => false,
       'has_archive'   => true,
       'taxonomy'		=> 'groups',
-      'menu_icon'		=> 'dashicons-groups'
+      'menu_icon'		=> plugins_url( '/assets/icon_the-board.png' , dirname(__FILE__) )
   );
   register_post_type( 'member', $args );
 }
