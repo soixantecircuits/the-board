@@ -449,7 +449,7 @@ class The_Board_Admin {
 			$old_content = get_post_meta( $post->ID, $field['id'], true );
 			$new_content = $_POST[$field['id']];
 
-			if($new_content >= 0 && $new_content != $old_content)
+			if( isset($new_content) && $new_content != $old_content)
 				update_post_meta( $post->ID, $field['id'], $new_content );
 			elseif('' == $new_content && $old_content)
 				delete_post_meta( $post->ID, $field['id'], $old_content );
