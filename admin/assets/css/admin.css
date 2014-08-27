@@ -1,1 +1,30 @@
 /* This stylesheet is used to style the admin option form of the plugin. */
+.profile-photo-holder{
+  width: 150px;
+  height: 150px;
+}
+
+.profile-photo-holder:hover{
+  background-color: #808080;
+}
+
+.button.upload-profile-photo{
+  margin: -155px auto 0;
+  z-index: 5;
+  position: relative;
+  /*background: transparent!important;*/
+  color: white;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  display: none;
+  cursor: pointer;
+  background-color:rgba(0,0,0,0.5);
+  height: 150px;
+  width: 150px;
+}
+
+.button.upload-profile-photo:hover{
+  color: white;
+  background-color:rgba(0,0,0,0.5);
+}
