@@ -19,6 +19,9 @@ add_filter('manage_member_posts_columns' , 'set_member_columns');
 
 function member_columns( $column, $post_id ) {
   switch ( $column ) {
+    case 'photo' :
+      echo '<img width="100" height="100" src="'. get_post_meta( $post_id , 'tb_photo' , true ) . '">';
+      break;
     case 'title' :
       echo get_post_meta( $post_id , 'tb_lastname' , true );
       break;
