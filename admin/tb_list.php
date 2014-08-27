@@ -33,7 +33,7 @@ function member_columns( $column, $post_id ) {
       break;
     case 'group' :
       echo get_groups( $post_id);
-      break;;
+      break;
   }
 }
 add_action( 'manage_posts_custom_column' , 'member_columns', 10, 2 );
