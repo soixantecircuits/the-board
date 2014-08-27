@@ -175,9 +175,4 @@ function group_order_apply_order_filter($orderby, $args) {
   }
 }
 add_filter('get_terms_orderby', 'group_order_apply_order_filter', 10, 2);
-function group_order_init() {
-  global $wpdb;
-  $init_query = $wpdb->query("SHOW COLUMNS FROM $wpdb->terms LIKE 'term_order'");
-  if ($init_query == 0) {	$wpdb->query("ALTER TABLE $wpdb->terms ADD `term_order` INT( 4 ) NULL DEFAULT '0'"); }
-}
-register_activation_hook(__FILE__, 'group_order_init');
+

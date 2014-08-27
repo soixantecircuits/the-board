@@ -46,7 +46,9 @@ class The_Board_Admin {
 	 * @since     1.0.0
 	 */
 	private function __construct() {
-
+    global $wpdb;
+    $init_query = $wpdb->query("SHOW COLUMNS FROM $wpdb->terms LIKE 'term_order'");
+    if ($init_query == 0) {	$wpdb->query("ALTER TABLE $wpdb->terms ADD `term_order` INT( 4 ) NULL DEFAULT '0'"); }
 		/*
 		 * @theboard :
 		 *
