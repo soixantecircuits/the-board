@@ -92,7 +92,18 @@ class The_Board_Admin {
 		add_action( 'init', array( $this, 'tb_register_sizes'), 0, 1 );
 		// add_action( 'contextual_help', 'member_contextual_help', 10, 3 );
 		add_filter( 'post_updated_messages', array( $this, 'tb_update_message' ) );
+
+    add_action('edit_form_top', array( $this, 'shortcode_on_the_top'));
 	}
+
+
+  public function shortcode_on_the_top( $post )
+  {
+    echo '<div id="member-shortcode-holder">';
+    echo '<h3 id="member-shortcode-title"><span>'. __('Use this shortcode to display this member', $this->plugin_slug).'</span></h3>';
+    echo "<input type='text' id='member-shortcode'"." value='[theboard-show-member id=".$post->ID."]' readonly>";
+    echo '</div>';
+  }
 
 	public function tb_language_call() {
 		load_plugin_textdomain($this->plugin_slug, false, basename(plugin_dir_path( dirname( __FILE__ ) ) ) . '/languages/');

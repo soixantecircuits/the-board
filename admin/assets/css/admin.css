@@ -34,3 +34,22 @@
   margin: 0 auto;
   display: block;
 }
+
+#member-shortcode{
+  width: 100%;
+  background: #f3f3f3;
+  color: #3f3f3f;
+}
+
+#member-shortcode-title{
+  font-size: 14px;
+  padding: 8px 2px;
+  margin: 0;
+  line-height: 1.4;
+}
+
+#member-shortcode-holder{
+  height: 80px;
+  background: white;
+  padding: 8px;
+}
