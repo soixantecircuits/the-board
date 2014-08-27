@@ -17,7 +17,7 @@ function groups_columns( $return, $column, $group_id ) {
     $group = get_term( $group_id, 'groups' );
   switch ( $column ) {
     case 'shortcode' :
-      $return = "<input type=\"text\" value=\"[theboard-show-group group='$group->name']\">";
+      $return = "<input type=\"text\" value=\"[theboard-show-group group=$group->term_id]\">";
       break;
   }
   return $return;
