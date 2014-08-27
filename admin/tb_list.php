@@ -44,6 +44,9 @@ function save_title($title_to_ignore) {
   if ($_POST['post_type']=='member'){
     $my_post_title = $_POST['tb_lastname'];
   }
+  else{
+    $my_post_title = $_POST['post_title'];
+  }
   return $my_post_title;
 }
 
