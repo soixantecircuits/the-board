@@ -3,9 +3,17 @@
 
   $(function () {
     $('.profile-photo-holder').hover(function(){
-      $('.upload-profile-photo').fadeIn();
+      $('.upload-profile-photo').animate({
+        'opacity': 1
+      }, 500, function() {
+        // Animation complete.
+      });
     }, function(){
-      $('.upload-profile-photo').fadeOut().css('display', 'none');
+      $('.upload-profile-photo').animate({
+        'opacity': 0
+      }, 500, function() {
+        // Animation complete.
+      });
     });
     $(".chosen-select").chosen();
     // Wordpress native image uploader call

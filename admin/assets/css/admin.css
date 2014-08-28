@@ -17,11 +17,12 @@
   border-radius: 0;
   border: none;
   box-shadow: none;
-  display: none;
   cursor: pointer;
   background:rgba(0,0,0,0.5);
   height: 150px;
   width: 150px;
+  opacity: 0;
+  display: block;
 }
 
 .button.upload-profile-photo:hover{
