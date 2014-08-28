@@ -120,10 +120,18 @@ class The_Board {
             'priority'	=> 'default',
             'fields' => array(
                 array(
+                    'label'		=> __('Photo', 'the-board'),
+                    'desc'		=> __('A nice picture of the member.', 'the-board'),
+                    'id'		=> $prefix . 'photo',
+                    'type'		=> 'image',
+                    'context'	=> 'normal',
+                    'priority'	=> 'default'
+                ),
+                array(
                     'label'		=> __('Lastname', 'the-board'),
                     'desc'		=> __('Lastname of the member.', 'the-board'),
                     'id'		=> $prefix . 'lastname',
-                    'type'		=> 'text',
+                    'type'		=> 'lastname',
                     'context'	=> 'normal',
                     'priority'	=> 'default'
                 ),
@@ -132,14 +140,6 @@ class The_Board {
                     'desc'		=> __('Firstname of the member.', 'the-board'),
                     'id'		=> $prefix . 'firstname',
                     'type'		=> 'text',
-                    'context'	=> 'normal',
-                    'priority'	=> 'default'
-                ),
-                array(
-                    'label'		=> __('Photo', 'the-board'),
-                    'desc'		=> __('A nice picture of the member.', 'the-board'),
-                    'id'		=> $prefix . 'photo',
-                    'type'		=> 'image',
                     'context'	=> 'normal',
                     'priority'	=> 'default'
                 ),
@@ -164,7 +164,7 @@ class The_Board {
         array(
             'label'		=> __('Contact information', 'the-board'),
             'id'		=> $prefix . 'contact-informaiton',
-            'context'	=> 'normal',
+            'context'	=> 'advance',
             'priority'	=> 'default',
             'fields' => array(
                 array(
@@ -189,7 +189,7 @@ class The_Board {
                     'id'		=> $prefix . 'phone',
                     'type'		=> 'tel',
                     'context'	=> 'normal',
-                    'priority'	=> 'low'
+                    'priority'	=> 'default'
                 ),
                 array(
                     'label'		=> __('Facebook', 'the-board'),
@@ -197,7 +197,7 @@ class The_Board {
                     'id'		=> $prefix . 'facebook',
                     'type'		=> 'text',
                     'context'	=> 'normal',
-                    'priority'	=> 'low'
+                    'priority'	=> 'default'
                 ),
                 array(
                     'label'		=> __('Twitter', 'the-board'),
@@ -205,7 +205,7 @@ class The_Board {
                     'id'		=> $prefix . 'twitter',
                     'type'		=> 'text',
                     'context'	=> 'normal',
-                    'priority'	=> 'low'
+                    'priority'	=> 'default'
                 ),
                 array(
                     'label'		=> __('Google+', 'the-board'),
@@ -213,7 +213,7 @@ class The_Board {
                     'id'		=> $prefix . 'googleplus',
                     'type'		=> 'text',
                     'context'	=> 'normal',
-                    'priority'	=> 'low'
+                    'priority'	=> 'default'
                 ),
                 array(
                     'label'		=> __('LinkedIn', 'the-board'),
@@ -221,7 +221,7 @@ class The_Board {
                     'id'		=> $prefix . 'linkedIn',
                     'type'		=> 'text',
                     'context'	=> 'normal',
-                    'priority'	=> 'low'
+                    'priority'	=> 'default'
                 ),
                 array(
                     'label'		=> __('Skype', 'the-board'),
@@ -229,7 +229,7 @@ class The_Board {
                     'id'		=> $prefix . 'skype',
                     'type'		=> 'text',
                     'context'	=> 'normal',
-                    'priority'	=> 'low'
+                    'priority'	=> 'default'
                 ),
             )
         )
