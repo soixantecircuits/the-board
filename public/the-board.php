@@ -88,131 +88,153 @@ class The_Board {
 		return $this->plugin_slug;
 	}
 
-	public function get_fields() {
+  public function get_fields() {
+    $prefix = 'tb_';
+    return array(
+        array(
+            'label'		=> __('Job', 'the-board'),
+            'desc'		=> __('Job occupied by the member.', 'the-board'),
+            'id'		=> $prefix . 'job',
+            'type'		=> 'text',
+            'context'	=> 'side',
+            'priority'	=> 'high'
+        ),
+        array(
+            'label'		=> __('Hierarchy', 'the-board'),
+            'desc'		=> __('0 being top level, how high is the member in his group ?', 'the-board'),
+            'id'		=> $prefix . 'hierarchy',
+            'type'		=> 'number',
+            'context'	=> 'side',
+            'priority'	=> 'high'
+        )
+    );
+  }
+
+	public function get_fields_groups() {
 		$prefix = 'tb_';
-		return array(
-			array(
-					'label'		=> __('Lastname', 'the-board'),
-					'desc'		=> __('Lastname of the member.', 'the-board'),
-					'id'		=> $prefix . 'lastname',
-					'type'		=> 'text',
-					'context'	=> 'normal',
-					'priority'	=> 'default'
-				),
-			array(
-					'label'		=> __('Firstname', 'the-board'),
-					'desc'		=> __('Firstname of the member.', 'the-board'),
-					'id'		=> $prefix . 'firstname',
-					'type'		=> 'text',
-					'context'	=> 'normal',
-					'priority'	=> 'default'
-				),
-			array(
-					'label'		=> __('Job', 'the-board'),
-					'desc'		=> __('Job occupied by the member.', 'the-board'),
-					'id'		=> $prefix . 'job',
-					'type'		=> 'text',
-					'context'	=> 'normal',
-					'priority'	=> 'default'
-				),
-			array(
-					'label'		=> __('Invert in glossary', 'the-board'),
-					'desc'		=> __('If this is checked, member will be sorted by its firstname. "John Smith" would be find at "John" (J) instead of "Smith" (S).', 'the-board'),
-					'id'		=> $prefix . 'invert',
-					'type'		=> 'checkbox',
-					'context'	=> 'side',
-					'priority'	=> 'low'
-				),
-			array(
-					'label'		=> __('Email', 'the-board'),
-					'desc'		=> __('Email of the member.', 'the-board'),
-					'id'		=> $prefix . 'email',
-					'type'		=> 'email',
-					'context'	=> 'normal',
-					'priority'	=> 'default'
-				),
-			array(
-					'label'		=> __('Contact form', 'the-board'),
-					'desc'		=> __('Contact form of the member. Put the ID provided by Contact Form 7.', 'the-board'),
-					'id'		=> $prefix . 'contact',
-					'type'		=> 'contact',
-					'context'	=> 'normal',
-					'priority'	=> 'default'
-				),
-			array(
-					'label'		=> __('Facebook', 'the-board'),
-					'desc'		=> __('URL for the Facebook account of the member.', 'the-board'),
-					'id'		=> $prefix . 'facebook',
-					'type'		=> 'text',
-					'context'	=> 'normal',
-					'priority'	=> 'low'
-				),
-			array(
-					'label'		=> __('Twitter', 'the-board'),
-					'desc'		=> __('URL for the Twitter account of the member.', 'the-board'),
-					'id'		=> $prefix . 'twitter',
-					'type'		=> 'text',
-					'context'	=> 'normal',
-					'priority'	=> 'low'
-				),
-			array(
-					'label'		=> __('Google+', 'the-board'),
-					'desc'		=> __('URL for the Google+ account of the member.', 'the-board'),
-					'id'		=> $prefix . 'googleplus',
-					'type'		=> 'text',
-					'context'	=> 'normal',
-					'priority'	=> 'low'
-				),
-			array(
-					'label'		=> __('LinkedIn', 'the-board'),
-					'desc'		=> __('URL for the LinkedIn account of the member.', 'the-board'),
-					'id'		=> $prefix . 'linkedIn',
-					'type'		=> 'text',
-					'context'	=> 'normal',
-					'priority'	=> 'low'
-				),
-			array(
-					'label'		=> __('Skype', 'the-board'),
-					'desc'		=> __('URL for the Skype account of the member.', 'the-board'),
-					'id'		=> $prefix . 'skype',
-					'type'		=> 'text',
-					'context'	=> 'normal',
-					'priority'	=> 'low'
-				),
-			array(
-					'label'		=> __('Phone', 'the-board'),
-					'desc'		=> __('Phone number of the member.', 'the-board'),
-					'id'		=> $prefix . 'phone',
-					'type'		=> 'tel',
-					'context'	=> 'normal',
-					'priority'	=> 'low'
-				),
-			array(
-					'label'		=> __('Photo', 'the-board'),
-					'desc'		=> __('A nice picture of the member.', 'the-board'),
-					'id'		=> $prefix . 'photo',
-					'type'		=> 'image',
-					'context'	=> 'normal',
-					'priority'	=> 'default'
-				),
-			array(
-					'label'		=> __('Custom field', 'the-board'),
-					'desc'		=> __('Whatever you think will be useful to know about the member.', 'the-board'),
-					'id'		=> $prefix . 'custom',
-					'type'		=> 'custom',
-					'context'	=> 'normal',
-					'priority'	=> 'low'
-				),
-			array(
-					'label'		=> __('Hierarchy', 'the-board'),
-					'desc'		=> __('0 being top level, how high is the member in his group ?', 'the-board'),
-					'id'		=> $prefix . 'hierarchy',
-					'type'		=> 'number',
-					'context'	=> 'side',
-					'priority'	=> 'default'
-				)
-			);
-	}
+    return array(
+        array(
+            'label'		=> __('Basic Information', 'the-board'),
+            'id'		=> $prefix . 'basic-informaiton',
+            'context'	=> 'normal',
+            'priority'	=> 'default',
+            'fields' => array(
+                array(
+                    'label'		=> __('Lastname', 'the-board'),
+                    'desc'		=> __('Lastname of the member.', 'the-board'),
+                    'id'		=> $prefix . 'lastname',
+                    'type'		=> 'text',
+                    'context'	=> 'normal',
+                    'priority'	=> 'default'
+                ),
+                array(
+                    'label'		=> __('Firstname', 'the-board'),
+                    'desc'		=> __('Firstname of the member.', 'the-board'),
+                    'id'		=> $prefix . 'firstname',
+                    'type'		=> 'text',
+                    'context'	=> 'normal',
+                    'priority'	=> 'default'
+                ),
+                array(
+                    'label'		=> __('Photo', 'the-board'),
+                    'desc'		=> __('A nice picture of the member.', 'the-board'),
+                    'id'		=> $prefix . 'photo',
+                    'type'		=> 'image',
+                    'context'	=> 'normal',
+                    'priority'	=> 'default'
+                ),
+                array(
+                    'label'		=> __('Invert in glossary', 'the-board'),
+                    'desc'		=> __('If this is checked, member will be sorted by its firstname. "John Smith" would be find at "John" (J) instead of "Smith" (S).', 'the-board'),
+                    'id'		=> $prefix . 'invert',
+                    'type'		=> 'checkbox',
+                    'context'	=> 'normal',
+                    'priority'	=> 'low'
+                ),
+                array(
+                    'label'		=> __('Custom field', 'the-board'),
+                    'desc'		=> __('Whatever you think will be useful to know about the member.', 'the-board'),
+                    'id'		=> $prefix . 'custom',
+                    'type'		=> 'custom',
+                    'context'	=> 'side',
+                    'priority'	=> 'low'
+                )
+            )
+        ),
+        array(
+            'label'		=> __('Contact information', 'the-board'),
+            'id'		=> $prefix . 'contact-informaiton',
+            'context'	=> 'normal',
+            'priority'	=> 'default',
+            'fields' => array(
+                array(
+                    'label'		=> __('Email', 'the-board'),
+                    'desc'		=> __('Email of the member.', 'the-board'),
+                    'id'		=> $prefix . 'email',
+                    'type'		=> 'email',
+                    'context'	=> 'normal',
+                    'priority'	=> 'default'
+                ),
+                array(
+                    'label'		=> __('Contact form', 'the-board'),
+                    'desc'		=> __('Contact form of the member. Put the ID provided by Contact Form 7.', 'the-board'),
+                    'id'		=> $prefix . 'contact',
+                    'type'		=> 'contact',
+                    'context'	=> 'normal',
+                    'priority'	=> 'default'
+                ),
+                array(
+                    'label'		=> __('Phone', 'the-board'),
+                    'desc'		=> __('Phone number of the member.', 'the-board'),
+                    'id'		=> $prefix . 'phone',
+                    'type'		=> 'tel',
+                    'context'	=> 'normal',
+                    'priority'	=> 'low'
+                ),
+                array(
+                    'label'		=> __('Facebook', 'the-board'),
+                    'desc'		=> __('URL for the Facebook account of the member.', 'the-board'),
+                    'id'		=> $prefix . 'facebook',
+                    'type'		=> 'text',
+                    'context'	=> 'normal',
+                    'priority'	=> 'low'
+                ),
+                array(
+                    'label'		=> __('Twitter', 'the-board'),
+                    'desc'		=> __('URL for the Twitter account of the member.', 'the-board'),
+                    'id'		=> $prefix . 'twitter',
+                    'type'		=> 'text',
+                    'context'	=> 'normal',
+                    'priority'	=> 'low'
+                ),
+                array(
+                    'label'		=> __('Google+', 'the-board'),
+                    'desc'		=> __('URL for the Google+ account of the member.', 'the-board'),
+                    'id'		=> $prefix . 'googleplus',
+                    'type'		=> 'text',
+                    'context'	=> 'normal',
+                    'priority'	=> 'low'
+                ),
+                array(
+                    'label'		=> __('LinkedIn', 'the-board'),
+                    'desc'		=> __('URL for the LinkedIn account of the member.', 'the-board'),
+                    'id'		=> $prefix . 'linkedIn',
+                    'type'		=> 'text',
+                    'context'	=> 'normal',
+                    'priority'	=> 'low'
+                ),
+                array(
+                    'label'		=> __('Skype', 'the-board'),
+                    'desc'		=> __('URL for the Skype account of the member.', 'the-board'),
+                    'id'		=> $prefix . 'skype',
+                    'type'		=> 'text',
+                    'context'	=> 'normal',
+                    'priority'	=> 'low'
+                ),
+            )
+        )
+    );
+  }
 
 	/**
 	 * Return an instance of this class.

@@ -67,8 +67,8 @@ class The_Board_Admin {
 		$plugin = The_Board::get_instance();
 		$this->plugin_slug = $plugin->get_plugin_slug();
 
-		$this->tb_fields = $plugin->get_fields();
-
+		$this->tb_fields_groups = $plugin->get_fields_groups();
+    $this->tb_fields = $plugin->get_fields();
 		// Load admin style sheet and JavaScript.
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
@@ -264,128 +264,152 @@ class The_Board_Admin {
 	}
 
 	public function tb_metaboxes_init() {
-		foreach ($this->tb_fields as $field) {
-			add_meta_box(
-				$field['id'],
-				$field['label'],
-				array( $this, 'tb_show_metabox' ),
-				'member',
-				$field['context'],
-				$field['priority'],
-				$field
-			);
-		}
+		foreach ($this->tb_fields_groups as $field_group) {
+      add_meta_box(
+          $field_group['id'],
+          $field_group['label'],
+          array( $this, 'tb_show_metabox' ),
+          'member',
+          $field_group['context'],
+          $field_group['priority'],
+          $field_group
+      );
+    }
+    foreach ($this->tb_fields as $field) {
+      add_meta_box(
+          $field['id'],
+          $field['label'],
+          array( $this, 'tb_show_metabox' ),
+          'member',
+          $field['context'],
+          $field['priority'],
+          $field
+      );
+    }
 	}
 
 	public function tb_show_metabox($post,  $metabox ) {
-		$field = $metabox['args'];
-		$meta_value = get_post_meta( $post->ID, $field['id'], true );
-		$meta_hide = get_post_meta( $post->ID, 'hideit_' . $field['id'], true );
+    if (isset($metabox['args']['fields'])){
+      $fields = $metabox['args']['fields'];
+    }
+    else{
+      $fields = array($metabox['args']);
+    }
 
-		if('tb_hierarchy' == $field['id'] && !is_numeric($meta_value) )
-			$meta_value = 0;
-		?>
-			<input type="hidden" name="<?php echo 'tb_mb_nonce_' . $field['id']; ?>" value="<?php echo wp_create_nonce( basename(__FILE__) ); ?>">
-		<?php
-		switch ( $field['type'] ) {
-			case 'text':
-				?>
-					<input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>" >
-				<?php
-				break;
-			case 'number':
-				?>
-					<input type="number" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>" <?php if('tb_hierarchy' == $field['id']) echo 'required'; ?> min="0" >
-				<?php
-				break;
-			case 'checkbox':
-				?>
-					<label><input type="checkbox" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" <?php if(!empty($meta_value)) echo 'checked'; ?> >Invert</label>
-				<?php
-				break;
-			case 'email':
-				?>
-					<input type="email" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>">
-				<?php
-				break;
-			case 'contact':
-					$args = array (
-					    'post_type'              => 'wpcf7_contact_form',
-							'posts_per_page'         => '-1',
-							'order'									 => 'desc'
-					);
-					$contactForms = get_posts( $args );
-					$isempty = empty($meta_value) ? 'selected' : null;
-					?>
-						<?php
-						if ( count($contactForms) > 0 ) {?>
-							<select name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input_list'; ?>" class="chosen-select">
-								<option disabled <?php echo $isempty; ?> ><?php _e('Chose a contact in the list below', 'the-board'); ?></option>
-								<option value=""><?php _e('None', 'the-board'); ?></option>
-							<?php
-								foreach ( $contactForms as $contactForm ) : setup_postdata( $contactForm ); 
-									$selected = $contactForm->ID == $meta_value ? 'selected' : null;
-									echo '<option value="'.$contactForm->ID.'" '.$selected.' >' . $contactForm->post_title . '</option>';
-								endforeach; 
-								wp_reset_postdata();
-							?>
-						Contact Form
-					</select>
-					<?php
-						} else {
-							$url = 'http://wordpress.org/plugins/contact-form-7/';?>
-							<p class="howto"><?php printf(__('We recommend you use Contact form 7. Never heard of it ? Check it out <a href="%s" target="%s">here</a>', $this->plugin_slug), esc_url( $url ), '_blank'); ?></p>
-							<?php return;
-						}
-				?>
-				<?php
-				break;
-			case 'tel':
-				?>
-					<input type="tel" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>">
-				<?php
-				break;
-			case 'image':
-				wp_enqueue_media();
-        if ($meta_value!=''){
-				?>
-          <input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>" hidden>
-          <div class="profile-photo-holder">
-            <img id="profile_photo" src="<?php echo $meta_value; ?>" alt="Profile photo"/>
-            <input type="button" value="<?php echo __('Upload Image', $this->plugin_slug); ?>" class="button upload-profile-photo tb_image_uploader_button">
-          </div>
-        <?php
-        }
-        else{
+    foreach ($fields as $field){
+      $meta_value = get_post_meta( $post->ID, $field['id'], true );
+      $meta_hide = get_post_meta( $post->ID, 'hideit_' . $field['id'], true );
+
+      if('tb_hierarchy' == $field['id'] && !is_numeric($meta_value) )
+        $meta_value = 0;
+      ?>
+
+      <h4><?php echo $field['label'];?></h4>
+      <input type="hidden" name="<?php echo 'tb_mb_nonce_' . $field['id']; ?>" value="<?php echo wp_create_nonce( basename(__FILE__) ); ?>">
+      <?php
+      switch ( $field['type'] ) {
+        case 'text':
           ?>
-          <input type="button" value="<?php echo __('Upload Image', $this->plugin_slug); ?>" class="button tb_image_uploader_button to-hide">
-          <input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>" hidden>
-          <div class="profile-photo-holder" style="display: none">
-            <img id="profile_photo" src="<?php echo $meta_value; ?>" alt="Profile photo"/>
-            <input type="button" value="<?php echo __('Upload Image', $this->plugin_slug); ?>" class="button upload-profile-photo tb_image_uploader_button">
-          </div>
-        <?php
-        }
-				break;
-			case 'custom':
-				?>
-					<input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>">
-				<?php
-				break;
-			default:
-				?>
-					<input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>">
-				<?php
-				break;
-		} ?>
-		<p class="howto"><?php echo $field['desc']; ?></p>
-		<?php if($field['type'] != 'checkbox') {
-			?>
-				<p>
-					<label class="selectit"><input type="checkbox" name="<?php echo 'hideit_' . $field['id']; ?>" <?php if(!empty($meta_hide)) echo 'checked'; ?>>Hide this information</label>
-				</p>
-			<?php
-		}
+          <input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>" >
+          <?php
+          break;
+        case 'number':
+          ?>
+          <input type="number" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>" <?php if('tb_hierarchy' == $field['id']) echo 'required'; ?> min="0" >
+          <?php
+          break;
+        case 'checkbox':
+          ?>
+          <label><input type="checkbox" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" <?php if(!empty($meta_value)) echo 'checked'; ?> >Invert</label>
+          <?php
+          break;
+        case 'email':
+          ?>
+          <input type="email" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>">
+          <?php
+          break;
+        case 'contact':
+          $args = array (
+              'post_type'              => 'wpcf7_contact_form',
+              'posts_per_page'         => '-1',
+              'order'									 => 'desc'
+          );
+          $contactForms = get_posts( $args );
+          $isempty = empty($meta_value) ? 'selected' : null;
+          ?>
+          <?php
+          if ( count($contactForms) > 0 ) {?>
+            <select name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input_list'; ?>" class="chosen-select">
+              <option disabled <?php echo $isempty; ?> ><?php _e('Chose a contact in the list below', 'the-board'); ?></option>
+              <option value=""><?php _e('None', 'the-board'); ?></option>
+              <?php
+              foreach ( $contactForms as $contactForm ) : setup_postdata( $contactForm );
+                $selected = $contactForm->ID == $meta_value ? 'selected' : null;
+                echo '<option value="'.$contactForm->ID.'" '.$selected.' >' . $contactForm->post_title . '</option>';
+              endforeach;
+              wp_reset_postdata();
+              ?>
+              Contact Form
+            </select>
+          <?php
+          } else {
+            $url = 'http://wordpress.org/plugins/contact-form-7/';?>
+            <p class="howto"><?php printf(__('We recommend you use Contact form 7. Never heard of it ? Check it out <a href="%s" target="%s">here</a>', $this->plugin_slug), esc_url( $url ), '_blank'); ?></p>
+            <?php return;
+          }
+          ?>
+          <?php
+          break;
+        case 'tel':
+          ?>
+          <input type="tel" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>">
+          <?php
+          break;
+        case 'image':
+          wp_enqueue_media();
+          if ($meta_value!=''){
+            ?>
+            <input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>" hidden>
+            <div class="profile-photo-holder">
+              <img id="profile_photo" src="<?php echo $meta_value; ?>" alt="Profile photo"/>
+              <input type="button" value="<?php echo __('Upload Image', $this->plugin_slug); ?>" class="button upload-profile-photo tb_image_uploader_button">
+            </div>
+          <?php
+          }
+          else{
+            ?>
+            <input type="button" value="<?php echo __('Upload Image', $this->plugin_slug); ?>" class="button tb_image_uploader_button to-hide">
+            <input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>" hidden>
+            <div class="profile-photo-holder" style="display: none">
+              <img id="profile_photo" src="<?php echo $meta_value; ?>" alt="Profile photo"/>
+              <input type="button" value="<?php echo __('Upload Image', $this->plugin_slug); ?>" class="button upload-profile-photo tb_image_uploader_button">
+            </div>
+          <?php
+          }
+          break;
+        case 'custom':
+          ?>
+          <input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>">
+          <?php
+          break;
+        default:
+          ?>
+            <input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>">
+          <?php
+          break;
+      } ?>
+      <p class="howto"><?php echo $field['desc']; ?></p>
+      <?php if($field['type'] != 'checkbox') {
+        ?>
+        <p>
+          <label class="selectit"><input type="checkbox" name="<?php echo 'hideit_' . $field['id']; ?>" <?php if(!empty($meta_hide)) echo 'checked'; ?>>Hide this information</label>
+        </p>
+      <?php
+      }
+      ?>
+      <h3></h3>
+    <?php
+    }
 	}
 
 	public function tb_metaboxes_save_datas(){
