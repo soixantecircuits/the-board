@@ -92,20 +92,20 @@ class The_Board {
     $prefix = 'tb_';
     return array(
         array(
-            'label'		=> __('Job', 'the-board'),
-            'desc'		=> __('Job occupied by the member.', 'the-board'),
-            'id'		=> $prefix . 'job',
-            'type'		=> 'text',
-            'context'	=> 'side',
-            'priority'	=> 'high'
-        ),
-        array(
             'label'		=> __('Hierarchy', 'the-board'),
             'desc'		=> __('0 being top level, how high is the member in his group ?', 'the-board'),
             'id'		=> $prefix . 'hierarchy',
             'type'		=> 'number',
             'context'	=> 'side',
             'priority'	=> 'high'
+        ),
+        array(
+            'label'		=> __('Job', 'the-board'),
+            'desc'		=> __('Job occupied by the member.', 'the-board'),
+            'id'		=> $prefix . 'job',
+            'type'		=> 'text',
+            'context'	=> 'side',
+            'priority'	=> 'low'
         )
     );
   }
@@ -121,7 +121,7 @@ class The_Board {
             'fields' => array(
                 array(
                     'label'		=> __('Photo', 'the-board'),
-                    'desc'		=> __('A nice picture of the member.', 'the-board'),
+                    'desc'		=> __('', 'the-board'),
                     'id'		=> $prefix . 'photo',
                     'type'		=> 'image',
                     'context'	=> 'normal',

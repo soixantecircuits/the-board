@@ -53,3 +53,56 @@
   background: white;
   padding: 8px;
 }
+
+#tb_basic-informaiton .tb_field, #tb_contact-informaiton .tb_field {
+  width: 280px;
+  min-height: 250px;
+  padding: 5px;
+}
+
+#tb_basic-informaiton .tb_field:not(:last-child), #tb_contact-informaiton .tb_field:not(:last-child){
+  float: left;
+  /*border-bottom: 1px solid #eee;*/
+}
+
+
+#tb_basic-informaiton .tb_field, #tb_contact-informaiton .tb_field{
+  display: inline-block;
+}
+
+.tb_skype-icon, .tb_linkedIn-icon, .tb_facebook-icon, .tb_twitter-icon, .tb_googleplus-icon{
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  float: left;
+  background-image: url(icons_black_social.png);
+  background-size: 400px;
+  margin: 1.33em 0 0;
+}
+
+.tb_skype-icon{
+  background-position: 21px 424px;
+}
+
+.tb_linkedIn-icon{
+  background-position: 296px 424px;
+}
+
+.tb_facebook-icon{
+  background-position: 364px 424px;
+}
+
+.tb_twitter-icon{
+  background-position: 399px 424px;
+}
+
+.tb_googleplus-icon{
+  background-position: 330px 424px;
+}
+
+
+
+
+
+
+

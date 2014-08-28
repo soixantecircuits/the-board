@@ -95,6 +95,8 @@ class The_Board_Admin {
 		add_action( 'plugins_loaded', array( $this, 'tb_language_call' ), 1);
 
 		add_action( 'add_meta_boxes', array( $this, 'tb_metaboxes_init') );
+
+
 		add_action( 'save_post', array( $this, 'tb_metaboxes_save_datas'), 0, 1 );
 
 		add_action( 'init', array( $this, 'tb_register_sizes'), 0, 1 );
@@ -311,11 +313,12 @@ class The_Board_Admin {
       if('tb_hierarchy' == $field['id'] && !is_numeric($meta_value) )
         $meta_value = 0;
       ?>
-      <div class="tb_field">
+      <div class="tb_field <?php echo $field['id']?>-container">
         <?php
         if (isset($metabox['args']['fields'])){
           ?>
-          <h4><?php echo $field['label'];?></h4>
+          <div class="<?php echo $field['id']?>-icon"></div>
+          <h4 class="<?php echo $field['id']?>-title"><?php echo $field['label'];?></h4>
         <?php
         }
         ?>
@@ -426,11 +429,7 @@ class The_Board_Admin {
           </p>
         <?php
         }
-        if (isset($metabox['args']['fields'])){
-          ?>
-          <h3></h3>
-        <?php
-        }
+
         ?>
       </div>
     <?php
