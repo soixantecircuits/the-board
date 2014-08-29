@@ -52,9 +52,10 @@ function tb_get_one_member($atts) {
 
 function tb_get_all_members(){
     ob_start();
-    include('views/shortcodes/static/static-direction.php');
-    include('views/shortcodes/static/static-fond.php');
-    include('views/shortcodes/static/static-finance.php');
+    $terms = get_terms( 'groups', 'parent=0&hide_empty=1' );
+    foreach ($terms as $term) {
+        echo do_shortcode( '[theboard-show-group group='.$term->term_id.']' );
+    }
     $return .= ob_get_contents();
     ob_end_clean();
     return $return;
