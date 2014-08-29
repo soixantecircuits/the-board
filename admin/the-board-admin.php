@@ -392,10 +392,12 @@ class The_Board_Admin {
             wp_enqueue_media();
             if ($meta_value!=''){
               ?>
+              <input type="button" value="<?php echo __('Upload Image', $this->plugin_slug); ?>" class="button tb_image_uploader_button to-hide" style="display: none">
               <input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>" hidden>
               <div class="profile-photo-holder">
                 <img id="profile_photo" src="<?php echo $meta_value; ?>" alt="Profile photo"/>
                 <input type="button" value="<?php echo __('Upload Image', $this->plugin_slug); ?>" class="button upload-profile-photo tb_image_uploader_button">
+                <div  class="tb_image_delete_button"></div>
               </div>
             <?php
             }
@@ -406,6 +408,7 @@ class The_Board_Admin {
               <div class="profile-photo-holder" style="display: none">
                 <img id="profile_photo" src="<?php echo $meta_value; ?>" alt="Profile photo"/>
                 <input type="button" value="<?php echo __('Upload Image', $this->plugin_slug); ?>" class="button upload-profile-photo tb_image_uploader_button">
+                <div  class="tb_image_delete_button"></div>
               </div>
             <?php
             }

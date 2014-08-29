@@ -101,6 +101,19 @@
   background-position: 330px 424px;
 }
 
+.tb_image_delete_button{
+  width: 20px;
+  height: 20px;
+  background-image: url(close.png);
+  background-size: contain;
+  margin-top: -155px;
+  margin-left: 135px;
+  position: absolute;
+  z-index: 410;
+  display: none;
+  cursor: pointer;
+}
+
 
 
 

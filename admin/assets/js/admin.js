@@ -2,13 +2,21 @@
   "use strict";
 
   $(function () {
+    $('.tb_image_delete_button').click(function(){
+      $('.profile-photo-holder').hide();
+      $('.button.tb_image_uploader_button.to-hide').show();
+      $('#tb_photo_input').attr('value','');
+    });
+
     $('.profile-photo-holder').hover(function(){
+      $('.tb_image_delete_button').show();
       $('.upload-profile-photo').animate({
         'opacity': 1
       }, 500, function() {
         // Animation complete.
       });
     }, function(){
+      $('.tb_image_delete_button').hide();
       $('.upload-profile-photo').animate({
         'opacity': 0
       }, 500, function() {
