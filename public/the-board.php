@@ -442,13 +442,13 @@ class The_Board {
 
 
     if( file_exists( get_template_directory().$user_theme_template."/css/styles.css") ){
-      wp_enqueue_style('user-css', get_template_directory_uri().$user_theme_template."/css/styles.css");
+      wp_enqueue_style('user-css', get_template_directory_uri().$user_theme_template."/css/styles.css", array(), self::VERSION );
     } else {
       wp_enqueue_style( 'the-board-default-styles', plugins_url( 'assets/css/default.css', __FILE__ ), array(), self::VERSION );
     }
 
     if( file_exists( get_template_directory().$user_theme_template."/css/scripts.js") ){
-      wp_enqueue_script('user-js', get_template_directory_uri().$user_theme_template."/css/scripts.js");
+      wp_enqueue_script('user-js', get_template_directory_uri().$user_theme_template."/css/scripts.js", array(  ), self::VERSION);
     } else {
       wp_enqueue_script( 'the-board-default-script', plugins_url( 'assets/js/default.js', __FILE__ ), array(  ), self::VERSION );
     }
