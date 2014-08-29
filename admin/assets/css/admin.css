@@ -5,7 +5,7 @@
 }
 
 /*.profile-photo-holder:hover{*/
-  /*background-color: #808080;*/
+/*background-color: #808080;*/
 /*}*/
 
 .button.upload-profile-photo{
@@ -55,19 +55,19 @@
   padding: 8px;
 }
 
-#tb_basic-informaiton .tb_field, #tb_contact-informaiton .tb_field {
+#tb_basic-information .tb_field, #tb_contact-information .tb_field {
   width: 280px;
   min-height: 250px;
   padding: 5px;
 }
 
-#tb_basic-informaiton .tb_field:not(:last-child), #tb_contact-informaiton .tb_field:not(:last-child){
+#tb_basic-information .tb_field:not(:last-child), #tb_contact-information .tb_field:not(:last-child){
   float: left;
   /*border-bottom: 1px solid #eee;*/
 }
 
 
-#tb_basic-informaiton .tb_field, #tb_contact-informaiton .tb_field{
+#tb_basic-information .tb_field, #tb_contact-information .tb_field{
   display: inline-block;
 }
 
