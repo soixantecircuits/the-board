@@ -27,17 +27,17 @@
                 <td colspan="5" rowspan="" headers="">
                         <?php $fullname = null;
                         if( isset($postmeta['tb_lastname']) || isset($postmeta['tb_firstname']) ) {
-                            if(isset($postmeta['tb_lastname']) && !isset($postmeta['hideit_tb_lastname'])){
-                                $fullname .= $postmeta['tb_lastname'][0];
+                            if(isset($postmeta['tb_firstname']) && !isset($postmeta['hideit_tb_firstname'])){
+                                $fullname .= $postmeta['tb_firstname'][0];
                             }
                             if(isset($postmeta['tb_lastname']) && isset($postmeta['tb_firstname'])){
                                 $fullname .= ' ';
                             }
-                            if(isset($postmeta['tb_firstname']) && !isset($postmeta['hideit_tb_firstname'])){
-                                $fullname .= $postmeta['tb_firstname'][0];
+                            if(isset($postmeta['tb_lastname']) && !isset($postmeta['hideit_tb_lastname'])){
+                                $fullname .= $postmeta['tb_lastname'][0];
                             }
                             if( isset($postmeta['tb_invert']) && isset($postmeta['tb_lastname']) && isset($postmeta['tb_firstname']) ){
-                                $fullname = $postmeta['tb_firstname'][0] . ' ' . $postmeta['tb_lastname'][0];
+                                $fullname = $postmeta['tb_lastname'][0] . ' ' . $postmeta['tb_firstname'][0];
                             }
                         } ?>
                         <?php echo $fullname; ?>
@@ -60,7 +60,7 @@
                                 <a href="javascript:void(0);" onclick="hide('contact-pop');" title="Close"><?php _e('Close this window', The_Board::get_instance()->get_plugin_slug()); ?></a>
                                 <?php echo do_shortcode('[contact-form-7 id="'.$postmeta['tb_contact'][0].'"]'); ?>
                             </div>
-                            <a href="javascript:void(0);" onclick="pop('contact-pop');" title="<?php echo $fullname; ?>"><?php echo __('Contacter', The_Board::get_instance()->get_plugin_slug() ).' '.$fullname; ?></a>
+                            <a href="javascript:void(0);" onclick="pop('contact-pop');" title="<?php echo $fullname; ?>"><?php echo __('Contact', The_Board::get_instance()->get_plugin_slug() ).' '.$fullname; ?></a>
                         </td>
                     </tr>
                 <?php } ?>
