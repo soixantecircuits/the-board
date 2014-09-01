@@ -2,8 +2,8 @@
 
 Contributors: @tommywang, @gabrielstuff, @hugohil, @soixantecircuits
 Tags: board, team, working groups
-Requires at least:
-Tested up to:
+Requires at least: 3.5
+Tested up to: 3.9.2
 Stable tag: 0.9.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
