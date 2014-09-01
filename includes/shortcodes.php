@@ -52,7 +52,7 @@ function tb_get_one_member($atts) {
 
 function tb_get_all_members(){
     ob_start();
-    $terms = get_terms( 'groups', 'parent=0&hide_empty=1' );
+    $terms = get_terms( 'groups', 'parent=0&hide_empty=1&orderby=term_order&order=ASC' );
     foreach ($terms as $term) {
         echo do_shortcode( '[theboard-show-group group='.$term->term_id.']' );
     }
