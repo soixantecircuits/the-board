@@ -34,7 +34,6 @@ The Board comes with a default template that integrates well with the Twentyfour
 3. Upload the `the-board` directory to the `/wp-content/plugins/` directory
 4. Activate the plugin in the Plugin dashboard
 
-
 # Credits
 
 Contributors: @tommywang, @gabrielstuff, @hugohil, @soixantecircuits
@@ -43,4 +42,3 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 The basic structure of this plugin was cloned from the [WordPress-Plugin-Boilerplate](https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate) project.
-This plugin supports the [GitHub Updater](https://github.com/afragen/github-updater) plugin, so if you install that, this plugin becomes automatically updateable direct from GitHub. Any submission to WP.org repo will make this redundant.

@@ -20,6 +20,8 @@ Finally, if you want to show all of your groups and subgroups in order, just put
 
 The Board comes with a default template that integrates well with the Twentyfourteen theme. However, you can override it totally or partially by adding `member.php`, `groups.php`, `css/styles.css`, `js/scripts.js` files in a directory named `plugins/the-board` at your root of your theme.
 
+The basic structure of this plugin was cloned from the [WordPress-Plugin-Boilerplate](https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate) project.
+
 == Installation ==
 
 = Using The WordPress Dashboard =
@@ -54,6 +56,3 @@ The Board comes with a default template that integrates well with the Twentyfour
 == Arbitrary section ==
 
 == Updates ==
-
-The basic structure of this plugin was cloned from the [WordPress-Plugin-Boilerplate](https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate) project.
-This plugin supports the [GitHub Updater](https://github.com/afragen/github-updater) plugin, so if you install that, this plugin becomes automatically updateable direct from GitHub. Any submission to WP.org repo will make this redundant.
