@@ -190,9 +190,8 @@ class The_Board_Admin {
 		if ( ! isset( $this->plugin_slug ) ) {
 			return;
 		}
-
-		$screen = get_current_screen();
-		if ( $screen->id == 'member' ) {
+        $screen = get_current_screen();
+        if ( $screen->id == 'member' || $screen->id == 'edit-member' ) {
 			wp_enqueue_script( $this->plugin_slug . '-chosen', plugins_url( 'assets/js/chosen.jquery.min.js', __FILE__ ), array( 'jquery' ), The_Board::VERSION );
 			wp_enqueue_script( $this->plugin_slug . '-admin-script', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery',$this->plugin_slug . '-chosen' ), The_Board::VERSION );
 		}

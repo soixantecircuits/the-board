@@ -1,15 +1,12 @@
 <?php
 function set_member_columns($columns) {
-
   return array(
       'photo' => __('Profile photo', The_Board::get_instance()->get_plugin_slug()),
       'title' => __('Name', The_Board::get_instance()->get_plugin_slug()),
       'first_name' => __('First name', The_Board::get_instance()->get_plugin_slug()),
       'shortcode' => __('Shortcode', The_Board::get_instance()->get_plugin_slug()),
       'group' => __('Group', The_Board::get_instance()->get_plugin_slug()),
-      'date' => __('Date', The_Board::get_instance()->get_plugin_slug()),
-      'author' => __('Author', The_Board::get_instance()->get_plugin_slug()),
-
+      'hierarchy' => __('Hierarchy', The_Board::get_instance()->get_plugin_slug())
   );
 }
 add_filter('manage_member_posts_columns' , 'set_member_columns');
@@ -21,7 +18,7 @@ function member_columns( $column, $post_id ) {
       $image = get_post_meta( $post_id , 'tb_photo' , true );
       if( empty( $image ) ) {
         $image = plugins_url( '/assets/replace.jpg' , dirname(__FILE__) );
-      } 
+      }
       echo '<img width="72" height="72" src="'. $image . '">';
       break;
     case 'title' :
@@ -31,7 +28,10 @@ function member_columns( $column, $post_id ) {
       echo get_post_meta( $post_id , 'tb_firstname' , true );
       break;
     case 'shortcode' :
-      echo "[theboard-show-member id=".$post_id."]";
+      echo "<input type='text' readonly value='[theboard-show-member id=".$post_id."]'>";
+      break;
+    case 'hierarchy' :
+      echo get_post_meta( $post_id , 'tb_hierarchy' , true );
       break;
     case 'group' :
       echo get_groups( $post_id);
@@ -52,10 +52,69 @@ function get_groups($id){
   return $groups_string;
 }
 
+function tb_quickedit($column, $post_type){
+  switch ($column) {
+    case 'hierarchy':
+    ?>
+      <fieldset class="inline-edit-col-right">
+        <div class="inline-edit-col">
+          <label for="tb_hierarchy" class="inline-edit-status alignleft">
+            <span><?php _e('Hierarchy', The_Board::get_instance()->get_plugin_slug()); ?></span>
+            <input type="number" name="tb_hierarchy" min="0" id="tb_hierarchy">
+          </label>
+        </div>
+      </fieldset>
+    <?php
+      break;
+  }
 
-//add_action('do_meta_boxes', 'move_meta_box');
-//function move_meta_box()
-//{
-//  remove_meta_box('groupsdiv', 'member', 'side');
-//  add_meta_box( "groupsdiv", __('Groups', 'the-board'), 'wp_nav_menu_item_taxonomy_meta_box', 'member', 'side', 'default');
-//}
+}
+add_action('quick_edit_custom_box', 'tb_quickedit', 1, 2);
+
+function tb_save_quickedit($post_id){
+  if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE )
+      return $post_id;
+  if ( 'member' == $_POST['post_type'] ) {
+      if ( !current_user_can( 'edit_page', $post_id ) )
+          return $post_id;
+  } else {
+      if ( !current_user_can( 'edit_post', $post_id ) )
+      return $post_id;
+  }
+
+  $post = get_post( $post_id );
+  if (isset($_POST['tb_hierarchy']) && ($post->post_type != 'revision')) {
+      $hierarchy = esc_attr($_POST['tb_hierarchy']);
+      update_post_meta( $post_id, 'tb_hierarchy', $hierarchy);
+  }
+  return $hierarchy;
+}
+add_action( 'save_post', 'tb_save_quickedit' );
+
+function tb_quickedit_js(){
+  global $current_screen;
+  if (($current_screen->id != 'edit-member') || ($current_screen->post_type != 'member')) return;
+  ?>
+    <script>
+      function quickedit_hierarchy(hierarchy) {
+        inlineEditPost.revert();
+        document.getElementById('tb_hierarchy').value = hierarchy;
+      }
+    </script>
+  <?php
+}
+add_action('admin_footer', 'tb_quickedit_js');
+
+function tb_expand_quick_edit_link($actions, $post) {
+    if( 'member' !== get_post_type( $post->ID ) )
+      return $actions;
+
+    $hierarchy = get_post_meta( $post->ID, 'tb_hierarchy', TRUE);
+    $actions['inline hide-if-no-js'] = '<a href="#" class="editinline" title="';
+    $actions['inline hide-if-no-js'] .= esc_attr( __( 'Edit this item inline' ) ) . '" ';
+    $actions['inline hide-if-no-js'] .= " onclick=\"quickedit_hierarchy('{$hierarchy}')\">";
+    $actions['inline hide-if-no-js'] .= __( 'Quick&nbsp;Edit' );
+    $actions['inline hide-if-no-js'] .= '</a>';
+    return $actions;
+}
+add_filter('post_row_actions', 'tb_expand_quick_edit_link', 10, 2);
