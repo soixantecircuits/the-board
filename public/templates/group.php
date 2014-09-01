@@ -19,7 +19,6 @@
         <tr>
             <?php
                 $term_children = get_term_children( $term->term_id, 'groups' );
-                // print_r($term);
                 if( sizeof($term_children) ){
                     ?>
                     <?php
@@ -27,36 +26,35 @@
                     ?>
                     <td colspan="" class="member_cell right_column_members">
                     <?php
-                        foreach ($term_children as $child_id) {
+                        foreach ($term_children as $child => $child_id) {
                             $subgroup = get_term( $child_id, 'groups' );
                             $term_posts = get_posts( array(
                                     'post_type'     => 'member',
                                     'tax_query'     => array(
                                         array(
-                                            'taxonomy'          => 'groups',
-                                            'terms'             => $subgroup->term_id,
+                                            'taxonomy'  => 'groups',
+                                            'terms'     => $subgroup->term_id,
                                         )
                                     ),
                                 )
                             );
                             if( empty($term_posts) ){
                                 wp_reset_postdata();
-                                break;
                             } else {
                                 wp_reset_postdata();
+                                ?>
+                                    <table class="subgroup_block">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="3" rowspan="" headers="" scope=""><?php echo $subgroup->name; ?></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <?php display_members_hierarchically($subgroup->term_id, true); ?>
+                                        </tbody>
+                                    </table>
+                                <?php
                             }
-                            ?>
-                                <table class="subgroup_block">
-                                    <thead>
-                                        <tr>
-                                            <th colspan="3" rowspan="" headers="" scope=""><?php echo $subgroup->name; ?></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                            <?php display_members_hierarchically($subgroup->term_id, true); ?>
-                                    </tbody>
-                                </table>
-                            <?php
                         }
                     ?></td><?php
                 } else {

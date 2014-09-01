@@ -1,4 +1,12 @@
 <?php
+/**
+ *
+ * @package   The Board
+ * @author    Soixane circuits
+ * @license   GPL-2.0+
+ */
+?>
+<?php
     function display_members_hierarchically($group, $include_children){
         $i = 0;
         $max_cell = 3;

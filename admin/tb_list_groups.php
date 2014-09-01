@@ -3,11 +3,11 @@
 function set_groups_columns($columns) {
 
   return array(
-        'cb'    => '<input type="checkbox">',
-        'Name' => __('Name', The_Board::get_instance()->get_plugin_slug()),
-        'shortcode' => __('shortcode', The_Board::get_instance()->get_plugin_slug()),
+        'cb'          => __('Bulk actions', The_Board::get_instance()->get_plugin_slug()),
+        'Name'        => __('Name', The_Board::get_instance()->get_plugin_slug()),
+        'shortcode'   => __('shortcode', The_Board::get_instance()->get_plugin_slug()),
         'description' => __('Description', The_Board::get_instance()->get_plugin_slug()),
-        'posts' => __('Posts', The_Board::get_instance()->get_plugin_slug()),
+        'posts'       => __('Posts', The_Board::get_instance()->get_plugin_slug()),
   );
 }
 add_filter('manage_edit-groups_columns' , 'set_groups_columns');

@@ -66,15 +66,20 @@ class The_Board_Admin {
 		 *
 		 */
 		$plugin = The_Board::get_instance();
+
 		$this->plugin_slug = $plugin->get_plugin_slug();
-		$this->tb_fields_groups = $plugin->get_fields_groups();
-    $this->tb_fields = $plugin->get_fields();
-    $this->to_fields_total = $this->tb_fields;
-    foreach ($this->tb_fields_groups as $field_group) {
-      foreach ($field_group['fields'] as $field){
-        array_push($this->to_fields_total, $field);
-      }
-    }
+
+        $this->tb_fields_groups = $plugin->get_fields_groups();
+
+        $this->tb_fields = $plugin->get_fields();
+
+        $this->to_fields_total = $this->tb_fields;
+
+        foreach ($this->tb_fields_groups as $field_group) {
+          foreach ($field_group['fields'] as $field){
+            array_push($this->to_fields_total, $field);
+          }
+        }
 		// Load admin style sheet and JavaScript.
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
@@ -102,23 +107,21 @@ class The_Board_Admin {
 		// add_action( 'contextual_help', 'member_contextual_help', 10, 3 );
 		add_filter( 'post_updated_messages', array( $this, 'tb_update_message' ) );
 
-    add_action('edit_form_top', array( $this, 'shortcode_on_the_top'));
+        add_action('edit_form_top', array( $this, 'shortcode_on_the_top'));
 	}
 
 
-  public function shortcode_on_the_top( $post )
-  {
-    if ($post->post_type == 'member'){
-      echo '<div id="member-shortcode-holder">';
-      echo '<h3 id="member-shortcode-title"><span>'. __('Use the shortcode below to display this member', MEMBERS_PLUGIN_BASENAME).'</span></h3>';
-      echo "<input type='text' id='member-shortcode'"." value='[theboard-show-member id=".$post->ID."]' readonly>";
-      echo '</div>';
+    public function shortcode_on_the_top( $post ) {
+        if ($post->post_type == 'member'){
+            echo '<div id="member-shortcode-holder">';
+            echo '<h3 id="member-shortcode-title"><span>'. __('Use the shortcode below to display this member', MEMBERS_PLUGIN_BASENAME).'</span></h3>';
+            echo "<input type='text' id='member-shortcode'"." value='[theboard-show-member id=".$post->ID."]' readonly>";
+            echo '</div>';
+        }
     }
-  }
 
 	public function tb_language_call() {
 		load_plugin_textdomain(The_Board::get_instance()->get_plugin_slug(), false, basename(plugin_dir_path( dirname( __FILE__ ) ) ) . '/languages/');
-		//error_log(basename( plugin_dir_path( dirname( __FILE__ ) ) ) . '/languages/');
 	}
 
 	/**
@@ -351,9 +354,9 @@ class The_Board_Admin {
             break;
           case 'contact':
             $args = array (
-                'post_type'              => 'wpcf7_contact_form',
-                'posts_per_page'         => '-1',
-                'order'									 => 'desc'
+                'post_type'         => 'wpcf7_contact_form',
+                'posts_per_page'    => '-1',
+                'order'             => 'desc'
             );
             $contactForms = get_posts( $args );
             $isempty = empty($meta_value) ? 'selected' : null;

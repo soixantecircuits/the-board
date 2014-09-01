@@ -66,15 +66,6 @@ class The_Board {
 
     // Activate plugin when new blog is added
     add_action( 'wpmu_new_blog', array( $this, 'activate_new_site' ) );
-
-    // Load public-facing style sheet and JavaScript.
-
-    /* Define custom functionality.
-     * Refer To http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
-     */
-    // add_action( 'wp', array( $this, 'tb_get_member_shortcode' ), 1 );
-    add_filter( '@theboard', array( $this, 'filter_method_name' ) );
-
   }
 
   /**
@@ -92,20 +83,20 @@ class The_Board {
     $prefix = 'tb_';
     return array(
         array(
-            'label'		=> __('Hierarchy', MEMBERS_PLUGIN_BASENAME),
-            'desc'		=> __('0 being top level, how high is the member in his group ?', MEMBERS_PLUGIN_BASENAME),
-            'id'		=> $prefix . 'hierarchy',
-            'type'		=> 'number',
-            'context'	=> 'side',
-            'priority'	=> 'high'
+            'label'     => __('Hierarchy', MEMBERS_PLUGIN_BASENAME),
+            'desc'      => __('0 being top level, how high is the member in his group ?', MEMBERS_PLUGIN_BASENAME),
+            'id'        => $prefix . 'hierarchy',
+            'type'      => 'number',
+            'context'   => 'side',
+            'priority'  => 'high'
         ),
         array(
-            'label'		=> __('Job', MEMBERS_PLUGIN_BASENAME),
-            'desc'		=> __('Job occupied by the member.', MEMBERS_PLUGIN_BASENAME),
-            'id'		=> $prefix . 'job',
-            'type'		=> 'text',
-            'context'	=> 'side',
-            'priority'	=> 'low'
+            'label'     => __('Job', MEMBERS_PLUGIN_BASENAME),
+            'desc'      => __('Job occupied by the member.', MEMBERS_PLUGIN_BASENAME),
+            'id'        => $prefix . 'job',
+            'type'      => 'text',
+            'context'   => 'side',
+            'priority'  => 'low'
         )
     );
   }
@@ -114,122 +105,122 @@ class The_Board {
     $prefix = 'tb_';
     return array(
         array(
-            'label'		=> __('Basic Information', MEMBERS_PLUGIN_BASENAME),
-            'id'		=> $prefix . 'basic-information',
-            'context'	=> 'normal',
-            'priority'	=> 'default',
-            'fields' => array(
+            'label'         => __('Basic Information', MEMBERS_PLUGIN_BASENAME),
+            'id'            => $prefix . 'basic-information',
+            'context'       => 'normal',
+            'priority'      => 'default',
+            'fields'        => array(
                 array(
-                    'label'		=> __('Photo', MEMBERS_PLUGIN_BASENAME),
-                    'desc'		=> __('', MEMBERS_PLUGIN_BASENAME),
-                    'id'		=> $prefix . 'photo',
-                    'type'		=> 'image',
-                    'context'	=> 'normal',
-                    'priority'	=> 'default'
+                    'label'     => __('Photo', MEMBERS_PLUGIN_BASENAME),
+                    'desc'      => __('', MEMBERS_PLUGIN_BASENAME),
+                    'id'        => $prefix . 'photo',
+                    'type'      => 'image',
+                    'context'   => 'normal',
+                    'priority'  => 'default'
                 ),
                 array(
-                    'label'		=> __('Lastname', MEMBERS_PLUGIN_BASENAME),
-                    'desc'		=> __('Lastname of the member.', MEMBERS_PLUGIN_BASENAME),
-                    'id'		=> $prefix . 'lastname',
-                    'type'		=> 'lastname',
-                    'context'	=> 'normal',
-                    'priority'	=> 'default'
+                    'label'     => __('Lastname', MEMBERS_PLUGIN_BASENAME),
+                    'desc'      => __('Lastname of the member.', MEMBERS_PLUGIN_BASENAME),
+                    'id'        => $prefix . 'lastname',
+                    'type'      => 'lastname',
+                    'context'   => 'normal',
+                    'priority'  => 'default'
                 ),
                 array(
-                    'label'		=> __('Firstname', MEMBERS_PLUGIN_BASENAME),
-                    'desc'		=> __('Firstname of the member.', MEMBERS_PLUGIN_BASENAME),
-                    'id'		=> $prefix . 'firstname',
-                    'type'		=> 'text',
-                    'context'	=> 'normal',
-                    'priority'	=> 'default'
+                    'label'     => __('Firstname', MEMBERS_PLUGIN_BASENAME),
+                    'desc'      => __('Firstname of the member.', MEMBERS_PLUGIN_BASENAME),
+                    'id'        => $prefix . 'firstname',
+                    'type'      => 'text',
+                    'context'   => 'normal',
+                    'priority'  => 'default'
                 ),
                 array(
-                    'label'		=> __('Invert in glossary', MEMBERS_PLUGIN_BASENAME),
-                    'desc'		=> __('If this is checked, member will be sorted by its firstname. "John Smith" would be find at "John" (J) instead of "Smith" (S).', MEMBERS_PLUGIN_BASENAME),
-                    'id'		=> $prefix . 'invert',
-                    'type'		=> 'checkbox',
-                    'context'	=> 'normal',
-                    'priority'	=> 'low'
+                    'label'     => __('Invert in glossary', MEMBERS_PLUGIN_BASENAME),
+                    'desc'      => __('If this is checked, member will be sorted by its firstname. "John Smith" would be find at "John" (J) instead of "Smith" (S).', MEMBERS_PLUGIN_BASENAME),
+                    'id'        => $prefix . 'invert',
+                    'type'      => 'checkbox',
+                    'context'   => 'normal',
+                    'priority'  => 'low'
                 ),
                 array(
-                    'label'		=> __('Custom field', MEMBERS_PLUGIN_BASENAME),
-                    'desc'		=> __('Whatever you think will be useful to know about the member.', MEMBERS_PLUGIN_BASENAME),
-                    'id'		=> $prefix . 'custom',
-                    'type'		=> 'custom',
-                    'context'	=> 'side',
-                    'priority'	=> 'low'
+                    'label'     => __('Custom field', MEMBERS_PLUGIN_BASENAME),
+                    'desc'      => __('Whatever you think will be useful to know about the member.', MEMBERS_PLUGIN_BASENAME),
+                    'id'        => $prefix . 'custom',
+                    'type'      => 'custom',
+                    'context'   => 'side',
+                    'priority'  => 'low'
                 )
             )
         ),
         array(
-            'label'		=> __('Contact information', MEMBERS_PLUGIN_BASENAME),
-            'id'		=> $prefix . 'contact-information',
-            'context'	=> 'normal',
-            'priority'	=> 'default',
-            'fields' => array(
+            'label'     => __('Contact information', MEMBERS_PLUGIN_BASENAME),
+            'id'        => $prefix . 'contact-information',
+            'context'   => 'normal',
+            'priority'  => 'default',
+            'fields'    => array(
                 array(
-                    'label'		=> __('Email', MEMBERS_PLUGIN_BASENAME),
-                    'desc'		=> __('Email of the member.', MEMBERS_PLUGIN_BASENAME),
-                    'id'		=> $prefix . 'email',
-                    'type'		=> 'email',
-                    'context'	=> 'normal',
-                    'priority'	=> 'default'
+                    'label'     => __('Email', MEMBERS_PLUGIN_BASENAME),
+                    'desc'      => __('Email of the member.', MEMBERS_PLUGIN_BASENAME),
+                    'id'        => $prefix . 'email',
+                    'type'      => 'email',
+                    'context'   => 'normal',
+                    'priority'  => 'default'
                 ),
                 array(
-                    'label'		=> __('Contact form', MEMBERS_PLUGIN_BASENAME),
-                    'desc'		=> __('Contact form of the member. Put the ID provided by Contact Form 7.', MEMBERS_PLUGIN_BASENAME),
-                    'id'		=> $prefix . 'contact',
-                    'type'		=> 'contact',
-                    'context'	=> 'normal',
-                    'priority'	=> 'default'
+                    'label'     => __('Contact form', MEMBERS_PLUGIN_BASENAME),
+                    'desc'      => __('Contact form of the member. Put the ID provided by Contact Form 7.', MEMBERS_PLUGIN_BASENAME),
+                    'id'        => $prefix . 'contact',
+                    'type'      => 'contact',
+                    'context'   => 'normal',
+                    'priority'  => 'default'
                 ),
                 array(
-                    'label'		=> __('Phone', MEMBERS_PLUGIN_BASENAME),
-                    'desc'		=> __('Phone number of the member.', MEMBERS_PLUGIN_BASENAME),
-                    'id'		=> $prefix . 'phone',
-                    'type'		=> 'tel',
-                    'context'	=> 'normal',
-                    'priority'	=> 'default'
+                    'label'     => __('Phone', MEMBERS_PLUGIN_BASENAME),
+                    'desc'      => __('Phone number of the member.', MEMBERS_PLUGIN_BASENAME),
+                    'id'        => $prefix . 'phone',
+                    'type'      => 'tel',
+                    'context'   => 'normal',
+                    'priority'  => 'default'
                 ),
                 array(
-                    'label'		=> __('Facebook', MEMBERS_PLUGIN_BASENAME),
-                    'desc'		=> __('URL for the Facebook account of the member.', MEMBERS_PLUGIN_BASENAME),
-                    'id'		=> $prefix . 'facebook',
-                    'type'		=> 'text',
-                    'context'	=> 'normal',
-                    'priority'	=> 'default'
+                    'label'     => __('Facebook', MEMBERS_PLUGIN_BASENAME),
+                    'desc'      => __('URL for the Facebook account of the member.', MEMBERS_PLUGIN_BASENAME),
+                    'id'        => $prefix . 'facebook',
+                    'type'      => 'text',
+                    'context'   => 'normal',
+                    'priority'  => 'default'
                 ),
                 array(
-                    'label'		=> __('Twitter', MEMBERS_PLUGIN_BASENAME),
-                    'desc'		=> __('URL for the Twitter account of the member.', MEMBERS_PLUGIN_BASENAME),
-                    'id'		=> $prefix . 'twitter',
-                    'type'		=> 'text',
-                    'context'	=> 'normal',
-                    'priority'	=> 'default'
+                    'label'     => __('Twitter', MEMBERS_PLUGIN_BASENAME),
+                    'desc'      => __('URL for the Twitter account of the member.', MEMBERS_PLUGIN_BASENAME),
+                    'id'        => $prefix . 'twitter',
+                    'type'      => 'text',
+                    'context'   => 'normal',
+                    'priority'  => 'default'
                 ),
                 array(
-                    'label'		=> __('Google+', MEMBERS_PLUGIN_BASENAME),
-                    'desc'		=> __('URL for the Google+ account of the member.', MEMBERS_PLUGIN_BASENAME),
-                    'id'		=> $prefix . 'googleplus',
-                    'type'		=> 'text',
-                    'context'	=> 'normal',
-                    'priority'	=> 'default'
+                    'label'     => __('Google+', MEMBERS_PLUGIN_BASENAME),
+                    'desc'      => __('URL for the Google+ account of the member.', MEMBERS_PLUGIN_BASENAME),
+                    'id'        => $prefix . 'googleplus',
+                    'type'      => 'text',
+                    'context'   => 'normal',
+                    'priority'  => 'default'
                 ),
                 array(
-                    'label'		=> __('LinkedIn', MEMBERS_PLUGIN_BASENAME),
-                    'desc'		=> __('URL for the LinkedIn account of the member.', MEMBERS_PLUGIN_BASENAME),
-                    'id'		=> $prefix . 'linkedIn',
-                    'type'		=> 'text',
-                    'context'	=> 'normal',
-                    'priority'	=> 'default'
+                    'label'     => __('LinkedIn', MEMBERS_PLUGIN_BASENAME),
+                    'desc'      => __('URL for the LinkedIn account of the member.', MEMBERS_PLUGIN_BASENAME),
+                    'id'        => $prefix . 'linkedIn',
+                    'type'      => 'text',
+                    'context'   => 'normal',
+                    'priority'  => 'default'
                 ),
                 array(
-                    'label'		=> __('Skype', MEMBERS_PLUGIN_BASENAME),
-                    'desc'		=> __('URL for the Skype account of the member.', MEMBERS_PLUGIN_BASENAME),
-                    'id'		=> $prefix . 'skype',
-                    'type'		=> 'text',
-                    'context'	=> 'normal',
-                    'priority'	=> 'default'
+                    'label'     => __('Skype', MEMBERS_PLUGIN_BASENAME),
+                    'desc'      => __('URL for the Skype account of the member.', MEMBERS_PLUGIN_BASENAME),
+                    'id'        => $prefix . 'skype',
+                    'type'      => 'text',
+                    'context'   => 'normal',
+                    'priority'  => 'default'
                 ),
             )
         )

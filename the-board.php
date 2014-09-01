@@ -76,8 +76,8 @@ require_once plugin_dir_path( __FILE__ ) . '/includes/groups_order.php';
  * The code below is intended to to give the lightest footprint possible.
  */
 if ( is_admin()  ) {
-  require_once( plugin_dir_path( __FILE__ ) . 'admin/the-board-admin.php' );
-  require_once plugin_dir_path( __FILE__ ) . 'admin/tb_list.php';
-  require_once plugin_dir_path( __FILE__ ) . 'admin/tb_list_groups.php';
-	add_action( 'plugins_loaded', array( 'The_Board_Admin', 'get_instance' ) );
+    require_once( plugin_dir_path( __FILE__ ) . 'admin/the-board-admin.php' );
+    require_once plugin_dir_path( __FILE__ ) . 'admin/tb_list.php';
+    require_once plugin_dir_path( __FILE__ ) . 'admin/tb_list_groups.php';
+    add_action( 'plugins_loaded', array( 'The_Board_Admin', 'get_instance' ) );
 }

@@ -1,7 +1,7 @@
 <?php
 add_shortcode( 'theboard-show-member', 'tb_get_one_member' );
 add_shortcode( 'theboard-show-group', 'tb_get_members_by_group' );
-add_shortcode( 'theboard', 'tb_get_all_members' ); // temporary static shortcode
+add_shortcode( 'theboard', 'tb_get_all_members' );
 
 function tb_get_members_by_group($atts) {
     $return = null;
@@ -52,11 +52,11 @@ function tb_get_one_member($atts) {
 
 function tb_get_all_members($atts){
     extract(shortcode_atts( array(
-        'id'    => 0
-    ), $atts, 'theboard-show-member' ) );
+        'display'    => 0
+    ), $atts, 'theboard' ) );
 
     ob_start();
-    $terms = get_terms( 'groups', 'parent=0&hide_empty=1&orderby=term_order&order=ASC' );
+    $terms = get_terms( 'groups', 'parent=0&hide_empty=&orderby=term_order&order=ASC' );
     foreach ($terms as $term) {
         echo do_shortcode( '[theboard-show-group group='.$term->term_id.']' );
     }

@@ -1,12 +1,13 @@
 <?php
 function set_member_columns($columns) {
   return array(
-      'photo' => __('Profile photo', The_Board::get_instance()->get_plugin_slug()),
-      'title' => __('Last name', The_Board::get_instance()->get_plugin_slug()),
-      'first_name' => __('First name', The_Board::get_instance()->get_plugin_slug()),
-      'shortcode' => __('Shortcode', The_Board::get_instance()->get_plugin_slug()),
-      'group' => __('Group', The_Board::get_instance()->get_plugin_slug()),
-      'hierarchy' => __('Hierarchy', The_Board::get_instance()->get_plugin_slug())
+      'cb'          => __('Bulk actions', The_Board::get_instance()->get_plugin_slug()),
+      'photo'       => __('Profile photo', The_Board::get_instance()->get_plugin_slug()),
+      'title'       => __('Last name', The_Board::get_instance()->get_plugin_slug()),
+      'first_name'  => __('First name', The_Board::get_instance()->get_plugin_slug()),
+      'shortcode'   => __('Shortcode', The_Board::get_instance()->get_plugin_slug()),
+      'group'       => __('Group', The_Board::get_instance()->get_plugin_slug()),
+      'hierarchy'   => __('Hierarchy', The_Board::get_instance()->get_plugin_slug())
   );
 }
 add_filter('manage_member_posts_columns' , 'set_member_columns');
@@ -74,9 +75,11 @@ add_action('quick_edit_custom_box', 'tb_quickedit', 1, 2);
 function tb_save_quickedit($post_id){
   if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE )
       return $post_id;
-  if ( 'member' == $_POST['post_type'] ) {
+  if ( !isset($_POST) ){
+    if ( 'member' == $_POST['post_type'] ) {
       if ( !current_user_can( 'edit_page', $post_id ) )
           return $post_id;
+    }
   } else {
       if ( !current_user_can( 'edit_post', $post_id ) )
       return $post_id;
@@ -87,7 +90,10 @@ function tb_save_quickedit($post_id){
       $hierarchy = esc_attr($_POST['tb_hierarchy']);
       update_post_meta( $post_id, 'tb_hierarchy', $hierarchy);
   }
-  return $hierarchy;
+  if( isset($hierarchy) )
+    return $hierarchy;
+  else
+    return $post_id;
 }
 add_action( 'save_post', 'tb_save_quickedit' );
 

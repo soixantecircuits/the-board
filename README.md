@@ -10,6 +10,8 @@ Finally, if you want to show all of your groups and subgroups in order, just put
 
 The Board comes with a default template that integrates well with the Twentyfourteen theme. However, you can override it totally or partially by adding `member.php`, `groups.php`, `css/styles.css`, `js/scripts.js` files in a directory named `plugins/the-board` at your root of your theme.
 
+We integrated [Contact Form 7](http://wordpress.org/plugins/contact-form-7/) to The Board so you can easily let your users get in touch with your members. You absolutely can chose not to use it, everything will outputs just fine. Still, we recommend it :)
+
 # Installation
 
 ## Using The WordPress Dashboard
@@ -33,6 +35,12 @@ The Board comes with a default template that integrates well with the Twentyfour
 2. Extract the `the-board` directory to your computer
 3. Upload the `the-board` directory to the `/wp-content/plugins/` directory
 4. Activate the plugin in the Plugin dashboard
+
+## Then
+
+To display just one member, copy the shortcode on the member creation/edit page and paste it in a new page.
+To display a whole group or subgroup, go to the "groups" pannel, copy the shortcode corresponding to the group you wish to display and paste in a new page.
+Finally, if you want to show all of your groups and subgroups in order, just put `[theboard display=all]` in a new page.
 
 # Credits
 
