@@ -2,7 +2,7 @@
 function set_member_columns($columns) {
   return array(
       'photo' => __('Profile photo', The_Board::get_instance()->get_plugin_slug()),
-      'title' => __('Name', The_Board::get_instance()->get_plugin_slug()),
+      'title' => __('Last name', The_Board::get_instance()->get_plugin_slug()),
       'first_name' => __('First name', The_Board::get_instance()->get_plugin_slug()),
       'shortcode' => __('Shortcode', The_Board::get_instance()->get_plugin_slug()),
       'group' => __('Group', The_Board::get_instance()->get_plugin_slug()),
