@@ -41,11 +41,11 @@ msgstr "Si cette case est coché, le prénom et le nom apparaitront inversé"
 
 #: ../admin/the-board-admin.php:103
 msgid "Email"
-msgstr "e-mail"
+msgstr "E-mail"
 
 #: ../admin/the-board-admin.php:104
 msgid "Email of the member."
-msgstr "e-mail de la personne."
+msgstr "E-mail de la personne."
 
 #: ../admin/the-board-admin.php:111
 msgid "Facebook"
@@ -226,4 +226,82 @@ msgstr "Les membres affichent le détail des personnes impliquées."
 #: ../admin/views/contextual-help.php:15
 msgid "You can view/edit the details of each member by clicking on its name, or you can perform bulk actions using the dropdown menu and selecting multiple items."
 msgstr "Vous pouvez voir et éditer le détails de chaque membre en cliquant sur son nom ou en utilisant une action groupé et en les sélectionnant."
+
+#: 
+msgid "Groups Order"
+msgstr "Ordre des Groupes"
+
+#: 
+#, fuzzy
+msgid "Use the shortcode below to display this member"
+msgstr "Utiliser le shortcode ci-dessous pour afficher ce membre"
+
+#: 
+msgid "Upload Image"
+msgstr "Télécharger"
+
+#: 
+msgid "Hide this information"
+msgstr "Cacher cette information"
+
+#: 
+msgid "Contact information"
+msgstr "Information de Contact"
+
+#: 
+msgid "Basic Information"
+msgstr "Information Basique"
+
+#: 
+msgid "0 being top level, how high is the member in his group ?"
+msgstr "0 est le plus haut niveau, quelle niveau a ce membre dans son groupe?"
+
+#: 
+msgid "Hierarchy"
+msgstr "Hierarchie"
+
+#: 
+msgid "Contact form"
+msgstr "Formulaire de contact"
+
+#: 
+msgid "Choose a contact in the list below"
+msgstr "Choisir un contact dans la liste ci-dessous"
+
+#: 
+msgid "Contact form of the member. Put the ID provided by Contact Form 7."
+msgstr "Le formulaire de contact du membre. Mettre le ID de Contact Form 7."
+
+#: 
+msgid "Name"
+msgstr "Nom"
+
+#: 
+msgid "Posts"
+msgstr "Postes"
+
+#: 
+msgid "Order the groups by dragging and dropping them into the desired order."
+msgstr "Glisser et déposer les groupes dans l'ordre désiré pour les ré-organiser."
+
+#: 
+msgid "Update Order"
+msgstr "Sauvegarder"
+
+#: 
+msgid "Choose a group from the drop down to order its sub-groups."
+msgstr "Choisir un groupe pour ré-organiser ses sous-groupes."
+
+#: 
+msgid "Order Sub-groups"
+msgstr "Ré-organiser les sous-groupes"
+
+#: 
+msgid "Return to Parent Group"
+msgstr "Retourner vers le groupe parent"
+
+#: 
+#, fuzzy
+msgid "Sub-Groups"
+msgstr "Sous-Groupes"
 

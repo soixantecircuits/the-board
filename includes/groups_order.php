@@ -1,7 +1,7 @@
 <?php
 function group_order_page() {
   $plugin = The_Board::get_instance();
-  add_submenu_page('edit.php?post_type=member', __('Order Groups', $plugin->get_plugin_slug()), __('Order Groups', $plugin->get_plugin_slug()), 'manage_categories', 'order-groups', 'groups_order');
+  add_submenu_page('edit.php?post_type=member', __('Groups Order', $plugin->get_plugin_slug()), __('Groups Order', $plugin->get_plugin_slug()), 'manage_categories', 'order-groups', 'groups_order');
 }
 
 function group_order_css() {
@@ -52,7 +52,7 @@ function groups_order(){
   ?>
   <div class='wrap'>
     <?php screen_icon($plugin->get_plugin_slug()); ?>
-    <h2><?php _e('Order Groups', $plugin->get_plugin_slug()); ?></h2>
+    <h2><?php _e('Groups Order', $plugin->get_plugin_slug()); ?></h2>
     <form name="custom-order-form" method="post" action="">
       <?php
       $tax = 'groups';
@@ -67,7 +67,7 @@ function groups_order(){
         ?>
         <div id="poststuff" class="metabox-holder">
           <div class="widget order-widget">
-            <h3 class="widget-top"><?php _e( 'Groups', $plugin->get_plugin_slug()) ?> | <small><?php _e('Order the groups by dragging and dropping them into the desired order.', $plugin->get_plugin_slug()) ?></small></h3>
+            <h3 class="widget-top"><?php _e('Groups', $plugin->get_plugin_slug()) ?> | <small><?php _e('Order the groups by dragging and dropping them into the desired order.', $plugin->get_plugin_slug()) ?></small></h3>
             <div class="misc-pub-section">
               <ul id="custom-order-list">
                 <?php foreach ( $terms as $term ) : ?>
@@ -78,7 +78,7 @@ function groups_order(){
             </div>
             <div class="misc-pub-section misc-pub-section-last">
               <?php if ($parent_ID != 0) { ?>
-                <input type="submit" class="button" style="float:left" id="return-sub-posts" name="return-sub-posts" value="<?php _e('Return to Parent', $plugin->get_plugin_slug()); ?>" />
+                <input type="submit" class="button" style="float:left" id="return-sub-posts" name="return-sub-posts" value="<?php _e('Return to Parent Group', $plugin->get_plugin_slug()); ?>" />
               <?php } ?>
               <div id="publishing-action">
                 <img src="<?php echo esc_url( admin_url( 'images/wpspin_light.gif' ) ); ?>" id="custom-loading" style="display:none" alt="" />
@@ -92,12 +92,12 @@ function groups_order(){
 
           <?php $dropdown = group_order_sub_query( $terms, $tax ); if( !empty($dropdown) ) { ?>
             <div class="widget order-widget">
-              <h3 class="widget-top"><?php _e('Sub-Groups', $plugin->get_plugin_slug()); ?> | <small><?php _e('Choose a term from the drop down to order its sub-terms.', $plugin->get_plugin_slug()); ?></small></h3>
+              <h3 class="widget-top"><?php _e('Sub-Groups', $plugin->get_plugin_slug()); ?> | <small><?php _e('Choose a group from the drop down to order its sub-groups.', $plugin->get_plugin_slug()); ?></small></h3>
               <div class="misc-pub-section misc-pub-section-last">
                 <select id="sub-posts" name="sub-posts">
                   <?php echo $dropdown; ?>
                 </select>
-                <input type="submit" name="go-sub-posts" class="button" id="go-sub-posts" value="<?php _e('Order Sub-terms', $plugin->get_plugin_slug()) ?>" />
+                <input type="submit" name="go-sub-posts" class="button" id="go-sub-posts" value="<?php _e('Order Sub-groups', $plugin->get_plugin_slug()) ?>" />
               </div>
             </div>
           <?php } ?>

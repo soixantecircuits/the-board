@@ -46,6 +46,7 @@ class The_Board_Admin {
 	 * @since     1.0.0
 	 */
 	private function __construct() {
+    $this->tb_language_call();
     global $wpdb;
     $init_query = $wpdb->query("SHOW COLUMNS FROM $wpdb->terms LIKE 'term_order'");
     if ($init_query == 0) {	$wpdb->query("ALTER TABLE $wpdb->terms ADD `term_order` INT( 4 ) NULL DEFAULT '0'"); }
@@ -66,7 +67,6 @@ class The_Board_Admin {
 		 */
 		$plugin = The_Board::get_instance();
 		$this->plugin_slug = $plugin->get_plugin_slug();
-
 		$this->tb_fields_groups = $plugin->get_fields_groups();
     $this->tb_fields = $plugin->get_fields();
     $this->to_fields_total = $this->tb_fields;
@@ -92,10 +92,9 @@ class The_Board_Admin {
 		 * Read more about actions and filters:
 		 * http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
 		 */
-		add_action( 'plugins_loaded', array( $this, 'tb_language_call' ), 1);
+
 
 		add_action( 'add_meta_boxes', array( $this, 'tb_metaboxes_init') );
-
 
 		add_action( 'save_post', array( $this, 'tb_metaboxes_save_datas'), 0, 1 );
 
@@ -111,14 +110,14 @@ class The_Board_Admin {
   {
     if ($post->post_type == 'member'){
       echo '<div id="member-shortcode-holder">';
-      echo '<h3 id="member-shortcode-title"><span>'. __('Use this shortcode to display this member', $this->plugin_slug).'</span></h3>';
+      echo '<h3 id="member-shortcode-title"><span>'. __('Use the shortcode below to display this member', $this->plugin_slug).'</span></h3>';
       echo "<input type='text' id='member-shortcode'"." value='[theboard-show-member id=".$post->ID."]' readonly>";
       echo '</div>';
     }
   }
 
 	public function tb_language_call() {
-		load_plugin_textdomain($this->plugin_slug, false, basename(plugin_dir_path( dirname( __FILE__ ) ) ) . '/languages/');
+		load_plugin_textdomain(The_Board::get_instance()->get_plugin_slug(), false, basename(plugin_dir_path( dirname( __FILE__ ) ) ) . '/languages/');
 		//error_log(basename( plugin_dir_path( dirname( __FILE__ ) ) ) . '/languages/');
 	}
 
@@ -363,7 +362,7 @@ class The_Board_Admin {
             <?php
             if ( count($contactForms) > 0 ) {?>
               <select name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input_list'; ?>" class="chosen-select">
-                <option disabled <?php echo $isempty; ?> ><?php _e('Chose a contact in the list below', 'the-board'); ?></option>
+                <option disabled <?php echo $isempty; ?> ><?php _e('Choose a contact in the list below', 'the-board'); ?></option>
                 <option value=""><?php _e('None', 'the-board'); ?></option>
                 <?php
                 foreach ( $contactForms as $contactForm ) : setup_postdata( $contactForm );
@@ -428,7 +427,7 @@ class The_Board_Admin {
         <?php if($field['type'] != 'checkbox') {
           ?>
           <p>
-            <label class="selectit"><input type="checkbox" name="<?php echo 'hideit_' . $field['id']; ?>" <?php if(!empty($meta_hide)) echo 'checked'; ?>>Hide this information</label>
+            <label class="selectit"><input type="checkbox" name="<?php echo 'hideit_' . $field['id']; ?>" <?php if(!empty($meta_hide)) echo 'checked'; ?>><?php echo __('Hide this information', 'the-board');?></label>
           </p>
         <?php
         }
