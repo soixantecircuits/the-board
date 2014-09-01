@@ -427,7 +427,7 @@ class The_Board_Admin {
         <?php if($field['type'] != 'checkbox') {
           ?>
           <p>
-            <label class="selectit"><input type="checkbox" name="<?php echo 'hideit_' . $field['id']; ?>" <?php if(!empty($meta_hide)) echo 'checked'; ?>><?php echo __('Hide this information', 'the-board');?></label>
+            <label class="selectit"><input type="checkbox" name="<?php echo 'hideit_' . $field['id']; ?>" <?php if(!empty($meta_hide)) echo 'checked'; ?>><?php echo __('Hide this information', MEMBERS_PLUGIN_BASENAME);?></label>
           </p>
         <?php
         }
