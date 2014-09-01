@@ -42,7 +42,7 @@ class The_Board {
    *
    * @var      string
    */
-  protected $plugin_slug = 'the-board';
+  protected $plugin_slug = MEMBERS_PLUGIN_BASENAME;
 
   /**
    * Instance of this class.
@@ -85,23 +85,23 @@ class The_Board {
    * @return    Plugin slug variable.
    */
   public function get_plugin_slug() {
-    return $this->plugin_slug;
+    return MEMBERS_PLUGIN_BASENAME;
   }
 
   public function get_fields() {
     $prefix = 'tb_';
     return array(
         array(
-            'label'		=> __('Hierarchy', 'the-board'),
-            'desc'		=> __('0 being top level, how high is the member in his group ?', 'the-board'),
+            'label'		=> __('Hierarchy', MEMBERS_PLUGIN_BASENAME),
+            'desc'		=> __('0 being top level, how high is the member in his group ?', MEMBERS_PLUGIN_BASENAME),
             'id'		=> $prefix . 'hierarchy',
             'type'		=> 'number',
             'context'	=> 'side',
             'priority'	=> 'high'
         ),
         array(
-            'label'		=> __('Job', 'the-board'),
-            'desc'		=> __('Job occupied by the member.', 'the-board'),
+            'label'		=> __('Job', MEMBERS_PLUGIN_BASENAME),
+            'desc'		=> __('Job occupied by the member.', MEMBERS_PLUGIN_BASENAME),
             'id'		=> $prefix . 'job',
             'type'		=> 'text',
             'context'	=> 'side',
@@ -114,46 +114,46 @@ class The_Board {
     $prefix = 'tb_';
     return array(
         array(
-            'label'		=> __('Basic Information', 'the-board'),
+            'label'		=> __('Basic Information', MEMBERS_PLUGIN_BASENAME),
             'id'		=> $prefix . 'basic-information',
             'context'	=> 'normal',
             'priority'	=> 'default',
             'fields' => array(
                 array(
-                    'label'		=> __('Photo', 'the-board'),
-                    'desc'		=> __('', 'the-board'),
+                    'label'		=> __('Photo', MEMBERS_PLUGIN_BASENAME),
+                    'desc'		=> __('', MEMBERS_PLUGIN_BASENAME),
                     'id'		=> $prefix . 'photo',
                     'type'		=> 'image',
                     'context'	=> 'normal',
                     'priority'	=> 'default'
                 ),
                 array(
-                    'label'		=> __('Lastname', 'the-board'),
-                    'desc'		=> __('Lastname of the member.', 'the-board'),
+                    'label'		=> __('Lastname', MEMBERS_PLUGIN_BASENAME),
+                    'desc'		=> __('Lastname of the member.', MEMBERS_PLUGIN_BASENAME),
                     'id'		=> $prefix . 'lastname',
                     'type'		=> 'lastname',
                     'context'	=> 'normal',
                     'priority'	=> 'default'
                 ),
                 array(
-                    'label'		=> __('Firstname', 'the-board'),
-                    'desc'		=> __('Firstname of the member.', 'the-board'),
+                    'label'		=> __('Firstname', MEMBERS_PLUGIN_BASENAME),
+                    'desc'		=> __('Firstname of the member.', MEMBERS_PLUGIN_BASENAME),
                     'id'		=> $prefix . 'firstname',
                     'type'		=> 'text',
                     'context'	=> 'normal',
                     'priority'	=> 'default'
                 ),
                 array(
-                    'label'		=> __('Invert in glossary', 'the-board'),
-                    'desc'		=> __('If this is checked, member will be sorted by its firstname. "John Smith" would be find at "John" (J) instead of "Smith" (S).', 'the-board'),
+                    'label'		=> __('Invert in glossary', MEMBERS_PLUGIN_BASENAME),
+                    'desc'		=> __('If this is checked, member will be sorted by its firstname. "John Smith" would be find at "John" (J) instead of "Smith" (S).', MEMBERS_PLUGIN_BASENAME),
                     'id'		=> $prefix . 'invert',
                     'type'		=> 'checkbox',
                     'context'	=> 'normal',
                     'priority'	=> 'low'
                 ),
                 array(
-                    'label'		=> __('Custom field', 'the-board'),
-                    'desc'		=> __('Whatever you think will be useful to know about the member.', 'the-board'),
+                    'label'		=> __('Custom field', MEMBERS_PLUGIN_BASENAME),
+                    'desc'		=> __('Whatever you think will be useful to know about the member.', MEMBERS_PLUGIN_BASENAME),
                     'id'		=> $prefix . 'custom',
                     'type'		=> 'custom',
                     'context'	=> 'side',
@@ -162,70 +162,70 @@ class The_Board {
             )
         ),
         array(
-            'label'		=> __('Contact information', 'the-board'),
+            'label'		=> __('Contact information', MEMBERS_PLUGIN_BASENAME),
             'id'		=> $prefix . 'contact-information',
             'context'	=> 'normal',
             'priority'	=> 'default',
             'fields' => array(
                 array(
-                    'label'		=> __('Email', 'the-board'),
-                    'desc'		=> __('Email of the member.', 'the-board'),
+                    'label'		=> __('Email', MEMBERS_PLUGIN_BASENAME),
+                    'desc'		=> __('Email of the member.', MEMBERS_PLUGIN_BASENAME),
                     'id'		=> $prefix . 'email',
                     'type'		=> 'email',
                     'context'	=> 'normal',
                     'priority'	=> 'default'
                 ),
                 array(
-                    'label'		=> __('Contact form', 'the-board'),
-                    'desc'		=> __('Contact form of the member. Put the ID provided by Contact Form 7.', 'the-board'),
+                    'label'		=> __('Contact form', MEMBERS_PLUGIN_BASENAME),
+                    'desc'		=> __('Contact form of the member. Put the ID provided by Contact Form 7.', MEMBERS_PLUGIN_BASENAME),
                     'id'		=> $prefix . 'contact',
                     'type'		=> 'contact',
                     'context'	=> 'normal',
                     'priority'	=> 'default'
                 ),
                 array(
-                    'label'		=> __('Phone', 'the-board'),
-                    'desc'		=> __('Phone number of the member.', 'the-board'),
+                    'label'		=> __('Phone', MEMBERS_PLUGIN_BASENAME),
+                    'desc'		=> __('Phone number of the member.', MEMBERS_PLUGIN_BASENAME),
                     'id'		=> $prefix . 'phone',
                     'type'		=> 'tel',
                     'context'	=> 'normal',
                     'priority'	=> 'default'
                 ),
                 array(
-                    'label'		=> __('Facebook', 'the-board'),
-                    'desc'		=> __('URL for the Facebook account of the member.', 'the-board'),
+                    'label'		=> __('Facebook', MEMBERS_PLUGIN_BASENAME),
+                    'desc'		=> __('URL for the Facebook account of the member.', MEMBERS_PLUGIN_BASENAME),
                     'id'		=> $prefix . 'facebook',
                     'type'		=> 'text',
                     'context'	=> 'normal',
                     'priority'	=> 'default'
                 ),
                 array(
-                    'label'		=> __('Twitter', 'the-board'),
-                    'desc'		=> __('URL for the Twitter account of the member.', 'the-board'),
+                    'label'		=> __('Twitter', MEMBERS_PLUGIN_BASENAME),
+                    'desc'		=> __('URL for the Twitter account of the member.', MEMBERS_PLUGIN_BASENAME),
                     'id'		=> $prefix . 'twitter',
                     'type'		=> 'text',
                     'context'	=> 'normal',
                     'priority'	=> 'default'
                 ),
                 array(
-                    'label'		=> __('Google+', 'the-board'),
-                    'desc'		=> __('URL for the Google+ account of the member.', 'the-board'),
+                    'label'		=> __('Google+', MEMBERS_PLUGIN_BASENAME),
+                    'desc'		=> __('URL for the Google+ account of the member.', MEMBERS_PLUGIN_BASENAME),
                     'id'		=> $prefix . 'googleplus',
                     'type'		=> 'text',
                     'context'	=> 'normal',
                     'priority'	=> 'default'
                 ),
                 array(
-                    'label'		=> __('LinkedIn', 'the-board'),
-                    'desc'		=> __('URL for the LinkedIn account of the member.', 'the-board'),
+                    'label'		=> __('LinkedIn', MEMBERS_PLUGIN_BASENAME),
+                    'desc'		=> __('URL for the LinkedIn account of the member.', MEMBERS_PLUGIN_BASENAME),
                     'id'		=> $prefix . 'linkedIn',
                     'type'		=> 'text',
                     'context'	=> 'normal',
                     'priority'	=> 'default'
                 ),
                 array(
-                    'label'		=> __('Skype', 'the-board'),
-                    'desc'		=> __('URL for the Skype account of the member.', 'the-board'),
+                    'label'		=> __('Skype', MEMBERS_PLUGIN_BASENAME),
+                    'desc'		=> __('URL for the Skype account of the member.', MEMBERS_PLUGIN_BASENAME),
                     'id'		=> $prefix . 'skype',
                     'type'		=> 'text',
                     'context'	=> 'normal',
@@ -395,7 +395,7 @@ class The_Board {
    */
   public function load_plugin_textdomain() {
 
-    $domain = $this->plugin_slug;
+    $domain = MEMBERS_PLUGIN_BASENAME;
     $locale = apply_filters( 'plugin_locale', get_locale(), $domain );
 
     load_textdomain( $domain, trailingslashit( WP_LANG_DIR ) . $domain . '/' . $domain . '-' . $locale . '.mo' );
@@ -408,7 +408,7 @@ class The_Board {
    * @since    1.0.0
    */
   public function enqueue_styles() {
-    wp_enqueue_style( $this->plugin_slug . '-plugin-styles', plugins_url( 'assets/css/public.css', __FILE__ ), array(), self::VERSION );
+    wp_enqueue_style( MEMBERS_PLUGIN_BASENAME . '-plugin-styles', plugins_url( 'assets/css/public.css', __FILE__ ), array(), self::VERSION );
   }
 
   /**
@@ -417,7 +417,7 @@ class The_Board {
    * @since    1.0.0
    */
   public function enqueue_scripts() {
-    wp_enqueue_script( $this->plugin_slug . '-plugin-script', plugins_url( 'assets/js/public.js', __FILE__ ), array(  ), self::VERSION );
+    wp_enqueue_script( MEMBERS_PLUGIN_BASENAME . '-plugin-script', plugins_url( 'assets/js/public.js', __FILE__ ), array(  ), self::VERSION );
   }
 
   /**
@@ -460,7 +460,7 @@ class The_Board {
     }
 
     if( !isset($path) || !file_exists($path)){
-      return __('No template found. Sorry.', $this->plugin_slug);
+      return __('No template found. Sorry.', MEMBERS_PLUGIN_BASENAME);
     }
   }
 

@@ -51,11 +51,3 @@ function get_groups($id){
   }
   return $groups_string;
 }
-
-
-//add_action('do_meta_boxes', 'move_meta_box');
-//function move_meta_box()
-//{
-//  remove_meta_box('groupsdiv', 'member', 'side');
-//  add_meta_box( "groupsdiv", __('Groups', 'the-board'), 'wp_nav_menu_item_taxonomy_meta_box', 'member', 'side', 'default');
-//}
