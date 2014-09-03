@@ -26,7 +26,7 @@ class The_Board {
    *
    * @var     string
    */
-  const VERSION = '1.0.8';
+  const VERSION = '1.0.019';
 
   /**
    * @theboard - Rename "the-board" to the name of your plugin
