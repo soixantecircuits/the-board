@@ -167,10 +167,10 @@ class The_Board_Admin {
 			return;
 		}
 
+    wp_enqueue_style( $this->plugin_slug .'-admin-styles', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), The_Board::VERSION );
 
-		$screen = get_current_screen();
+    $screen = get_current_screen();
 		if ( $screen->id == 'member' ) {
-			wp_enqueue_style( $this->plugin_slug .'-admin-styles', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), The_Board::VERSION );
 			wp_enqueue_style( $this->plugin_slug .'-chosen-styles', plugins_url( 'assets/css/chosen.min.css', __FILE__ ), array(), The_Board::VERSION );
 		}
 
@@ -190,13 +190,13 @@ class The_Board_Admin {
 	public function enqueue_admin_scripts() {
 
 		if ( ! isset( $this->plugin_slug ) ) {
-			return;
-		}
-        $screen = get_current_screen();
-        if ( $screen->id == 'member' || $screen->id == 'edit-member' ) {
-			wp_enqueue_script( $this->plugin_slug . '-chosen', plugins_url( 'assets/js/chosen.jquery.min.js', __FILE__ ), array( 'jquery' ), The_Board::VERSION );
-			wp_enqueue_script( $this->plugin_slug . '-admin-script', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery',$this->plugin_slug . '-chosen' ), The_Board::VERSION );
-		}
+      return;
+    }
+    $screen = get_current_screen();
+    if ( $screen->id == 'member' || $screen->id == 'edit-member' ) {
+      wp_enqueue_script( $this->plugin_slug . '-chosen', plugins_url( 'assets/js/chosen.jquery.min.js', __FILE__ ), array( 'jquery' ), The_Board::VERSION );
+      wp_enqueue_script( $this->plugin_slug . '-admin-script', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery',$this->plugin_slug . '-chosen' ), The_Board::VERSION );
+    }
 
 	}
 

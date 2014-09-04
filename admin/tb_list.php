@@ -20,7 +20,9 @@ function member_columns( $column, $post_id ) {
       if( empty( $image ) ) {
         $image = plugins_url( '/assets/replace.jpg' , dirname(__FILE__) );
       }
-      echo '<img width="72" height="72" src="'. $image . '">';
+      echo '<div class="tb_photo-container-list">';
+      echo '<img src="'. $image . '">';
+      echo '</div>';
       break;
     case 'title' :
       echo get_post_meta( $post_id , 'tb_lastname' , true );
