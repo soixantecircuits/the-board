@@ -307,7 +307,7 @@ class The_Board_Admin {
     foreach ($groups as $group){
       $meta_value = get_post_meta( $member_id, 'tb_email_'.$group->slug, true );
       $meta_hide = get_post_meta( $member_id, 'hideit_tb_email_'.$group->slug, true );
-      $checked = empty($meta_hide)? '' : 'checked';
+      $checked = (empty($meta_hide) || $meta_hide=='off')? '' : 'checked';
       echo '<div class="tb_field tb_email_'.$group->slug.'-container">';
       echo '<input type="hidden" name="tb_mb_nonce_' . $group->slug.'" value="'.wp_create_nonce( basename(__FILE__) ).'">';
       echo '<h4 class="tb_email_'.$group->slug.'-title">'.__('Email (', MEMBERS_PLUGIN_BASENAME). $group->name.')</h4>';
@@ -448,7 +448,7 @@ class The_Board_Admin {
         <?php if($field['type'] != 'checkbox') {
           ?>
           <p>
-            <label class="selectit"><input type="checkbox" name="<?php echo 'hideit_' . $field['id']; ?>" <?php if(!empty($meta_hide)) echo 'checked'; ?>><?php echo __('Hide this information', MEMBERS_PLUGIN_BASENAME);?></label>
+            <label class="selectit"><input type="checkbox" name="<?php echo 'hideit_' . $field['id']; ?>" <?php if(!empty($meta_hide) && $meta_hide != 'off') echo 'checked'; ?>><?php echo __('Hide this information', MEMBERS_PLUGIN_BASENAME);?></label>
           </p>
         <?php
         }
@@ -548,9 +548,10 @@ class The_Board_Admin {
     elseif('' == $new_content && $old_content)
       delete_post_meta( $post->ID, $field['id'], $old_content );
 
-    if(isset($_POST['hideit_' . $field['id']])){
-      $old_hidden = get_post_meta( $post->ID, 'hideit_' . $field['id'], true );
-      $new_hidden = $_POST['hideit_' . $field['id']];
+
+    $old_hidden = get_post_meta( $post->ID, 'hideit_' . $field['id'], true );
+    if(isset($_POST['hideit_' . $field['id']]) || $old_hidden != ''){
+      $new_hidden = isset($_POST['hideit_' . $field['id']])? $_POST['hideit_' . $field['id']] : 'off';
 
       if(isset($new_hidden) && $new_hidden != '')
         update_post_meta( $post->ID, 'hideit_' . $field['id'], $new_hidden );

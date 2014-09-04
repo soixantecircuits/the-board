@@ -54,10 +54,12 @@
         <?php
         $group = get_term_by('term_taxonomy_id', $current_group, 'groups');
         $should_show = false;
+        if ($group != false){
           $meta_name = 'tb_email_'.$group->slug;
           if (isset($postmeta[$meta_name])){
             $should_show = true;
           }
+        }
         ?>
         <?php if( isset($postmeta['tb_contact']) || isset($postmeta['tb_email']) || isset($postmeta['tb_phone']) || $should_show ) { ?>
             <tr class="contact_row">
@@ -80,7 +82,7 @@
                     </tr>
                 <?php } ?>
                 <?php
-                  $meta_name = 'tb_email_'.$group->slug;
+                if (isset($meta_name)){
                   if (isset($postmeta[$meta_name]) && !isset($postmeta['hideit_'.$meta_name]) ){
                     ?>
                     <tr>
@@ -90,6 +92,7 @@
                     </tr>
                   <?php
                   }
+                }
                 ?>
                 <?php if( isset($postmeta['tb_phone']) && !isset($postmeta['hideit_tb_phone'])) { ?>
                     <tr>
