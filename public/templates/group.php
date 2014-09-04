@@ -18,7 +18,7 @@
     <tbody>
         <tr>
             <?php
-                $term_children = get_term_children( $term->term_id, 'groups' );
+            $term_children = get_terms( 'groups', array( 'child_of' => $term->term_id, 'orderby' => 'term_order', 'order' => 'ASC' ) );
                 if( sizeof($term_children) ){
                     ?>
                     <?php
