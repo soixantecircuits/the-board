@@ -51,7 +51,15 @@
                 </td>
             </tr>
         <?php } ?>
-        <?php if( isset($postmeta['tb_contact']) || isset($postmeta['tb_email']) || isset($postmeta['tb_phone']) ) { ?>
+        <?php
+        $group = get_term_by('term_taxonomy_id', $current_group, 'groups');
+        $should_show = false;
+          $meta_name = 'tb_email_'.$group->slug;
+          if (isset($postmeta[$meta_name])){
+            $should_show = true;
+          }
+        ?>
+        <?php if( isset($postmeta['tb_contact']) || isset($postmeta['tb_email']) || isset($postmeta['tb_phone']) || $should_show ) { ?>
             <tr class="contact_row">
                 <?php if( isset($postmeta['tb_contact']) && !isset($postmeta['hideit_tb_contact'])) { ?>
                     <tr>
@@ -71,6 +79,18 @@
                         </td>
                     </tr>
                 <?php } ?>
+                <?php
+                  $meta_name = 'tb_email_'.$group->slug;
+                  if (isset($postmeta[$meta_name]) && !isset($postmeta['hideit_'.$meta_name]) ){
+                    ?>
+                    <tr>
+                      <td colspan="5" rowspan="" headers="">
+                        <a href="mailto:<?php echo $postmeta[$meta_name][0]; ?>"><?php echo $postmeta[$meta_name][0]; ?></a>
+                      </td>
+                    </tr>
+                  <?php
+                  }
+                ?>
                 <?php if( isset($postmeta['tb_phone']) && !isset($postmeta['hideit_tb_phone'])) { ?>
                     <tr>
                         <td colspan="5" rowspan="" headers="">

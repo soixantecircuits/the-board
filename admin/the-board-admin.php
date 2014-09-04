@@ -65,21 +65,24 @@ class The_Board_Admin {
 		 * @theboard:
 		 *
 		 */
-		$plugin = The_Board::get_instance();
+    $plugin = The_Board::get_instance();
 
-		$this->plugin_slug = $plugin->get_plugin_slug();
+    $this->plugin_slug = $plugin->get_plugin_slug();
 
-        $this->tb_fields_groups = $plugin->get_fields_groups();
+    $this->tb_fields_groups = $plugin->get_fields_groups();
 
-        $this->tb_fields = $plugin->get_fields();
+    $this->tb_fields = $plugin->get_fields();
 
-        $this->to_fields_total = $this->tb_fields;
+    $this->to_fields_total = $this->tb_fields;
 
-        foreach ($this->tb_fields_groups as $field_group) {
-          foreach ($field_group['fields'] as $field){
-            array_push($this->to_fields_total, $field);
-          }
-        }
+    foreach ($this->tb_fields_groups as $field_group) {
+      foreach ($field_group['fields'] as $field){
+        array_push($this->to_fields_total, $field);
+      }
+    }
+
+
+
 		// Load admin style sheet and JavaScript.
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
@@ -299,6 +302,22 @@ class The_Board_Admin {
     }
 	}
 
+  public function show_groups_emails($member_id){
+    $groups = get_the_terms($member_id, 'groups');
+    foreach ($groups as $group){
+      $meta_value = get_post_meta( $member_id, 'tb_email_'.$group->slug, true );
+      $meta_hide = get_post_meta( $member_id, 'hideit_tb_email_'.$group->slug, true );
+      $checked = empty($meta_hide)? '' : 'checked';
+      echo '<div class="tb_field tb_email_'.$group->slug.'-container">';
+      echo '<input type="hidden" name="tb_mb_nonce_' . $group->slug.'" value="'.wp_create_nonce( basename(__FILE__) ).'">';
+      echo '<h4 class="tb_email_'.$group->slug.'-title">'.__('Email (', MEMBERS_PLUGIN_BASENAME). $group->name.')</h4>';
+      echo '<input type="email" name="tb_email_'.$group->slug.'" id="tb_email_'.$group->slug . '_input" value="'.$meta_value.'">';
+      echo '<p class="howto">'. __('Email of the group: ', MEMBERS_PLUGIN_BASENAME) . $group->name .'</p>';
+      echo '<p><label class="selectit"><input type="checkbox" name="hideit_tb_email_'.$group->slug . '"' . $checked .' >'. __('Hide this information', MEMBERS_PLUGIN_BASENAME).'</label></p>';
+      echo '</div>';
+    }
+  }
+
 	public function tb_show_metabox($post,  $metabox ) {
     if (isset($metabox['args']['fields'])){
       $fields = $metabox['args']['fields'];
@@ -437,12 +456,20 @@ class The_Board_Admin {
         ?>
       </div>
     <?php
+      if ($field['type'] == 'email'){
+        $this->show_groups_emails($post->ID);
+      }
     }
 	}
 
 	public function tb_metaboxes_save_datas(){
 		global $post;
 
+    $groups = get_terms('groups');
+    foreach ($groups as $group) {
+      $field = array('id' => $group->slug);
+      array_push($this->to_fields_total, $field);
+    }
 		if(!isset($post) || !isset($_POST['post_type']))
 			return;
 
@@ -482,6 +509,16 @@ class The_Board_Admin {
 			}
 		}
 
+    $groups = get_terms('groups', array('hide_empty'=>false));
+    foreach ($groups as $group) {
+      $field = array('id' => 'tb_email_' . $group->slug);
+      if(isset($_POST['tb_mb_nonce_' . $field['id']])){
+        if(!wp_verify_nonce( $_POST['tb_mb_nonce_' . $field['id']], basename(__FILE__)) )
+          return;
+      }
+      $this->save_field($field, $post);
+    }
+
 		foreach ($this->to_fields_total as $field) {
 			if(isset($_POST['tb_mb_nonce_' . $field['id']])){
 				if(!wp_verify_nonce( $_POST['tb_mb_nonce_' . $field['id']], basename(__FILE__)) )
@@ -489,36 +526,38 @@ class The_Board_Admin {
 			} else {
 				return;
 			}
-			if(defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
-				return;
-			if('member' !== $_POST['post_type'])
-				return;
-			if(!current_user_can('edit_page', $post->ID))
-				return;
-			elseif(!current_user_can('edit_post', $post->ID))
-				return;
-
-			$old_content = get_post_meta( $post->ID, $field['id'], true );
-			$new_content = isset($_POST[$field['id']])? $_POST[$field['id']] : '';
-
-			if( isset($new_content) && $new_content != $old_content)
-				update_post_meta( $post->ID, $field['id'], $new_content );
-			elseif('' == $new_content && $old_content)
-				delete_post_meta( $post->ID, $field['id'], $old_content );
-
-			if(isset($_POST['hideit_' . $field['id']])){
-				$old_hidden = get_post_meta( $post->ID, 'hideit_' . $field['id'], true );
-				$new_hidden = $_POST['hideit_' . $field['id']];
-
-				if(isset($new_hidden) && $new_hidden != '')
-					update_post_meta( $post->ID, 'hideit_' . $field['id'], $new_hidden );
-				elseif($new_hidden == '' && $old_hidden)
-					delete_post_meta( $post->ID, 'hideit_' . $field['id'], $old_hidden );
-			}
+      $this->save_field($field, $post);
 		}
 	}
 
+  public function save_field($field, $post){
+    if(defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
+      return;
+    if('member' !== $_POST['post_type'])
+      return;
+    if(!current_user_can('edit_page', $post->ID))
+      return;
+    elseif(!current_user_can('edit_post', $post->ID))
+      return;
 
+    $old_content = get_post_meta( $post->ID, $field['id'], true );
+    $new_content = isset($_POST[$field['id']])? $_POST[$field['id']] : '';
+
+    if( isset($new_content) && $new_content != $old_content)
+      update_post_meta( $post->ID, $field['id'], $new_content );
+    elseif('' == $new_content && $old_content)
+      delete_post_meta( $post->ID, $field['id'], $old_content );
+
+    if(isset($_POST['hideit_' . $field['id']])){
+      $old_hidden = get_post_meta( $post->ID, 'hideit_' . $field['id'], true );
+      $new_hidden = $_POST['hideit_' . $field['id']];
+
+      if(isset($new_hidden) && $new_hidden != '')
+        update_post_meta( $post->ID, 'hideit_' . $field['id'], $new_hidden );
+      elseif($new_hidden == '' && $old_hidden)
+        delete_post_meta( $post->ID, 'hideit_' . $field['id'], $old_hidden );
+    }
+  }
 
 	public function tb_update_message(){
 		// See http://wp-bytes.com/function/2013/02/changing-post-updated-messages/

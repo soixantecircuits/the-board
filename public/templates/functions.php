@@ -57,7 +57,7 @@
 
 
                 echo '<td colspan="'.$colspan.'" rowspan="" headers="" class="member_cell">';
-                    echo do_shortcode( '[theboard-show-member id='.$member['id'].']' );
+                    echo do_shortcode( '[theboard-show-member id='.$member['id'].' current_group=' . $group . ']' );
                 echo '</td>';
 
                 if(0 == $i % $max_cell && $i !== $total_posts){

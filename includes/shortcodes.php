@@ -28,7 +28,8 @@ function tb_get_one_member($atts) {
     $return = null;
 
     extract(shortcode_atts( array(
-        'id'    => 0
+        'id'    => 0 ,
+      'current_group' => ''
     ), $atts, 'theboard-show-member' ) );
 
     $path = The_Board::tb_check_path('member');
