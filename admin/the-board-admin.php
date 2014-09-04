@@ -551,7 +551,7 @@ class The_Board_Admin {
 
     $old_hidden = get_post_meta( $post->ID, 'hideit_' . $field['id'], true );
     if(isset($_POST['hideit_' . $field['id']]) || $old_hidden != ''){
-      $new_hidden = isset($_POST['hideit_' . $field['id']])? $_POST['hideit_' . $field['id']] : 'off';
+      $new_hidden = isset($_POST['hideit_' . $field['id']])? $_POST['hideit_' . $field['id']] : '';
 
       if(isset($new_hidden) && $new_hidden != '')
         update_post_meta( $post->ID, 'hideit_' . $field['id'], $new_hidden );
