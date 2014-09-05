@@ -304,17 +304,19 @@ class The_Board_Admin {
 
   public function show_groups_emails($member_id){
     $groups = get_the_terms($member_id, 'groups');
-    foreach ($groups as $group){
-      $meta_value = get_post_meta( $member_id, 'tb_email_'.$group->slug, true );
-      $meta_hide = get_post_meta( $member_id, 'hideit_tb_email_'.$group->slug, true );
-      $checked = (empty($meta_hide) || $meta_hide=='off')? '' : 'checked';
-      echo '<div class="tb_field tb_email_'.$group->slug.'-container">';
-      echo '<input type="hidden" name="tb_mb_nonce_' . $group->slug.'" value="'.wp_create_nonce( basename(__FILE__) ).'">';
-      echo '<h4 class="tb_email_'.$group->slug.'-title">'.__('Email (', MEMBERS_PLUGIN_BASENAME). $group->name.')</h4>';
-      echo '<input type="email" name="tb_email_'.$group->slug.'" id="tb_email_'.$group->slug . '_input" value="'.$meta_value.'">';
-      echo '<p class="howto">'. __('Email of the group: ', MEMBERS_PLUGIN_BASENAME) . $group->name .'</p>';
-      echo '<p><label class="selectit"><input type="checkbox" name="hideit_tb_email_'.$group->slug . '"' . $checked .' >'. __('Hide this information', MEMBERS_PLUGIN_BASENAME).'</label></p>';
-      echo '</div>';
+    if ($groups !=false){
+      foreach ($groups as $group){
+        $meta_value = get_post_meta( $member_id, 'tb_email_'.$group->slug, true );
+        $meta_hide = get_post_meta( $member_id, 'hideit_tb_email_'.$group->slug, true );
+        $checked = (empty($meta_hide) || $meta_hide=='off')? '' : 'checked';
+        echo '<div class="tb_field tb_email_'.$group->slug.'-container">';
+        echo '<input type="hidden" name="tb_mb_nonce_' . $group->slug.'" value="'.wp_create_nonce( basename(__FILE__) ).'">';
+        echo '<h4 class="tb_email_'.$group->slug.'-title">'.__('Email (', MEMBERS_PLUGIN_BASENAME). $group->name.')</h4>';
+        echo '<input type="email" name="tb_email_'.$group->slug.'" id="tb_email_'.$group->slug . '_input" value="'.$meta_value.'">';
+        echo '<p class="howto">'. __('Email of the group: ', MEMBERS_PLUGIN_BASENAME) . $group->name .'</p>';
+        echo '<p><label class="selectit"><input type="checkbox" name="hideit_tb_email_'.$group->slug . '"' . $checked .' >'. __('Hide this information', MEMBERS_PLUGIN_BASENAME).'</label></p>';
+        echo '</div>';
+      }
     }
   }
 
