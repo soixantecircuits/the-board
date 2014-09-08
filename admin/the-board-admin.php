@@ -302,24 +302,6 @@ class The_Board_Admin {
     }
 	}
 
-  public function show_groups_emails($member_id){
-    $groups = get_the_terms($member_id, 'groups');
-    if ($groups !=false){
-      foreach ($groups as $group){
-        $meta_value = get_post_meta( $member_id, 'tb_email_'.$group->slug, true );
-        $meta_hide = get_post_meta( $member_id, 'hideit_tb_email_'.$group->slug, true );
-        $checked = (empty($meta_hide) || $meta_hide=='off')? '' : 'checked';
-        echo '<div class="tb_field tb_email_'.$group->slug.'-container">';
-        echo '<input type="hidden" name="tb_mb_nonce_' . $group->slug.'" value="'.wp_create_nonce( basename(__FILE__) ).'">';
-        echo '<h4 class="tb_email_'.$group->slug.'-title">'.__('Email (', MEMBERS_PLUGIN_BASENAME). $group->name.')</h4>';
-        echo '<input type="email" name="tb_email_'.$group->slug.'" id="tb_email_'.$group->slug . '_input" value="'.$meta_value.'">';
-        echo '<p class="howto">'. __('Email of the group: ', MEMBERS_PLUGIN_BASENAME) . $group->name .'</p>';
-        echo '<p><label class="selectit"><input type="checkbox" name="hideit_tb_email_'.$group->slug . '"' . $checked .' >'. __('Hide this information', MEMBERS_PLUGIN_BASENAME).'</label></p>';
-        echo '</div>';
-      }
-    }
-  }
-
 	public function tb_show_metabox($post,  $metabox ) {
     if (isset($metabox['args']['fields'])){
       $fields = $metabox['args']['fields'];
@@ -461,8 +443,67 @@ class The_Board_Admin {
       if ($field['type'] == 'email'){
         $this->show_groups_emails($post->ID);
       }
+      if ($field['type'] == 'contact'){
+        $this->show_groups_contact_form($post->ID);
+      }
     }
 	}
+
+  public function show_groups_contact_form($member_id){
+  $groups = get_the_terms($member_id, 'groups');
+    if ($groups !=false) {
+      foreach ($groups as $group) {
+        $meta_value = get_post_meta( $member_id, 'tb_contact_'.$group->slug, true );
+        $meta_hide = get_post_meta( $member_id, 'hideit_tb_contact_'.$group->slug, true );
+        $isempty = empty($meta_value) ? 'selected' : null;
+        $args = array (
+            'post_type'         => 'wpcf7_contact_form',
+            'posts_per_page'    => '-1',
+            'order'             => 'desc'
+        );
+        $contactForms = get_posts( $args );
+        $checked = (empty($meta_hide) || $meta_hide=='off')? '' : 'checked';
+        echo '<div class="tb_field tb_contact_'.$group->slug.'-container">';
+        echo '<input type="hidden" name="tb_mb_nonce_' . $group->slug.'" value="'.wp_create_nonce( basename(__FILE__) ).'">';
+        echo '<h4 class="tb_contact_'.$group->slug.'-title">'.__('Contact Form (', MEMBERS_PLUGIN_BASENAME). $group->name.')</h4>';
+
+        echo '<select name="tb_contact_'.$group->slug.'" id="tb_contact_'.$group->slug . '_input_list" class="chosen-select">';
+        echo '<option disabled '. $isempty .' >' . _e('Choose a contact in the list below', MEMBERS_PLUGIN_BASENAME).'</option>';
+        echo '<option value="">'._e('None', MEMBERS_PLUGIN_BASENAME).'</option>';
+          foreach ($contactForms as $contactForm) : setup_postdata($contactForm);
+            $selected = $contactForm->ID == $meta_value ? 'selected' : null;
+            echo '<option value="' . $contactForm->ID . '" ' . $selected . ' >' . $contactForm->post_title . '</option>';
+          endforeach;
+          wp_reset_postdata();
+        echo 'Contact Form';
+        echo '</select>';
+        echo '<p class="howto">'. __('Contact form of the group: ', MEMBERS_PLUGIN_BASENAME) . $group->name .'</p>';
+        echo '<p><label class="selectit"><input type="checkbox" name="hideit_tb_contact_'.$group->slug . '"' . $checked .' >'. __('Hide this information', MEMBERS_PLUGIN_BASENAME).'</label></p>';
+        echo '</div>';
+        ?>
+
+      <?php
+      }
+    }
+  }
+
+  public function show_groups_emails($member_id){
+    $groups = get_the_terms($member_id, 'groups');
+    if ($groups !=false){
+      foreach ($groups as $group){
+        $meta_value = get_post_meta( $member_id, 'tb_email_'.$group->slug, true );
+        $meta_hide = get_post_meta( $member_id, 'hideit_tb_email_'.$group->slug, true );
+        $checked = (empty($meta_hide) || $meta_hide=='off')? '' : 'checked';
+        echo '<div class="tb_field tb_email_'.$group->slug.'-container">';
+        echo '<input type="hidden" name="tb_mb_nonce_' . $group->slug.'" value="'.wp_create_nonce( basename(__FILE__) ).'">';
+        echo '<h4 class="tb_email_'.$group->slug.'-title">'.__('Email (', MEMBERS_PLUGIN_BASENAME). $group->name.')</h4>';
+        echo '<input type="email" name="tb_email_'.$group->slug.'" id="tb_email_'.$group->slug . '_input" value="'.$meta_value.'">';
+        echo '<p class="howto">'. __('Email of the group: ', MEMBERS_PLUGIN_BASENAME) . $group->name .'</p>';
+        echo '<p><label class="selectit"><input type="checkbox" name="hideit_tb_email_'.$group->slug . '"' . $checked .' >'. __('Hide this information', MEMBERS_PLUGIN_BASENAME).'</label></p>';
+        echo '</div>';
+      }
+    }
+  }
 
 	public function tb_metaboxes_save_datas(){
 		global $post;
@@ -513,12 +554,18 @@ class The_Board_Admin {
 
     $groups = get_terms('groups', array('hide_empty'=>false));
     foreach ($groups as $group) {
-      $field = array('id' => 'tb_email_' . $group->slug);
-      if(isset($_POST['tb_mb_nonce_' . $field['id']])){
-        if(!wp_verify_nonce( $_POST['tb_mb_nonce_' . $field['id']], basename(__FILE__)) )
+      $field_email = array('id' => 'tb_email_' . $group->slug);
+      if(isset($_POST['tb_mb_nonce_' . $field_email['id']])){
+        if(!wp_verify_nonce( $_POST['tb_mb_nonce_' . $field_email['id']], basename(__FILE__)) )
           return;
       }
-      $this->save_field($field, $post);
+      $this->save_field($field_email, $post);
+      $field_contact = array('id' => 'tb_contact_' . $group->slug);
+      if(isset($_POST['tb_mb_nonce_' . $field_contact['id']])){
+        if(!wp_verify_nonce( $_POST['tb_mb_nonce_' . $field_contact['id']], basename(__FILE__)) )
+          return;
+      }
+      $this->save_field($field_contact, $post);
     }
 
 		foreach ($this->to_fields_total as $field) {
@@ -533,6 +580,7 @@ class The_Board_Admin {
 	}
 
   public function save_field($field, $post){
+
     if(defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
       return;
     if('member' !== $_POST['post_type'])
@@ -549,7 +597,6 @@ class The_Board_Admin {
       update_post_meta( $post->ID, $field['id'], $new_content );
     elseif('' == $new_content && $old_content)
       delete_post_meta( $post->ID, $field['id'], $old_content );
-
 
     $old_hidden = get_post_meta( $post->ID, 'hideit_' . $field['id'], true );
     if(isset($_POST['hideit_' . $field['id']]) || $old_hidden != ''){

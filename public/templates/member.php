@@ -53,15 +53,20 @@
         <?php } ?>
         <?php
         $group = get_term_by('term_taxonomy_id', $current_group, 'groups');
-        $should_show = false;
+        $should_show_email = false;
+        $should_show_contact = false;
         if ($group != false){
-          $meta_name = 'tb_email_'.$group->slug;
-          if (isset($postmeta[$meta_name])){
-            $should_show = true;
+          $email_meta_name = 'tb_email_'.$group->slug;
+          $contact_meta_name = 'tb_contact_'.$group->slug;
+          if (isset($postmeta[$email_meta_name])){
+            $should_show_email = true;
+          }
+          if (isset($postmeta[$contact_meta_name])){
+            $should_show_contact = true;
           }
         }
         ?>
-        <?php if( isset($postmeta['tb_contact']) || isset($postmeta['tb_email']) || isset($postmeta['tb_phone']) || $should_show ) { ?>
+        <?php if( isset($postmeta['tb_contact']) || isset($postmeta['tb_email']) || isset($postmeta['tb_phone']) || $should_show_email || $should_show_contact ) { ?>
             <tr class="contact_row">
                 <?php if( isset($postmeta['tb_contact']) && !isset($postmeta['hideit_tb_contact'])) { ?>
                     <tr>
@@ -82,12 +87,23 @@
                     </tr>
                 <?php } ?>
                 <?php
-                if (isset($meta_name)){
-                  if (isset($postmeta[$meta_name]) && !isset($postmeta['hideit_'.$meta_name]) ){
+                if (isset($email_meta_name)){
+                  if (isset($postmeta[$email_meta_name]) && !isset($postmeta['hideit_'.$email_meta_name]) ){
                     ?>
                     <tr>
                       <td colspan="5" rowspan="" headers="">
-                        <a href="mailto:<?php echo $postmeta[$meta_name][0]; ?>"><?php echo $postmeta[$meta_name][0]; ?></a>
+                        <a href="mailto:<?php echo $postmeta[$email_meta_name][0]; ?>"><?php echo $postmeta[$email_meta_name][0]; ?></a>
+                      </td>
+                    </tr>
+                  <?php
+                  }
+                }
+                if (isset($contact_meta_name)){
+                  if (isset($postmeta[$contact_meta_name]) && !isset($postmeta['hideit_'.$contact_meta_name]) ){
+                    ?>
+                    <tr>
+                      <td colspan="5" rowspan="" headers="">
+                        <?php echo do_shortcode('[modal name="'.__('Contacter', 'the-board').' '.$fullname.'" class="line" title="'.__('Contacter', 'the-board').' '.$fullname.'" width="320px"][contact-form-7 id="'.$postmeta[$contact_meta_name][0].'"][/modal]'); ?>
                       </td>
                     </tr>
                   <?php
