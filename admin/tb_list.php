@@ -7,7 +7,8 @@ function set_member_columns($columns) {
       'first_name'  => __('First name', The_Board::get_instance()->get_plugin_slug()),
       'shortcode'   => __('Shortcode', The_Board::get_instance()->get_plugin_slug()),
       'group'       => __('Group', The_Board::get_instance()->get_plugin_slug()),
-      'hierarchy'   => __('Hierarchy', The_Board::get_instance()->get_plugin_slug())
+      'hierarchy'   => __('Hierarchy', The_Board::get_instance()->get_plugin_slug()),
+      'order'   => __('Order', The_Board::get_instance()->get_plugin_slug())
   );
 }
 add_filter('manage_member_posts_columns' , 'set_member_columns');
@@ -35,6 +36,9 @@ function member_columns( $column, $post_id ) {
       break;
     case 'hierarchy' :
       echo get_post_meta( $post_id , 'tb_hierarchy' , true );
+      break;
+    case 'order' :
+      echo get_post_meta( $post_id , 'tb_order' , true );
       break;
     case 'group' :
       echo get_groups( $post_id);
@@ -69,6 +73,18 @@ function tb_quickedit($column, $post_type){
       </fieldset>
     <?php
       break;
+    case 'order':
+      ?>
+      <fieldset class="inline-edit-col-right">
+        <div class="inline-edit-col">
+          <label for="tb_order" class="inline-edit-status alignleft">
+            <span><?php _e('Order', The_Board::get_instance()->get_plugin_slug()); ?></span>
+            <input type="number" name="tb_order" min="0" id="tb_order">
+          </label>
+        </div>
+      </fieldset>
+      <?php
+      break;
   }
 
 }
@@ -92,8 +108,14 @@ function tb_save_quickedit($post_id){
       $hierarchy = esc_attr($_POST['tb_hierarchy']);
       update_post_meta( $post_id, 'tb_hierarchy', $hierarchy);
   }
+  if (isset($_POST['tb_order']) && ($post->post_type != 'revision')) {
+    $order = esc_attr($_POST['tb_order']);
+    update_post_meta( $post_id, 'tb_order', $order);
+  }
   if( isset($hierarchy) )
     return $hierarchy;
+  else if( isset($order) )
+    return $order;
   else
     return $post_id;
 }
@@ -108,6 +130,10 @@ function tb_quickedit_js(){
         inlineEditPost.revert();
         document.getElementById('tb_hierarchy').value = hierarchy;
       }
+      function quickedit_order(order) {
+        inlineEditPost.revert();
+        document.getElementById('tb_order').value = order;
+      }
     </script>
   <?php
 }
@@ -118,9 +144,10 @@ function tb_expand_quick_edit_link($actions, $post) {
       return $actions;
 
     $hierarchy = get_post_meta( $post->ID, 'tb_hierarchy', TRUE);
+    $order = get_post_meta( $post->ID, 'tb_order', TRUE);
     $actions['inline hide-if-no-js'] = '<a href="#" class="editinline" title="';
     $actions['inline hide-if-no-js'] .= esc_attr( __( 'Edit this item inline' ) ) . '" ';
-    $actions['inline hide-if-no-js'] .= " onclick=\"quickedit_hierarchy('{$hierarchy}')\">";
+    $actions['inline hide-if-no-js'] .= " onclick=\"quickedit_hierarchy('{$hierarchy}'); quickedit_order('{$order}');\">";
     $actions['inline hide-if-no-js'] .= __( 'Quick&nbsp;Edit' );
     $actions['inline hide-if-no-js'] .= '</a>';
     return $actions;

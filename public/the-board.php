@@ -91,6 +91,14 @@ class The_Board {
             'priority'  => 'high'
         ),
         array(
+            'label'     => __('Order', MEMBERS_PLUGIN_BASENAME),
+            'desc'      => __('The order for showing the members from a same hierarchy?', MEMBERS_PLUGIN_BASENAME),
+            'id'        => $prefix . 'order',
+            'type'      => 'order',
+            'context'   => 'side',
+            'priority'  => 'high'
+        ),
+        array(
             'label'     => __('Job', MEMBERS_PLUGIN_BASENAME),
             'desc'      => __('Job occupied by the member.', MEMBERS_PLUGIN_BASENAME),
             'id'        => $prefix . 'job',

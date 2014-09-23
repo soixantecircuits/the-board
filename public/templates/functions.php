@@ -7,6 +7,10 @@
  */
 ?>
 <?php
+    function sortOrder($a, $b) {
+      return  $b["order"] <= $a["order"];
+    }
+
     function display_members_hierarchically($group, $include_children){
         $i = 0;
         $max_cell = 3;
@@ -26,15 +30,16 @@
         );
 
         $hierarchy_row = array();
-
         foreach ($member_query->get_posts() as $member) {
             $rank = get_post_meta( $member->ID, 'tb_hierarchy', true );
+            $order = get_post_meta( $member->ID, 'tb_order', true );
             $hierarchy_row[$rank][] = array(
                     'id'        => $member->ID,
-                    'hierarchy' => $rank
+                    'hierarchy' => $rank,
+                    'order'     => $order
                 );
+            usort($hierarchy_row[$rank], "sortOrder");
         }
-        ksort($hierarchy_row);
 
         foreach ($hierarchy_row as $members) {
             $total_posts = count($members);

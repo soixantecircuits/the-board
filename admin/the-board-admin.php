@@ -316,6 +316,8 @@ class The_Board_Admin {
 
       if('tb_hierarchy' == $field['id'] && !is_numeric($meta_value) )
         $meta_value = 0;
+      if('tb_order' == $field['id'] && !is_numeric($meta_value) )
+        $meta_value = 0;
       ?>
       <div class="tb_field <?php echo $field['id']?>-container">
         <?php
@@ -343,6 +345,11 @@ class The_Board_Admin {
           case 'number':
             ?>
             <input type="number" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>" <?php if('tb_hierarchy' == $field['id']) echo 'required'; ?> min="0" >
+            <?php
+            break;
+          case 'order':
+            ?>
+            <input type="number" name="<?php echo $field['id']; ?>" id="<?php echo $field['id'] . '_input'; ?>" value="<?php echo $meta_value; ?>" <?php if('tb_order' == $field['id']) echo 'required'; ?> min="0" >
             <?php
             break;
           case 'checkbox':
