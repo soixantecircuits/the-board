@@ -305,3 +305,7 @@ msgstr "Retourner vers le groupe parent"
 msgid "Sub-Groups"
 msgstr "Sous-Groupes"
 
+#: 
+msgid "Contact"
+msgstr "Contacter"
+

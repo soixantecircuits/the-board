@@ -103,7 +103,7 @@
                     ?>
                     <tr>
                       <td colspan="5" rowspan="" headers="">
-                        <?php echo do_shortcode('[modal name="'.__('Contacter', 'the-board').' '.$fullname.'" class="line" title="'.__('Contacter', 'the-board').' '.$fullname.'" width="320px"][contact-form-7 id="'.$postmeta[$contact_meta_name][0].'"][/modal]'); ?>
+                        <?php echo do_shortcode('[modal name="'.__('Contact', 'the-board').' '.$fullname.'" class="line" title="'.__('Contact', 'the-board').' '.$fullname.'" width="320px"][contact-form-7 id="'.$postmeta[$contact_meta_name][0].'"][/modal]'); ?>
                       </td>
                     </tr>
                   <?php
