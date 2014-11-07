@@ -52,7 +52,7 @@
             </tr>
         <?php } ?>
         <?php
-        $group = get_term_by('term_taxonomy_id', $current_group, 'groups');
+        $group = get_term_by('term_id', $current_group, 'groups');
         $should_show_email = false;
         $should_show_contact = false;
         if ($group != false){
