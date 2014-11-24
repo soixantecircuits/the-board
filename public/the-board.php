@@ -217,7 +217,7 @@ class The_Board {
                 array(
                     'label'     => __('LinkedIn', MEMBERS_PLUGIN_BASENAME),
                     'desc'      => __('URL for the LinkedIn account of the member.', MEMBERS_PLUGIN_BASENAME),
-                    'id'        => $prefix . 'linkedIn',
+                    'id'        => $prefix . 'linkedin',
                     'type'      => 'text',
                     'context'   => 'normal',
                     'priority'  => 'default'

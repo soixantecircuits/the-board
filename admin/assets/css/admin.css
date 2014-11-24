@@ -71,7 +71,7 @@
   display: inline-block;
 }
 
-.tb_skype-icon, .tb_linkedIn-icon, .tb_facebook-icon, .tb_twitter-icon, .tb_googleplus-icon{
+.tb_skype-icon, .tb_linkedin-icon, .tb_facebook-icon, .tb_twitter-icon, .tb_googleplus-icon{
   width: 20px;
   height: 20px;
   display: inline-block;
@@ -85,7 +85,7 @@
   background-position: 21px 424px;
 }
 
-.tb_linkedIn-icon{
+.tb_linkedin-icon{
   background-position: 296px 424px;
 }
 
