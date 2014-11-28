@@ -2,13 +2,13 @@
 function set_member_columns($columns) {
   return array(
       'cb'          => __('Bulk actions', The_Board::get_instance()->get_plugin_slug()),
-      'photo'       => __('Profile photo', The_Board::get_instance()->get_plugin_slug()),
+      'tb_photo'       => __('Profile photo', The_Board::get_instance()->get_plugin_slug()),
       'title'       => __('Last name', The_Board::get_instance()->get_plugin_slug()),
-      'first_name'  => __('First name', The_Board::get_instance()->get_plugin_slug()),
-      'shortcode'   => __('Shortcode', The_Board::get_instance()->get_plugin_slug()),
-      'group'       => __('Group', The_Board::get_instance()->get_plugin_slug()),
-      'hierarchy'   => __('Hierarchy', The_Board::get_instance()->get_plugin_slug()),
-      'order'   => __('Order', The_Board::get_instance()->get_plugin_slug())
+      'tb_first_name'  => __('First name', The_Board::get_instance()->get_plugin_slug()),
+      'tb_shortcode'   => __('Shortcode', The_Board::get_instance()->get_plugin_slug()),
+      'tb_group'       => __('Group', The_Board::get_instance()->get_plugin_slug()),
+      'tb_hierarchy'   => __('Hierarchy', The_Board::get_instance()->get_plugin_slug()),
+      'tb_order'   => __('Order', The_Board::get_instance()->get_plugin_slug())
   );
 }
 add_filter('manage_member_posts_columns' , 'set_member_columns');
@@ -16,7 +16,7 @@ add_filter('manage_member_posts_columns' , 'set_member_columns');
 
 function member_columns( $column, $post_id ) {
   switch ( $column ) {
-    case 'photo' :
+    case 'tb_photo' :
       $image = get_post_meta( $post_id , 'tb_photo' , true );
       if( empty( $image ) ) {
         $image = plugins_url( '/assets/replace.jpg' , dirname(__FILE__) );
@@ -28,19 +28,19 @@ function member_columns( $column, $post_id ) {
     case 'title' :
       echo get_post_meta( $post_id , 'tb_lastname' , true );
       break;
-    case 'first_name' :
+    case 'tb_first_name' :
       echo get_post_meta( $post_id , 'tb_firstname' , true );
       break;
-    case 'shortcode' :
+    case 'tb_shortcode' :
       echo "<input type='text' readonly value='[theboard-show-member id=".$post_id."]'>";
       break;
-    case 'hierarchy' :
+    case 'tb_hierarchy' :
       echo get_post_meta( $post_id , 'tb_hierarchy' , true );
       break;
-    case 'order' :
+    case 'tb_order' :
       echo get_post_meta( $post_id , 'tb_order' , true );
       break;
-    case 'group' :
+    case 'tb_group' :
       echo get_groups( $post_id);
       break;
   }
